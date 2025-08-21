@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------------------
+# Command: /find-patterns
+#
+# Description:
+#   Calls the Gemini CLI to find all instances of a specific coding pattern.
+#
+# Usage Examples:
+#
+#   1. Find a pattern in default directories ('src/'):
+#      /find-patterns Find all instances of React hooks usage in the @src/ directory
+#
+#   2. Find a pattern in a specific directory:
+#      /find-patterns Find all instances of async/await error handling in the @./api/v1/ directory
+# ---------------------------------------------------------------------------
+
+name = "find-patterns"
+description = "Find specific coding patterns, anti-patterns, or code smells in the codebase"
+
+prompt = """
+`gemini --all_files -p "Find all instances of the coding pattern described. {{args}}
+
+**Pattern Analysis:**
+
+1.  **Pattern Occurrences**: List all files containing this pattern with specific line references.
+2.  **Implementation Variations**: Show the different ways this pattern is implemented (good and bad).
+3.  **Code Examples**: Provide 3-5 representative examples of the pattern in use.
+4.  **Usage Context**: Explain where and why this pattern is used.
+5.  **Quality Assessment**: Analyze the overall quality, maintainability, and performance of the implementations.
+6.  **Recommendations**: Suggest standardization, refactoring, or alternative patterns.
+
+Provide specific file paths and line numbers for all examples."`
+"""

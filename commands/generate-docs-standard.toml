@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Command: /generate-docs-standard
+#
+# Description:
+#   Generates new documentation for a project by following a specific
+#   documentation standard/template. It reads the standard, analyzes the
+#   codebase, and creates a new document in the correct format.
+#
+# Usage Examples:
+#
+#   1. Generate docs for the current project using a standard file:
+#      /generate-docs-standard using the template @./docs/api_standard.md. The codebase is in the current directory.
+#
+#   2. Generate docs for a specific part of a project:
+#      /generate-docs-standard for the 'utils' module, following the standard @./docs/module_standard.md. The code is in @./src/utils/.
+# ---------------------------------------------------------------------------
+
+name = "generate-docs-standard"
+description = "Generate documentation using a provided documentation standard/template"
+
+prompt = """
+Generate documentation for this project following the EXACT structure, format, and style defined in the provided standard.
+
+**Details:**
+{{args}}
+
+**Instructions:**
+
+1.  **Follow the Template**: Use the structure, headings, and format from the standard file as your template.
+2.  **Match the Style**: Copy the writing style, tone, and formatting conventions.
+3.  **Preserve Sections**: Keep all required sections from the standard, even if some are brief.
+4.  **Code Examples**: Use actual code from this project in the examples.
+5.  **Consistent Formatting**: Match all markdown formatting and styles.
+6.  **Section Organization**: Follow the exact order and hierarchy shown in the standard.
+
+**Content Requirements:**
+
+- Extract relevant information from the codebase.
+- Use real file paths, function names, and code snippets.
+- Include working examples that developers can copy-paste.
+
+Output the complete documentation in markdown format, ready to save as a file.
+"""

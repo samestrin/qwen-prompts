@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# Command: /performance-audit
+#
+# Description:
+#   Calls the Gemini CLI to identify performance issues and bottlenecks.
+#
+# Usage Examples:
+#
+#   1. Run a general audit:
+#      /performance-audit
+#
+#   2. Focus on a specific area:
+#      /performance-audit focusing on database query performance
+# ---------------------------------------------------------------------------
+
+name = "performance-audit"
+description = "Identify performance issues, bottlenecks, and optimization opportunities"
+
+prompt = """
+`gemini -p "@src/ @lib/ @api/ @components/ @services/ Perform a comprehensive performance audit of this codebase. {{args}}
+
+**Performance Analysis:**
+
+1.  **Database Performance**: Inefficient queries (N+1), missing indexes, unnecessary calls.
+2.  **API Performance**: Slow endpoints, missing caching, inefficient serialization.
+3.  **Frontend Performance**: Large bundle sizes, inefficient rendering, unoptimized assets.
+4.  **Memory Usage**: Memory leaks, large object storage, inefficient data structures.
+5.  **Algorithm Efficiency**: Inefficient loops (O(n²)), redundant calculations.
+6.  **Async/Concurrency Issues**: Blocking operations, race conditions, missing parallelization.
+
+**For each issue found, provide:**
+- 📁 File and line references.
+- ⚠️ Impact level (High/Medium/Low).
+- 💡 Specific optimization suggestions.
+- 📊 Expected performance improvement.
+
+**Priority Recommendations:**
+List the top 5 optimizations that would have the biggest impact."`
+"""

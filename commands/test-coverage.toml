@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------------------
+# Command: /test-coverage
+#
+# Description:
+#   Calls the Gemini CLI to analyze test coverage and quality.
+#
+# Usage Examples:
+#
+#   1. Run a general analysis:
+#      /test-coverage
+#
+#   2. Analyze a specific module:
+#      /test-coverage for the authentication module
+# ---------------------------------------------------------------------------
+
+name = "test-coverage"
+description = "Analyze test coverage and quality across the codebase"
+
+prompt = """
+`gemini -p "@src/ @tests/ @__tests__/ @spec/ @test/ Analyze the test coverage in this codebase. {{args}}
+
+**Test Coverage Analysis:**
+
+1.  **Test Structure Overview**: Frameworks, organization, test types, naming conventions.
+2.  **Coverage Assessment**: Which critical functionality lacks tests? Edge cases covered.
+3.  **Test Quality Analysis**: Readability, maintainability, proper assertions, mock usage.
+4.  **Missing Test Areas**: Untested functions, critical paths, error handling.
+5.  **Test Improvements**: Suggestions for organization, additional scenarios, performance gaps.
+6.  **Specific Recommendations**: Priority tests to write, refactoring opportunities, tools to adopt.
+
+Include specific file references and examples of good/problematic tests."`
+"""

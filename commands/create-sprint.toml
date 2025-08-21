@@ -1,0 +1,106 @@
+# ---------------------------------------------------------------------------
+# Command: /create-sprint
+#
+# Description:
+#   Analyzes the current project and generates a detailed, actionable
+#   sprint plan based on a feature request.
+#
+# Usage Example:
+#
+#   1. Plan a new feature sprint:
+#      /create-sprint-plan Implement user authentication with JWT
+#
+#   2. Plan a refactoring sprint:
+#      /create-sprint-plan Refactor the caching layer to use Redis
+# ---------------------------------------------------------------------------
+
+name = "create-sprint-plan"
+description = "Generates a detailed sprint plan from a feature request"
+
+prompt = """
+**Analysis Phase:**
+`gemini -p "@. You are an expert software architect. Analyze the provided project files to understand the technology stack, architecture patterns, testing strategy, and existing sprint conventions. Your goal is to gather all necessary context to create a new sprint plan for the following feature request: **"{{args}}"**. Summarize your findings in a brief report."`
+
+---
+
+**Sprint Generation Phase:**
+Using the analysis report above as your primary context, generate a complete and actionable sprint plan for the following feature request: **"{{args}}"**.
+
+You must follow these detailed instructions for generating the sprint plan:
+
+---
+### **Instructions for Sprint Plan Generation**
+
+You are an expert software architect and project manager. Your task is to analyze the project context from the report above and generate a detailed, actionable sprint plan.
+
+#### **Analysis and Adaptation**
+- **Adapt to Project Technology:** Use language-appropriate file extensions and naming conventions. Reference the correct testing frameworks and tools for the detected stack. Include framework-specific implementation details and use the correct package management commands.
+- **Maintain Template Structure:** Preserve the phase-based approach, TDD methodology, and git workflow from the template below.
+- **Contextualize to Requirements:** Break down the requested feature into logical phases. Identify dependencies, estimate scope, and plan for any necessary configuration or database changes.
+
+#### **File Generation Requirements**
+- **Naming Convention:** Follow the pattern `##.#_<sprintname>.md` and place the file in the `/planning/sprints/active/` directory.
+- **Content Adaptation:** Replace template placeholders with project-specific details. Update file paths, import statements, and directory references to match the project structure.
+- **Implementation Details:** Provide concrete, actionable tasks, including specific file locations and implementation approaches.
+
+#### **Quality Assurance**
+Ensure the generated sprint plan is immediately actionable, follows project conventions, includes comprehensive testing, and maintains code quality.
+
+---
+### **Sprint Plan Template**
+
+Use this template as the base for the new sprint plan:
+
+```markdown
+# Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
+
+**Objective:** {BRIEF_DESCRIPTION_OF_WHAT_THIS_SPRINT_ACCOMPLISHES}
+
+**Important**: You must check off your work as you go. Follow the project and commit rules found in `.trae/rules/project_rules.md`, `GEMINI.md` or `CLAUDE.md`.
+
+**Instructions**:
+- **TDD Approach**: Use TDD for all new implementations.
+- **Test Location**: Place tests in the appropriate directory.
+- **Coding Style**: Follow language and project conventions.
+
+## Git Branch Strategy
+- **Branch Management:** Create feature branch: `git checkout -b feature/{BRANCH_NAME}`
+
+## Phase 1: Foundation and Setup
+### 1.0 [ ] **Create Feature Branch**
+### 1.1 [ ] **{FOUNDATION_TASK_1}**
+### 1.2 [ ] **Commit Phase 1 Progress**
+
+## Phase 2: Core Implementation
+### 2.1 [ ] **{CORE_TASK_1}**
+### 2.2 [ ] **Commit Phase 2 Progress**
+
+## Phase 3: Integration and Testing
+### 3.1 [ ] **{INTEGRATION_TASK_1}**
+### 3.2 [ ] **Comprehensive Testing**
+### 3.3 [ ] **Commit Phase 3 Progress**
+
+## Phase 4: Documentation and Validation
+### 4.1 [ ] **Update Documentation**
+### 4.2 [ ] **Final Integration Testing**
+### 4.3 [ ] **Merge Feature Branch and Cleanup**
+
+## Success Criteria
+1. [ ] **{SUCCESS_CRITERION_1}**
+2. [ ] **{SUCCESS_CRITERION_2}**
+3. [ ] **All tests passing**
+
+## Implementation Guidelines
+### {LANGUAGE_SPECIFIC_SECTION}
+### Test Strategy
+### Configuration Pattern
+
+## Risk Mitigation
+- **Breaking Changes:** {MITIGATION_STRATEGY}
+- **Rollback Plan:** {ROLLBACK_STRATEGY}
+
+## Dependencies
+### Internal Dependencies
+### External Dependencies
+"`
+"""

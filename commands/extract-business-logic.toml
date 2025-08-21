@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# Command: /extract-business-logic
+#
+# Description:
+#   Calls the Gemini CLI to scan the codebase and document all
+#   business rules and application logic in plain English.
+#
+# Usage Examples:
+#
+#   1. Run on the entire codebase:
+#      /extract-business-logic
+# ---------------------------------------------------------------------------
+
+name = "extract-business-logic"
+description = "Extract and document business rules and logic from code"
+
+prompt = """
+`gemini --all_files -p "Extract all business logic and rules from this codebase:
+
+**Business Logic Documentation:**
+
+1.  **Core Business Rules**: What business rules are encoded in the software?
+2.  **Validation Logic**: Data validation rules and constraints.
+3.  **Workflow Logic**: Process flows and state transitions.
+4.  **Calculation Logic**: Formulas, algorithms, and pricing rules.
+5.  **Authorization Rules**: Who can do what and when.
+6.  **Integration Logic**: How different systems or services interact.
+
+For each rule:
+- Plain English description
+- File location and implementation
+- Dependencies and related rules
+- Edge cases and exceptions"`
+"""

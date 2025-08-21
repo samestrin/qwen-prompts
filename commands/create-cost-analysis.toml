@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# Command: /create-cost-analysis
+#
+# Description:
+#   Calls the Gemini CLI to perform a high-level cost analysis of a TDD and generates a cost analysis.
+#
+# Usage Examples:
+#
+#   1. Analyze a TDD using the default developer rate ($75/hr):
+#      /create-cost-analysis
+#
+#   2. Analyze a TDD with a custom senior developer rate:
+#      /create-cost-analysis Assume a developer rate of $120/hour.
+#
+#   3. Analyze a TDD with a different rate:
+#      /create-cost-analysis Assume a developer rate of $95/hour.
+# ---------------------------------------------------------------------------
+
+name = "create-cost-analysis"
+description = "Generates a high-level operational cost estimate for a project"
+
+prompt = """
+**Contextual Analysis:**
+`gemini -p "@planning/specifications/tdd.md" "Analyze the attached TDD to create a comprehensive cost projection. Your analysis must cover these areas:
+
+1.  **One-Time Development Cost:** Based on the TDD's 'Resource Planning' and 'Timeline' sections, calculate an estimated one-time development cost. **{{args|Assume a standard developer rate of $75/hour.}}**
+
+2.  **Monthly Operational Costs:**
+    a. **Primary Hosting:** Determine if the TDD is for a web service or a CLI tool. If it's a web service, analyze hosting costs from providers in this order: Digital Ocean, Vercel, Netlify, AWS, GCP. If it's a CLI, state that dedicated hosting is not applicable.
+    b. **Complementary Services:** Scan the TDD for mentions of other required services like databases, CDNs, backup solutions, monitoring tools, or email services. Provide a cost estimate for each identified service. If none are explicitly mentioned, state that.
+
+3.  **User-Borne Costs:** Detail any ongoing costs the end-user will be responsible for (e.g., third-party API usage fees)."`
+
+---
+
+**Final Task:**
+Using ONLY the contextual analysis provided above, format the information into a clear cost-analysis document using the following structure.
+
+```markdown
+# Cost Analysis Report
+
+## 1. One-Time Development Cost Estimate
+(Summarize the estimated hours and total cost for the initial build of the project based on the provided developer rate.)
+
+## 2. Estimated Monthly Operational Costs
+
+### Primary Hosting
+(Summarize the findings for monthly hosting. If it's a web service, detail the provider analysis. If it's a CLI, state that hosting is not applicable.)
+
+### Complementary Services
+(Provide a breakdown and cost estimate for any identified complementary services like databases, CDNs, monitoring, etc. If none were found, state that.)
+
+## 3. User-Borne Costs
+(Detail the ongoing costs, such as API fees, that are the responsibility of the end-user, not the project owner.)
+
+---
+
+Save the output as: @planning/specifications/cost-analysis.md
+"""

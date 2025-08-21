@@ -1,0 +1,33 @@
+# ---------------------------------------------------------------------------
+# Command: /dependency-analysis
+#
+# Description:
+#   Calls the Gemini CLI to analyze project dependencies.
+#
+# Usage Examples:
+#
+#   1. Run a general analysis:
+#      /dependency-analysis
+#
+#   2. Focus on a specific package manager:
+#      /dependency-analysis focusing on npm dependencies
+# ---------------------------------------------------------------------------
+
+name = "dependency-analysis"
+description = "Analyze project dependencies, their usage, and potential issues"
+
+prompt = """
+`gemini -p "@package.json @requirements.txt @composer.json @Gemfile @go.mod @Cargo.toml @pom.xml @build.gradle @src/ @lib/ Analyze the dependencies in this project. {{args}}
+
+**Dependency Analysis:**
+
+1.  **Dependency Overview**: Total number of dependencies, main package manager(s) used.
+2.  **Direct Dependencies**: List major dependencies with their versions and purpose.
+3.  **Dependency Usage Analysis**: Which dependencies are actively used vs. unused?
+4.  **Version & Security Analysis**: Are there outdated dependencies or known security vulnerabilities?
+5.  **Bundle Size & Performance**: Identify large dependencies affecting bundle size.
+6.  **Dependency Issues**: Look for conflicting versions, missing dependencies, or circular dependencies.
+7.  **Recommendations**: Suggest dependencies to update or remove, security patches, and optimizations.
+
+Include specific examples of dependency usage in the codebase with file references."`
+"""

@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# Command: /analyze-codebase
+#
+# Description:
+#   Calls the Gemini CLI to perform a high-level analysis of a codebase,
+#   detailing its architecture, tech stack, and key components.
+#
+# Usage Examples:
+#
+#   1. Analyze the current directory:
+#      /analyze-codebase
+#
+#   2. Analyze a specific directory:
+#      /analyze-codebase analyzing the @./server/api/ directory
+# ---------------------------------------------------------------------------
+
+name = "analyze-codebase"
+description = "Analyze entire codebase architecture and structure using Gemini's large context window"
+
+prompt = """
+`gemini -p "@./ Provide a comprehensive analysis of this codebase. {{args}}
+
+Your analysis should include:
+
+1.  **Project Overview**: What does this project do? What's its main purpose?
+2.  **Architecture**: High-level architecture and design patterns used.
+3.  **Technology Stack**: Languages, frameworks, libraries, and tools.
+4.  **File Structure**: Key directories and their purposes.
+5.  **Entry Points**: Main application entry points and how the app starts.
+6.  **Key Components**: The most important files/modules and their responsibilities.
+7.  **Dependencies**: Major external dependencies and their purposes.
+8.  **Configuration**: How the project is configured (env vars, config files, etc.).
+9.  **Build/Deploy**: How to build and deploy this project.
+10. **Areas for Improvement**: Potential issues, technical debt, or suggestions.
+
+Present this in a clear, organized format with specific file references where relevant."`
+"""

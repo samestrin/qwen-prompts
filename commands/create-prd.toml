@@ -1,0 +1,64 @@
+# ---------------------------------------------------------------------------
+# Command: /create-prd
+#
+# Description:
+#   Calls the Gemini CLI to generate a Product Requirements Document (PRD)
+#   based on a feature description, user story, or initial concept.
+#
+# Usage Examples:
+#
+#   1. Create a PRD for a simple feature:
+#      /create-prd for a new user authentication system using passkeys
+#
+#   2. Create a PRD from a more detailed concept:
+#      /create-prd for a CLI tool that automates blog post generation
+#      using LLMs, validates output against a JSON schema, and saves
+#      the results to a local file.
+# ---------------------------------------------------------------------------
+
+name = "create-prd"
+description = "Generates a Product Requirements Document (PRD) from a feature description"
+
+prompt = """First, perform a detailed analysis of the following concept: `gemini "Thoroughly brainstorm and outline the core components, user stories, functional and non-functional requirements, potential risks, target users, and a potential technical stack for the following idea: {{args}}"`
+
+---
+
+Now, using ONLY the analysis above as context, create a comprehensive Product Requirements Document (PRD). Populate every section of the following markdown template with relevant details derived from the analysis.
+
+```markdown
+# Product Requirements Document: [Enter Project Name]
+
+## 1. Overview
+(Provide a high-level summary of the project, its purpose, and the problem it solves.)
+
+## 2. Objectives
+(List the primary goals and desired outcomes of this project in a bulleted list.)
+
+## 3. Target Users and Use Cases
+(Describe the target audience and provide specific scenarios for how they will use the product.)
+
+## 4. Functional Requirements
+(Detail the specific features. **Break this section down with descriptive subheadings** for distinct components like 'User Interface', 'Backend API', 'Data Processing', etc., as appropriate.)
+
+## 5. Non-functional Requirements
+(Specify criteria like performance, reliability, maintainability, security, and portability.)
+
+## 6. Architecture and Design
+(Outline the proposed technology stack and high-level system architecture based on the initial analysis.)
+
+## 7. Risks and Considerations
+(Identify potential technical or project risks and suggest mitigation strategies.)
+
+## 8. Milestones and Timeline
+(Propose key project phases and a tentative timeline for completion.)
+
+## 9. Future Enhancements
+(List potential features or improvements for future versions.)
+
+## 10. Conclusion
+(Summarize the project's value and strategic importance.)
+
+---
+
+Save the output as: @planning/specifications/prd.md"`
+"""

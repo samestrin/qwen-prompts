@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# Command: /check-implementation
+#
+# Description:
+#   Calls the Gemini CLI to check if a specific feature or pattern is
+#   implemented in the codebase and provides a detailed report.
+#
+# Usage Examples:
+#
+#   1. Check for a feature in default directories ('src/', 'lib/'):
+#      /check-implementation Has Stripe payment processing been implemented?
+#
+#   2. Check for a feature in a specific directory:
+#      /check-implementation In the @./api/ and @./middleware/ directories, has user authentication been implemented?
+# ---------------------------------------------------------------------------
+
+name = "check-implementation"
+description = "Check if a specific feature or pattern is implemented in the codebase"
+
+prompt = """
+`gemini -p "@src/ @lib/ Has the following feature been implemented in this codebase? {{args}}
+
+Please provide:
+1.  **Implementation Status**: Yes/No with confidence level.
+2.  **Relevant Files**: List all files that contain related code with file paths.
+3.  **Code Examples**: Show specific functions, classes, or code blocks that implement this.
+4.  **Implementation Details**: How it's implemented, what approach is used.
+5.  **Coverage**: How complete is the implementation? Any gaps?
+6.  **Dependencies**: What external libraries or services does it rely on?
+7.  **Usage Examples**: How is this feature used throughout the codebase?
+8.  **Related Features**: Any related functionality that works with this feature?
+
+If not implemented, suggest where and how it could be added."`
+"""

@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# Command: /create-tdd
+#
+# Description:
+#   Calls the Gemini CLI to generates a Technical Design Document (PRD)
+#   based on a PRD.
+#
+# Usage Examples:
+#
+#   1. Create a TDD based on a PRD:
+#      /create-tdd
+# ---------------------------------------------------------------------------
+
+name = "create-tdd"
+description = "Generates a Technical Design Document (TDD) from a PRD"
+
+prompt = """
+First, perform a detailed technical analysis of the attached Product Requirements Document: `gemini -p "@planning/specifications/prd.md" "Analyze the attached PRD and derive all necessary information for a comprehensive Technical Design Document. Your analysis must include: a final technology stack decision with justification, a system architecture breakdown, detailed implementation specifications, a security plan, a testing strategy, risk assessment, and a project timeline with milestones. Be thorough and specific."`
+
+---
+
+Now, using ONLY the technical analysis above as context, create a comprehensive Technical Design Document (TDD). Populate every section of the following markdown template with the relevant details.
+
+```markdown
+# Technical Design Document: [Enter Project Name from PRD]
+
+## 1. Executive Technical Summary
+
+## 2. Technology Stack Analysis and Final Decision
+### 2.1 Performance Analysis
+### 2.2 Development Velocity Assessment
+
+## 3. System Architecture Design
+### 3.1 Application Layer Architecture
+### 3.2 Data Layer Design
+### 3.3 Infrastructure and Deployment
+
+## 4. Detailed Implementation Specifications
+### 4.1 Project Structure
+### 4.2 Core Dependencies
+
+## 5. Performance and Scalability Specifications
+
+## 6. Security Implementation Plan
+
+## 7. Development and Deployment Strategy
+### 7.1 Development Workflow
+### 7.2 Deployment Pipeline
+
+## 8. Risk Assessment and Mitigation
+
+## 9. Testing and Quality Assurance Strategy
+
+## 10. Monitoring and Maintenance Plan
+
+## 11. Implementation Timeline and Milestones
+
+## 12. Resource Planning and Estimates
+
+## 13. Success Criteria and Acceptance Testing
+
+## 14. Conclusion and Next Steps
+```
+
+Save the output as: @planning/specifications/tdd.md"`
+"""

@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Command: /code-quality
+#
+# Description:
+#   Calls the Gemini CLI to perform a comprehensive code quality analysis.
+#
+# Usage Examples:
+#
+#   1. Run a general analysis:
+#      /code-quality
+#
+#   2. Focus the analysis on a specific area:
+#      /code-quality focusing on naming conventions and code complexity
+# ---------------------------------------------------------------------------
+
+name = "code-quality"
+description = "Comprehensive code quality analysis including maintainability, readability, and best practices"
+
+prompt = """
+`gemini -p "@src/ @lib/ @components/ Perform a comprehensive code quality analysis. {{args}}
+
+**Code Quality Assessment:**
+
+1.  **Code Structure & Organization**: File/folder organization, module separation, architecture.
+2.  **Naming Conventions**: Clarity and consistency of variable, function, and class names.
+3.  **Function & Class Design**: Single Responsibility Principle, length, complexity.
+4.  **Code Complexity**: Cyclomatic complexity, nesting, long functions.
+5.  **Documentation & Comments**: Quality and usefulness of code comments and docs.
+6.  **Error Handling**: Consistency, proper exception usage, and recovery strategies.
+7.  **Code Duplication**: Evidence of copy-paste programming and opportunities for abstraction.
+8.  **Best Practices Compliance**: Adherence to language-specific best practices and SOLID principles.
+
+**Quality Metrics:**
+- Overall maintainability score (1-10)
+- Areas needing immediate attention
+- Long-term technical debt concerns
+
+**Specific Recommendations:**
+- Top 10 improvements with file references
+- Refactoring priorities
+- Code standards to establish"`
+"""

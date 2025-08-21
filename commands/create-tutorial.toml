@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# Command: /create-tutorial
+#
+# Description:
+#   Calls the Gemini CLI to create a step-by-step tutorial using the
+#   current codebase for real, working examples.
+#
+# Usage Examples:
+#
+#   1. Create an intermediate-level tutorial:
+#      /create-tutorial Create an intermediate-level tutorial on how to add a new API endpoint
+#
+#   2. Create a beginner-level tutorial:
+#      /create-tutorial Create a beginner-level tutorial on setting up the development environment
+# ---------------------------------------------------------------------------
+
+name = "create-tutorial"
+description = "Create step-by-step tutorials from existing code"
+
+prompt = """
+`gemini --all_files -p "Create a comprehensive tutorial using this codebase as examples. {{args}}
+
+**Tutorial Structure:**
+
+1.  **Introduction**: What will the user learn and why is it important?
+2.  **Prerequisites**: What knowledge or tools do they need beforehand?
+3.  **Step-by-Step Guide**: Explain each step clearly, using actual code from this project as examples.
+4.  **Common Pitfalls**: What common mistakes should the user avoid?
+5.  **Advanced Tips**: Include pro tips and best practices.
+6.  **Practice Exercises**: Suggest hands-on exercises the user can do.
+7.  **Further Reading**: Provide resources to learn more.
+
+The tutorial must be practical and actionable with real, working examples."`
+"""

@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# Command: /security-audit
+#
+# Description:
+#   Calls the Gemini CLI to perform a comprehensive security analysis.
+#
+# Usage Examples:
+#
+#   1. Run a general audit:
+#      /security-audit
+#
+#   2. Focus on a specific area:
+#      /security-audit focusing on authentication and authorization
+# ---------------------------------------------------------------------------
+
+name = "security-audit"
+description = "Perform comprehensive security analysis of the codebase"
+
+prompt = """
+`gemini -p "@src/ @api/ @backend/ @middleware/ @lib/ Perform a comprehensive security audit of this codebase. {{args}}
+
+**Security Checklist Analysis:**
+
+1.  **Authentication & Authorization**: JWT/session handling, password hashing, access controls.
+2.  **Input Validation & Sanitization**: Protections against SQL injection, XSS, and CSRF.
+3.  **Data Protection**: Encryption at rest/in transit, sensitive data handling, secret management.
+4.  **Error Handling**: Information disclosure in errors, proper logging.
+5.  **Rate Limiting & DoS Protection**: API rate limiting, request size limits, timeouts.
+6.  **Dependencies**: Outdated or vulnerable packages.
+
+**For each area, provide:**
+- ✅ What's implemented well.
+- ⚠️ Potential vulnerabilities found.
+- ❌ Missing security measures.
+- 📁 Specific files and line references.
+- 💡 Recommendations for improvements."`
+"""

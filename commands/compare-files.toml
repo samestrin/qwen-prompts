@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------
+# Command: /compare-files
+#
+# Description:
+#   Calls the Gemini CLI to compare multiple files/directories.
+#
+# Usage Examples:
+#
+#   1. Compare two files:
+#      /compare-files Compare these files: @./service/legacy_api.js @./service/new_api.js
+#
+#   2. Compare directories with a specific focus:
+#      /compare-files Compare @./v1/ @./v2/, focusing on implementation differences and code quality
+# ---------------------------------------------------------------------------
+
+name = "compare-files"
+description = "Compare multiple files or directories to find similarities, differences, and patterns"
+
+prompt = """
+`gemini --all_files -p "Compare the files/directories provided. {{args}}
+
+**Comparison Analysis:**
+
+1.  **Similarities**: Common patterns, shared logic, similar architecture.
+2.  **Differences**: Unique implementations, different approaches, varying code quality.
+3.  **Code Duplication**: Duplicated functions, opportunities for code reuse.
+4.  **Quality Assessment**: Which implementation is better and why? Compare performance and maintainability.
+5.  **Recommendations**: Consolidation opportunities, best practices, and refactoring suggestions.
+
+Provide specific line references and code examples for each point."`
+"""

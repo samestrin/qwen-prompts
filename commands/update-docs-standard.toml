@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# Command: /update-docs-standard
+#
+# Description:
+#   Updates an existing documentation file to make it conform to a
+#   specified documentation standard. It supports different update types,
+#   from simple reformatting to a complete content rewrite.
+#
+# Usage Examples:
+#
+#   1. Reformat a document without changing content:
+#      /update-docs-standard Perform a 'format-only' update on @./docs/old_api.md using the standard @./docs/api_standard.md
+#
+#   2. Refresh content and update code examples:
+#      /update-docs-standard Do a 'content-refresh' on the user guide @./docs/guide.md with the standard @./docs/style_guide.md
+#
+#   3. Completely rewrite a document based on the current code:
+#      /update-docs-standard Execute a 'full-rewrite' of @./README.md using the template @./docs/readme_standard.md
+# ---------------------------------------------------------------------------
+
+name = "update-docs-standard"
+description = "Update existing documentation to match a documentation standard"
+
+prompt = """
+Update the existing documentation to match the documentation standard provided.
+
+**Update Details:**
+{{args}}
+
+**General Requirements:**
+
+1.  **Preserve Good Content**: Keep valuable existing content that is still accurate.
+2.  **Follow Standard**: Match the structure, format, and style of the standard.
+3.  **Current Information**: Ensure all code examples and references are current.
+4.  **Complete Coverage**: Include all sections required by the standard.
+5.  **Consistency**: Maintain consistent formatting throughout.
+
+Depending on the **Update Type** specified, follow these rules:
+
+* **format-only**: Keep all existing content but update formatting, structure, and style to match the standard. Reorganize sections and fix markdown inconsistencies.
+* **content-refresh**: Keep existing content but refresh it with current codebase information. Update code examples, add missing sections from the standard, and update outdated information.
+* **full-rewrite**: Use the existing doc only as a reference for what to cover. Completely rewrite the documentation following the standard's structure and style, extracting fresh information from the current codebase.
+
+Output the complete updated documentation in markdown format.
+"""

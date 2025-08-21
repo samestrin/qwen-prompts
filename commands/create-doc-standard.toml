@@ -1,0 +1,65 @@
+# ---------------------------------------------------------------------------
+# Command: /create-doc-standard
+#
+# Description:
+#   Creates a comprehensive documentation standard and template. It can
+#   generate a standard from scratch based on a description or analyze
+#   existing documentation files to infer a consistent style.
+#
+# Usage Examples:
+#
+#   1. Generate a standard from a simple description:
+#      /create-doc-standard for a public-facing REST API documentation
+#
+#   2. Generate a standard by analyzing existing documents for style:
+#      /create-doc-standard for our Python CLI tools, using these files as a style reference @doc1.md @doc2.md
+# ---------------------------------------------------------------------------
+
+name = "create-doc-standard"
+description = "Create a documentation standard/template based on best practices and existing docs"
+
+prompt = """
+Create a comprehensive documentation standard/template based on the following details:
+
+{{args}}
+
+**Documentation Standard Requirements:**
+
+Create a template that includes:
+
+1.  **Document Structure**:
+    - Required sections in order
+    - Optional sections and when to include them
+    - Heading hierarchy and numbering
+
+2.  **Writing Style Guide**:
+    - Tone and voice (technical, friendly, formal, etc.)
+    - Sentence structure preferences
+    - Technical term usage
+    - Code example formatting
+
+3.  **Markdown Formatting Standards**:
+    - How to format code blocks
+    - When to use different heading levels
+    - List formatting preferences
+    - Table formatting (if applicable)
+    - Callout/warning box formatting
+
+4.  **Content Guidelines**:
+    - What information must be included in each section
+    - How detailed to be
+    - What to avoid or exclude
+    - How to handle edge cases
+
+5.  **Template Structure**:
+    - Provide an actual template with placeholder content
+    - Include example text showing the desired style
+    - Add comments explaining what goes in each section
+
+6.  **Quality Checklist**:
+    - Checklist for reviewing docs against this standard
+    - Common mistakes to avoid
+    - Quality indicators to look for
+
+Output as a complete markdown template that can be used as a standard for future documentation.
+"""
