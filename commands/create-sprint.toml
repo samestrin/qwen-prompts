@@ -19,12 +19,11 @@ description = "Generates a detailed sprint plan from a feature request"
 
 prompt = """
 **Analysis Phase:**
-`gemini -p "@. You are an expert software architect. Analyze the provided project files to understand the technology stack, architecture patterns, testing strategy, and existing sprint conventions. Your goal is to gather all necessary context to create a new sprint plan for the following feature request: **"{{args}}"**. Summarize your findings in a brief report."`
+`gemini -p "@. You are an expert software architect. Analyze the provided project files to understand the technology stack, architecture patterns, testing strategy, and existing sprint conventions. Your goal is to gather all necessary context to create a new sprint plan for the following feature request: **"{{args}}"**. Summarize your findings, include a list of affected files."`
 
 ---
 
-**Sprint Generation Phase:**
-Using the analysis report above as your primary context, generate a complete and actionable sprint plan for the following feature request: **"{{args}}"**.
+Now, Using the analysis report above as your primary context, generate a complete and actionable sprint plan for the following feature request: **"{{args}}"**.
 
 You must follow these detailed instructions for generating the sprint plan:
 
@@ -49,58 +48,9 @@ Ensure the generated sprint plan is immediately actionable, follows project conv
 ---
 ### **Sprint Plan Template**
 
-Use this template as the base for the new sprint plan:
+Here is the sprint template plan to use:
+`gemini -p "@-https://raw.githubusercontent.com/samestrin/qwen-prompts/refs/heads/main/planning/sprints/example.md"`
 
-```markdown
-# Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
-
-**Objective:** {BRIEF_DESCRIPTION_OF_WHAT_THIS_SPRINT_ACCOMPLISHES}
-
-**Important**: You must check off your work as you go. Follow the project and commit rules found in `.trae/rules/project_rules.md`, `GEMINI.md` or `CLAUDE.md`.
-
-**Instructions**:
-- **TDD Approach**: Use TDD for all new implementations.
-- **Test Location**: Place tests in the appropriate directory.
-- **Coding Style**: Follow language and project conventions.
-
-## Git Branch Strategy
-- **Branch Management:** Create feature branch: `git checkout -b feature/{BRANCH_NAME}`
-
-## Phase 1: Foundation and Setup
-### 1.0 [ ] **Create Feature Branch**
-### 1.1 [ ] **{FOUNDATION_TASK_1}**
-### 1.2 [ ] **Commit Phase 1 Progress**
-
-## Phase 2: Core Implementation
-### 2.1 [ ] **{CORE_TASK_1}**
-### 2.2 [ ] **Commit Phase 2 Progress**
-
-## Phase 3: Integration and Testing
-### 3.1 [ ] **{INTEGRATION_TASK_1}**
-### 3.2 [ ] **Comprehensive Testing**
-### 3.3 [ ] **Commit Phase 3 Progress**
-
-## Phase 4: Documentation and Validation
-### 4.1 [ ] **Update Documentation**
-### 4.2 [ ] **Final Integration Testing**
-### 4.3 [ ] **Merge Feature Branch and Cleanup**
-
-## Success Criteria
-1. [ ] **{SUCCESS_CRITERION_1}**
-2. [ ] **{SUCCESS_CRITERION_2}**
-3. [ ] **All tests passing**
-
-## Implementation Guidelines
-### {LANGUAGE_SPECIFIC_SECTION}
-### Test Strategy
-### Configuration Pattern
-
-## Risk Mitigation
-- **Breaking Changes:** {MITIGATION_STRATEGY}
-- **Rollback Plan:** {ROLLBACK_STRATEGY}
-
-## Dependencies
-### Internal Dependencies
-### External Dependencies
-"`
+---
+Save the output following the **Naming Convention** defined above in the @planning/sprints/active folder.
 """
