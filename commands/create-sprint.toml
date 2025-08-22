@@ -2,55 +2,329 @@
 # Command: /create-sprint
 #
 # Description:
-#   Analyzes the current project and generates a detailed, actionable
-#   sprint plan based on a feature request.
+#   Analyzes a feature request and the project context to generate a
+#   detailed and actionable sprint plan.
 #
 # Usage Example:
 #
 #   1. Plan a new feature sprint:
 #      /create-sprint-plan Implement user authentication with JWT
-#
-#   2. Plan a refactoring sprint:
-#      /create-sprint-plan Refactor the caching layer to use Redis
 # ---------------------------------------------------------------------------
 
 name = "create-sprint-plan"
 description = "Generates a detailed sprint plan from a feature request"
 
 prompt = """
-**Analysis Phase:**
-`gemini -p "@. You are an expert software architect. Analyze the provided project files to understand the technology stack, architecture patterns, testing strategy, and existing sprint conventions. Your goal is to gather all necessary context to create a new sprint plan for the following feature request: **"{{args}}"**. Summarize your findings, include a list of affected files."`
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+
+You are an expert software architect and project manager creating a sprint plan for **{{args}}**. You are ONLY in planning mode - do NOT write code, create files, create directories, or start implementation. You are ONLY authoring a sprint plan document. After generating the plan content, you will stop and wait for further instructions.
+
+### Analysis
+`gemini -p "@{MAIN_DIRECTORY} You are an expert software engineer performing ANALYSIS ONLY. Do NOT create files, directories, or make any changes to the codebase. Perform a comprehensive technical analysis of the feature request: **"{{args}}"**.
+
+Your analysis **must** include:
+
+1. **Complexity Assessment**: Identify if this is a simple (1-3 days), moderate (4-7 days), or complex (8+ days) implementation based on:
+   - Number of files/components affected
+   - Integration complexity with existing systems
+   - New dependencies or architectural changes required
+   - Testing complexity and scope
+
+2. **Technical Deep Dive**: 
+   - Examine existing codebase architecture and patterns
+   - Identify all configuration variables, APIs, and integration points
+   - Analyze threading, async, or concurrency requirements
+   - Assess packaging, deployment, or platform-specific needs
+   - Identify potential technical challenges and risks
+
+3. **Dependency Analysis**:
+   - Map internal dependencies (existing modules, classes, functions)
+   - Identify external dependencies (libraries, services, tools)
+   - Assess version compatibility and integration requirements
+
+4. **Implementation Breakdown**:
+   - Break down into logical phases with realistic time estimates
+   - Identify which files need creation vs modification
+   - Specify testing strategy (unit, integration, system tests)
+   - Consider error handling, validation, and edge cases
+
+5. **Architecture Considerations**:
+   - Identify design patterns needed
+   - Assess scalability and maintainability requirements
+   - Consider security implications
+   - Evaluate performance requirements
+
+Be thorough and specific. If the feature involves complex systems (like GUIs, threading, packaging, or multi-component integration), provide detailed technical analysis of each component."`
+
+Now, using the comprehensive analysis above, create a detailed sprint plan. **Important**: 
+
+- For COMPLEX features (8+ days), create detailed phases with specific technical challenges, multiple sub-tasks, and realistic timelines
+- For MODERATE features (4-7 days), provide structured phases with clear implementation steps
+- For SIMPLE features (1-3 days), use the standard template structure
+
+**Key Requirements**:
+1. **Reflect Complexity**: Match the sprint structure to the complexity identified in analysis
+2. **Technical Depth**: Include specific technical challenges, architectural decisions, and implementation patterns
+3. **Realistic Timelines**: Provide time estimates based on complexity assessment
+4. **Comprehensive Scope**: Address all aspects identified in the analysis (threading, configuration, packaging, etc.)
+5. **Risk Mitigation**: Include specific risks and mitigation strategies from the analysis
+
+Preserve the markdown structure, including instructional text and checkboxes `[ ]`. For complex features, expand phases with detailed sub-sections and technical specifications.
+
+### **Sprint Plan Template to Populate**
+
+# Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
+
+**Sprint Goal:** {DETAILED_SPRINT_GOAL_WITH_SUCCESS_CRITERIA}
+
+**Estimated Timeline:** {TIMELINE_BASED_ON_COMPLEXITY} ({COMPLEXITY_LEVEL}: {JUSTIFICATION})
+
+**Framework/Technology:** {PRIMARY_TECH_STACK}
+
+**Important**: You **must check off your work** as you complete it in real-time to maintain state. Follow the project and commit rules found in `.trae/rules/project_rules.md`, `QWEN.md`, `GEMINI.md` or `CLAUDE.md` (You only need to read one of them.). After the end of each phase, re-read the selected project rule file to make sure your context is up to date.
+
+## Development Guidelines
+
+**Git Strategy:**
+- **Branch**: `feature/{BRANCH_NAME}`
+- **Commits**: Frequent commits with conventional format
+- **Testing**: All tests must pass before merge
+
+**Test Location:** {SPECIFIC_TEST_DIRECTORY_STRUCTURE}
+
+**Code Standards:**
+- **TDD Approach**: Use TDD for all {IMPLEMENTATION_TYPE} and new implementations
+- **Coding Style**: Follow {LANGUAGE} Standard Style and project naming conventions
+- **Function Length**: 50-100 lines max
+- **File Length**: 500-650 lines max
+- **Cognitive Complexity**: Keep logic simple and clear
+- **DRY & KISS**: Avoid over-engineering and unneeded complexity
+
+## Success Criteria
+{LIST_OF_SPECIFIC_SUCCESS_CRITERIA}
+
+## Technical Challenges & Risks
+{IDENTIFIED_TECHNICAL_CHALLENGES_AND_MITIGATION_STRATEGIES}
+
+**Upon Completion**: Move this completed file to `/planning/sprints/completed`
+
+## Git Branch Strategy
+
+**Branch Management:**
+- Create feature branch: `git checkout -b feature/{BRANCH_NAME}`
+- Commit frequently with descriptive messages following conventional commit format
+- Each phase should have its own commit(s)
+- Final merge to main after all phases complete and tests pass
+
+**Commit Message Format:**
+```
+<type>(<scope>): <brief summary>
+
+<detailed description>
+
+- Specific change 1
+- Specific change 2
+```
+
+## Phase 1: {PHASE_1_NAME}
+
+**Phase Overview:** {PHASE_1_DESCRIPTION_AND_OBJECTIVES}
+
+**Estimated Duration:** {PHASE_1_TIMELINE}
+
+### 1.0 [ ] **Create Feature Branch**
+   **Action:** Create and switch to feature branch for {FEATURE_NAME}
+   **Implementation:**
+   - Create feature branch: `git checkout -b feature/{BRANCH_NAME}`
+   - Ensure working directory is clean before starting
+   - Push initial branch to remote: `git push -u origin feature/{BRANCH_NAME}`
+   **Goal:** Isolated development environment for {FEATURE_NAME} work
+
+### 1.1 [ ] **{FOUNDATION_TASK_1}**
+   **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
+   **Files to Create:** `{NEW_FILES_LIST}`
+   **Files to Modify:** `{EXISTING_FILES_LIST}`
+   **Action:** {DETAILED_TASK_DESCRIPTION}
+   **Technical Specifications:**
+   - {TECHNICAL_SPEC_1}
+   - {TECHNICAL_SPEC_2}
+   - {TECHNICAL_SPEC_3}
+   **Implementation Steps:**
+   - {SPECIFIC_IMPLEMENTATION_STEP_1}
+   - {SPECIFIC_IMPLEMENTATION_STEP_2}
+   - {SPECIFIC_IMPLEMENTATION_STEP_3}
+   **Dependencies:** {INTERNAL_AND_EXTERNAL_DEPENDENCIES}
+   **Tests Required:** {DETAILED_TEST_REQUIREMENTS}
+   **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
+   **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
+
+{ADDITIONAL_PHASE_1_TASKS_IF_COMPLEX}
+
+### 1.2 [ ] **Commit Phase 1 Progress**
+   **Action:** Commit foundation setup
+   **Implementation:**
+   - Stage all changes: `git add .`
+   - Commit with descriptive message: `git commit -m "{COMMIT_TYPE}({SCOPE}): {COMMIT_MESSAGE}"`
+   - Push to feature branch: `git push origin feature/{BRANCH_NAME}`
+   **Goal:** Track incremental progress and create checkpoint
+
+## Phase 2: {PHASE_2_NAME}
+
+**Phase Overview:** {PHASE_2_DESCRIPTION_AND_OBJECTIVES}
+
+**Estimated Duration:** {PHASE_2_TIMELINE}
+
+### 2.1 [ ] **{CORE_TASK_1}**
+   **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
+   **Files to Create:** `{NEW_FILES_LIST}`
+   **Files to Modify:** `{EXISTING_FILES_LIST}`
+   **Action:** {DETAILED_TASK_DESCRIPTION}
+   **Technical Specifications:**
+   - {TECHNICAL_SPEC_1}
+   - {TECHNICAL_SPEC_2}
+   - {TECHNICAL_SPEC_3}
+   **Implementation Steps:**
+   - {SPECIFIC_IMPLEMENTATION_STEP_1}
+   - {SPECIFIC_IMPLEMENTATION_STEP_2}
+   - {SPECIFIC_IMPLEMENTATION_STEP_3}
+   **Dependencies:** {INTERNAL_AND_EXTERNAL_DEPENDENCIES}
+   **Tests Required:** {DETAILED_TEST_REQUIREMENTS}
+   **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
+   **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
+
+{ADDITIONAL_PHASE_2_TASKS_IF_COMPLEX}
+
+### 2.2 [ ] **Commit Phase 2 Progress**
+   **Action:** Commit core implementation
+   **Implementation:**
+   - Stage all changes: `git add .`
+   - Commit with descriptive message: `git commit -m "{COMMIT_TYPE}({SCOPE}): {COMMIT_MESSAGE}"`
+   - Push to feature branch: `git push origin feature/{BRANCH_NAME}`
+   **Goal:** Track incremental progress and create checkpoint
+
+## Phase 3: {PHASE_3_NAME}
+
+**Phase Overview:** {PHASE_3_DESCRIPTION_AND_OBJECTIVES}
+
+**Estimated Duration:** {PHASE_3_TIMELINE}
+
+### 3.1 [ ] **{INTEGRATION_TASK_1}**
+   **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
+   **Files to Create:** `{NEW_FILES_LIST}`
+   **Files to Modify:** `{EXISTING_FILES_LIST}`
+   **Action:** {DETAILED_TASK_DESCRIPTION}
+   **Technical Specifications:**
+   - {TECHNICAL_SPEC_1}
+   - {TECHNICAL_SPEC_2}
+   **Implementation Steps:**
+   - {SPECIFIC_IMPLEMENTATION_STEP_1}
+   - {SPECIFIC_IMPLEMENTATION_STEP_2}
+   **Dependencies:** {INTERNAL_AND_EXTERNAL_DEPENDENCIES}
+   **Tests Required:** {DETAILED_TEST_REQUIREMENTS}
+   **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
+   **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
+
+{ADDITIONAL_PHASE_3_TASKS_IF_COMPLEX}
+
+### 3.2 [ ] **Commit Phase 3 Progress**
+   **Action:** Commit integration and testing
+   **Implementation:**
+   - Stage all changes: `git add .`
+   - Commit with descriptive message: `git commit -m "{COMMIT_TYPE}({SCOPE}): {COMMIT_MESSAGE}"`
+   - Push to feature branch: `git push origin feature/{BRANCH_NAME}`
+   **Goal:** Track incremental progress and create checkpoint
+
+## Phase 4: {PHASE_4_NAME}
+
+**Phase Overview:** {PHASE_4_DESCRIPTION_AND_OBJECTIVES}
+
+**Estimated Duration:** {PHASE_4_TIMELINE}
+
+### 4.1 [ ] **{DOCUMENTATION_OR_VALIDATION_TASK}**
+   **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
+   **Files to Create:** `{NEW_FILES_LIST}`
+   **Files to Modify:** `{EXISTING_FILES_LIST}`
+   **Action:** {DETAILED_TASK_DESCRIPTION}
+   **Technical Specifications:**
+   - {TECHNICAL_SPEC_1}
+   - {TECHNICAL_SPEC_2}
+   **Implementation Steps:**
+   - {SPECIFIC_IMPLEMENTATION_STEP_1}
+   - {SPECIFIC_IMPLEMENTATION_STEP_2}
+   **Dependencies:** {INTERNAL_AND_EXTERNAL_DEPENDENCIES}
+   **Tests Required:** {DETAILED_TEST_REQUIREMENTS}
+   **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
+   **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
+
+{ADDITIONAL_PHASE_4_TASKS_IF_COMPLEX}
+
+{ADDITIONAL_PHASES_FOR_COMPLEX_FEATURES}
+
+### 4.2 [ ] **Merge Feature Branch and Cleanup**
+   **Action:** Merge completed {FEATURE_NAME} back to main branch
+   **Implementation:**
+   - Ensure all tests pass: `{TEST_COMMAND}`
+   - Commit final changes: `git add . && git commit -m "{FINAL_COMMIT_MESSAGE}"`
+   - Switch to main branch: `git checkout main`
+   - Pull latest changes: `git pull origin main`
+   - Merge feature branch: `git merge feature/{BRANCH_NAME}`
+   - Push merged changes: `git push origin main`
+   - Delete feature branch: `git branch -d feature/{BRANCH_NAME}`
+   - Delete remote feature branch: `git push origin --delete feature/{BRANCH_NAME}`
+   **Goal:** Clean integration of {FEATURE_NAME} into main codebase
+
+## Success Criteria
+
+This sprint is considered successful when:
+1. [ ] **{SUCCESS_CRITERION_1}** - {DESCRIPTION}
+2. [ ] **{SUCCESS_CRITERION_2}** - {DESCRIPTION}
+3. [ ] **All tests passing** with new {FEATURE_NAME} functionality
+4. [ ] **No regressions** in existing functionality
+5. [ ] **Documentation updated** to reflect new capabilities (if applicable)
+
+## Implementation Guidelines
+
+### {LANGUAGE_SPECIFIC_SECTION}
+**{PATTERN_NAME}:**
+``{LANGUAGE}
+// Before (if refactoring)
+{BEFORE_CODE_EXAMPLE}
+
+// After
+{AFTER_CODE_EXAMPLE}
+``
+
+## Risk Mitigation
+- **{RISK_1}:** {MITIGATION_STRATEGY}
+- **{RISK_2}:** {MITIGATION_STRATEGY}
+- **Rollback Plan:** {ROLLBACK_STRATEGY}
+
+## Dependencies
+
+### Internal Dependencies
+- {INTERNAL_DEPENDENCY_1}: {DESCRIPTION}
+
+### External Dependencies
+- {EXTERNAL_DEPENDENCY_1}: {VERSION_AND_PURPOSE}
 
 ---
 
-Now, Using the analysis report above as your primary context, generate a complete and actionable sprint plan for the following feature request: **"{{args}}"**.
+Before creating the sprint plan, determine the next sprint number by checking existing files:
 
-You must follow these detailed instructions for generating the sprint plan:
+The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name "*.md" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1`"
 
----
-### **Instructions for Sprint Plan Generation**
+Based on this number:
+- If no sprints exist (empty result): start with sprint 1
+- For new major sprints: increment the base number (e.g., if highest is 2.3, next major is 3)
+- For sprint updates: increment the decimal (e.g., if highest is 2.3, next update is 2.4)
 
-You are an expert software architect and project manager. Your task is to analyze the project context from the report above and generate a detailed, actionable sprint plan.
+**DETERMINED_FILENAME** is "@planning/sprints/active/{CURRENT_HIGHEST_SPRINT+1}.0_<feature_name>.md".
 
-#### **Analysis and Adaptation**
-- **Adapt to Project Technology:** Use language-appropriate file extensions and naming conventions. Reference the correct testing frameworks and tools for the detected stack. Include framework-specific implementation details and use the correct package management commands.
-- **Maintain Template Structure:** Preserve the phase-based approach, TDD methodology, and git workflow from the template below.
-- **Contextualize to Requirements:** Break down the requested feature into logical phases. Identify dependencies, estimate scope, and plan for any necessary configuration or database changes.
-
-#### **File Generation Requirements**
-- **Naming Convention:** Follow the pattern `##.#_<sprintname>.md` and place the file in the `/planning/sprints/active/` directory.
-- **Content Adaptation:** Replace template placeholders with project-specific details. Update file paths, import statements, and directory references to match the project structure.
-- **Implementation Details:** Provide concrete, actionable tasks, including specific file locations and implementation approaches.
-
-#### **Quality Assurance**
-Ensure the generated sprint plan is immediately actionable, follows project conventions, includes comprehensive testing, and maintains code quality.
-
----
-### **Sprint Plan Template**
-
-Here is the sprint template plan to use:
-`gemini -p "@-https://raw.githubusercontent.com/samestrin/qwen-prompts/refs/heads/main/planning/sprints/example.md"`
-
----
-Save the output following the **Naming Convention** defined above in the @planning/sprints/active folder.
+Output the sprint plan content in **Markdown** into {DETERMINED_FILENAME}. Double-check exists {DETERMINED_FILENAME}; if it doesn't attempt a second write.
 """

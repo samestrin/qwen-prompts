@@ -2,33 +2,110 @@
 # Command: /create-tutorial
 #
 # Description:
-#   Calls the Gemini CLI to create a step-by-step tutorial using the
-#   current codebase for real, working examples.
+#   Calls the Gemini CLI to analyzes any codebase and creates comprehensive, 
+#   practical tutorials with real working examples.
 #
 # Usage Examples:
 #
-#   1. Create an intermediate-level tutorial:
-#      /create-tutorial Create an intermediate-level tutorial on how to add a new API endpoint
+#   1. Feature implementation tutorial:
+#      /create-tutorial Create a tutorial on implementing user authentication
 #
-#   2. Create a beginner-level tutorial:
-#      /create-tutorial Create a beginner-level tutorial on setting up the development environment
+#   2. Setup and configuration tutorial:
+#      /create-tutorial Create a beginner's guide to setting up the development environment
+#
+#   3. Architecture explanation tutorial:
+#      /create-tutorial Explain the microservices architecture used in this project
+#
+#   4. Testing tutorial:
+#      /create-tutorial Create a tutorial on writing and running tests for this application
 # ---------------------------------------------------------------------------
 
 name = "create-tutorial"
-description = "Create step-by-step tutorials from existing code"
+description = "Generate comprehensive tutorials from any codebase"
 
 prompt = """
-`gemini --all_files -p "Create a comprehensive tutorial using this codebase as examples. {{args}}
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
-**Tutorial Structure:**
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
 
-1.  **Introduction**: What will the user learn and why is it important?
-2.  **Prerequisites**: What knowledge or tools do they need beforehand?
-3.  **Step-by-Step Guide**: Explain each step clearly, using actual code from this project as examples.
-4.  **Common Pitfalls**: What common mistakes should the user avoid?
-5.  **Advanced Tips**: Include pro tips and best practices.
-6.  **Practice Exercises**: Suggest hands-on exercises the user can do.
-7.  **Further Reading**: Provide resources to learn more.
+Return the actual package/module directory name that contains the application logic (not generic names like \"src\"). Print only the directory name without explanation.`"
 
-The tutorial must be practical and actionable with real, working examples."`
+`gemini -p "@{MAIN_DIRECTORY} Analyze this codebase and create a comprehensive tutorial. {{args}}
+
+**ANALYSIS REQUIREMENTS:**
+First, examine the project structure, dependencies, documentation, and code patterns to understand:
+- Technology stack and frameworks used
+- Architecture patterns and design principles
+- Storage systems, databases, and external services
+- Build tools, package managers, and deployment methods
+- Testing frameworks and development workflows
+- System dependencies and platform requirements
+
+**TUTORIAL STRUCTURE:**
+
+1.  **Introduction**
+    - What the user will learn and accomplish
+    - Why this knowledge/skill is valuable
+    - Brief overview of the technology stack
+
+2.  **Prerequisites**
+    - Required knowledge level and background
+    - System requirements and platform compatibility
+    - Tools, software, and accounts needed
+    - Dependencies and build tools (including system-level requirements)
+
+3.  **Environment Setup**
+    - Step-by-step installation instructions
+    - Package manager setup and dependency installation
+    - Configuration file setup with real examples
+    - Verification steps to confirm proper setup
+
+4.  **Step-by-Step Implementation**
+    - Clear, numbered steps with explanations
+    - Real code examples from the actual project
+    - Configuration snippets and file contents
+    - Command-line instructions with expected outputs
+
+5.  **Common Issues & Troubleshooting**
+    - Typical installation and setup problems
+    - Platform-specific considerations
+    - Error messages and their solutions
+    - Debugging techniques and tools
+
+6.  **Advanced Configuration**
+    - Optional features and customizations
+    - Performance optimization tips
+    - Security best practices
+    - Production deployment considerations
+
+7.  **Testing & Validation**
+    - How to verify the implementation works
+    - Running tests and interpreting results
+    - Manual testing procedures
+    - Performance and functionality checks
+
+8.  **Next Steps & Resources**
+    - Suggested follow-up learning paths
+    - Related documentation and guides
+    - Community resources and support channels
+    - Advanced topics for further exploration
+
+**QUALITY REQUIREMENTS:**
+- Use actual file paths, function names, and code snippets from the project
+- Include all storage systems, databases, and external services found in the codebase
+- Mention all dependencies from package files (requirements.txt, package.json, etc.)
+- Reference actual configuration files and environment variables
+- Provide working command-line examples with realistic parameters
+- Ensure all steps are actionable and testable
+- Include platform-specific instructions where relevant
+
+The tutorial must be immediately usable by someone following it step-by-step."`
+
+---
+
+Carefully review the output and correct any formatting issues that may have occured in the generation of the tutorial.
+
+Then **hard stop**.
 """

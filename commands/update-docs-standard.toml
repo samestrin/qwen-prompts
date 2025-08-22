@@ -42,4 +42,6 @@ Depending on the **Update Type** specified, follow these rules:
 * **full-rewrite**: Use the existing doc only as a reference for what to cover. Completely rewrite the documentation following the standard's structure and style, extracting fresh information from the current codebase.
 
 Output the complete updated documentation in markdown format.
+
+Then **hard stop**.
 """

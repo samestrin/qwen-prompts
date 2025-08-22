@@ -17,9 +17,18 @@ name = "code-quality"
 description = "Comprehensive code quality analysis including maintainability, readability, and best practices"
 
 prompt = """
-`gemini -p "@src/ @lib/ @components/ Perform a comprehensive code quality analysis. {{args}}
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
-**Code Quality Assessment:**
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the actual package/module directory name that contains the application logic (not generic names like \"src\"). Print only the directory name without explanation.`"
+
+You are an expert software architect/engineer.
+
+### Code Quality Assessment
+`gemini -p "@{MAIN_DIRECTORY} Perform a comprehensive code quality analysis. {{args}}
 
 1.  **Code Structure & Organization**: File/folder organization, module separation, architecture.
 2.  **Naming Conventions**: Clarity and consistency of variable, function, and class names.
@@ -29,14 +38,30 @@ prompt = """
 6.  **Error Handling**: Consistency, proper exception usage, and recovery strategies.
 7.  **Code Duplication**: Evidence of copy-paste programming and opportunities for abstraction.
 8.  **Best Practices Compliance**: Adherence to language-specific best practices and SOLID principles.
+9.  **Security Considerations**: Input validation, authentication, authorization, data protection.
+10. **Performance & Efficiency**: Algorithm efficiency, resource usage, bottlenecks, scalability.
+11. **Testing Strategy**: Test coverage, test quality, testability of code design.
+12. **Accessibility & Usability**: UI/UX accessibility standards, user experience considerations.
 
 **Quality Metrics:**
 - Overall maintainability score (1-10)
+- Security risk assessment (1-10)
+- Performance efficiency rating (1-10)
+- Test coverage percentage
 - Areas needing immediate attention
 - Long-term technical debt concerns
 
 **Specific Recommendations:**
 - Top 10 improvements with file references
+- Security vulnerabilities to address
+- Performance optimization opportunities
+- Testing gaps to fill
 - Refactoring priorities
-- Code standards to establish"`
+- Code standards to establish`
+
+---
+
+Using ONLY the above technical output as context, provide a comprehensive code quality assessment in properly formatted **Markdown**. 
+
+Then **hard stop**.
 """

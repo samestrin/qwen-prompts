@@ -40,4 +40,6 @@ Generate documentation for this project following the EXACT structure, format, a
 - Include working examples that developers can copy-paste.
 
 Output the complete documentation in markdown format, ready to save as a file.
+
+Then **hard stop**.
 """

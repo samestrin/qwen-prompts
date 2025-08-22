@@ -17,9 +17,19 @@ name = "performance-audit"
 description = "Identify performance issues, bottlenecks, and optimization opportunities"
 
 prompt = """
-`gemini -p "@src/ @lib/ @api/ @components/ @services/ Perform a comprehensive performance audit of this codebase. {{args}}
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
-**Performance Analysis:**
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+
+You are an expert software architect/engineer.
+
+### Performance Analysis
+
+`gemini -p "@main_directory Perform a comprehensive performance audit of this codebase. {{args}}
 
 1.  **Database Performance**: Inefficient queries (N+1), missing indexes, unnecessary calls.
 2.  **API Performance**: Slow endpoints, missing caching, inefficient serialization.
@@ -36,4 +46,10 @@ prompt = """
 
 **Priority Recommendations:**
 List the top 5 optimizations that would have the biggest impact."`
+
+---
+
+Carefully review the output and correct any formatting issues that may have occured before display.
+
+Then **hard stop**.
 """

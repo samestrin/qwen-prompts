@@ -17,9 +17,10 @@ name = "dependency-analysis"
 description = "Analyze project dependencies, their usage, and potential issues"
 
 prompt = """
-`gemini -p "@package.json @requirements.txt @composer.json @Gemfile @go.mod @Cargo.toml @pom.xml @build.gradle @src/ @lib/ Analyze the dependencies in this project. {{args}}
+You are an expert software architect/engineer.
 
-**Dependency Analysis:**
+### Dependency Analysis
+`gemini -p "@package.json @requirements.txt @composer.json @Gemfile @go.mod @Cargo.toml @pom.xml @build.gradle @src/ @lib/ Analyze the dependencies in this project. {{args}}
 
 1.  **Dependency Overview**: Total number of dependencies, main package manager(s) used.
 2.  **Direct Dependencies**: List major dependencies with their versions and purpose.
@@ -30,4 +31,10 @@ prompt = """
 7.  **Recommendations**: Suggest dependencies to update or remove, security patches, and optimizations.
 
 Include specific examples of dependency usage in the codebase with file references."`
+
+---
+
+Carefully review the Dependency Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
+
+Then **hard stop**.
 """

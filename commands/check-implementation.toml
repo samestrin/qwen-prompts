@@ -18,7 +18,18 @@ name = "check-implementation"
 description = "Check if a specific feature or pattern is implemented in the codebase"
 
 prompt = """
-`gemini -p "@src/ @lib/ Has the following feature been implemented in this codebase? {{args}}
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+
+You are an expert software architect/engineer.
+
+### Analysis
+`gemini -p "@{MAIN_DIRECTORY} Has the following feature been implemented in this codebase? {{args}}
 
 Please provide:
 1.  **Implementation Status**: Yes/No with confidence level.
@@ -28,7 +39,17 @@ Please provide:
 5.  **Coverage**: How complete is the implementation? Any gaps?
 6.  **Dependencies**: What external libraries or services does it rely on?
 7.  **Usage Examples**: How is this feature used throughout the codebase?
-8.  **Related Features**: Any related functionality that works with this feature?
+8.  **Testing Coverage**: Does the feature have adequate tests? Unit, integration, or end-to-end tests?
+9.  **Error Handling**: How errors are handled, logging, and failure scenarios?
+10. **Configuration Requirements**: Environment variables, config files, or setup needed?
+11. **Related Features**: Any related functionality that works with this feature?
 
 If not implemented, suggest where and how it could be added."`
+
+---
+
+Using ONLY the above technical output as context, provide a detailed report about the {{args}} feature 
+implementation in properly formatted **Markdown**. 
+
+Then **hard stop**.
 """

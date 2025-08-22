@@ -17,9 +17,9 @@ name = "compare-files"
 description = "Compare multiple files or directories to find similarities, differences, and patterns"
 
 prompt = """
-`gemini --all_files -p "Compare the files/directories provided. {{args}}
+`gemini -p "Compare the files/directories provided. {{args}}
 
-**Comparison Analysis:**
+### Comparison Analysis
 
 1.  **Similarities**: Common patterns, shared logic, similar architecture.
 2.  **Differences**: Unique implementations, different approaches, varying code quality.
@@ -28,4 +28,8 @@ prompt = """
 5.  **Recommendations**: Consolidation opportunities, best practices, and refactoring suggestions.
 
 Provide specific line references and code examples for each point."`
+
+---
+Carefully review the output and correct any formatting issues that may have occured in the generation of the comparison. Then **hard stop**.
+
 """

@@ -17,16 +17,23 @@ name = "test-coverage"
 description = "Analyze test coverage and quality across the codebase"
 
 prompt = """
-`gemini -p "@src/ @tests/ @__tests__/ @spec/ @test/ Analyze the test coverage in this codebase. {{args}}
+Your primary role is that of a quality assurance engineer.
 
-**Test Coverage Analysis:**
+### Test Coverage Analysis
+`gemini -p "@tests/ @__tests__/ @spec/ @test/ @e2e/ @integration/ @cypress/ @src/test/ @testing/ Analyze the test coverage in this codebase. {{args}}
 
 1.  **Test Structure Overview**: Frameworks, organization, test types, naming conventions.
 2.  **Coverage Assessment**: Which critical functionality lacks tests? Edge cases covered.
 3.  **Test Quality Analysis**: Readability, maintainability, proper assertions, mock usage.
 4.  **Missing Test Areas**: Untested functions, critical paths, error handling.
-5.  **Test Improvements**: Suggestions for organization, additional scenarios, performance gaps.
-6.  **Specific Recommendations**: Priority tests to write, refactoring opportunities, tools to adopt.
+5.  **Test Reliability**: Timeout handling for API/database tests, flaky test identification, async test patterns.
+6.  **Test Improvements**: Suggestions for organization, additional scenarios, performance gaps.
+7.  **Specific Recommendations**: Priority tests to write, refactoring opportunities, tools to adopt.
 
 Include specific file references and examples of good/problematic tests."`
+
+---
+
+Carefully review the Test Coverage Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
 """
+

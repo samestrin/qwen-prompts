@@ -15,9 +15,18 @@ name = "extract-business-logic"
 description = "Extract and document business rules and logic from code"
 
 prompt = """
-`gemini --all_files -p "Extract all business logic and rules from this codebase:
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
-**Business Logic Documentation:**
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the actual package/module directory name that contains the application logic (not generic names like \"src\"). Print only the directory name without explanation.`"
+
+You are an expert software architect/engineer.
+
+### Business Logic Documentation
+`gemini -p "@{MAIN_DIRECTORY} Extract all business logic and rules from this codebase:
 
 1.  **Core Business Rules**: What business rules are encoded in the software?
 2.  **Validation Logic**: Data validation rules and constraints.
@@ -31,4 +40,10 @@ For each rule:
 - File location and implementation
 - Dependencies and related rules
 - Edge cases and exceptions"`
+
+---
+
+Carefully review the Business Logic Documentation, correct any formatting issues, and display in properly formatted **Markdown**. 
+
+Then **hard stop**.
 """

@@ -18,20 +18,49 @@ name = "analyze-codebase"
 description = "Analyze entire codebase architecture and structure using Gemini's large context window"
 
 prompt = """
-`gemini -p "@./ Provide a comprehensive analysis of this codebase. {{args}}
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+
+You are an expert software architect/engineer.
+
+### Analysis
+`gemini -p "@{MAIN_DIRECTORY} Provide a comprehensive technical analysis of this codebase. {{args}}
 
 Your analysis should include:
 
-1.  **Project Overview**: What does this project do? What's its main purpose?
-2.  **Architecture**: High-level architecture and design patterns used.
-3.  **Technology Stack**: Languages, frameworks, libraries, and tools.
-4.  **File Structure**: Key directories and their purposes.
-5.  **Entry Points**: Main application entry points and how the app starts.
-6.  **Key Components**: The most important files/modules and their responsibilities.
-7.  **Dependencies**: Major external dependencies and their purposes.
-8.  **Configuration**: How the project is configured (env vars, config files, etc.).
-9.  **Build/Deploy**: How to build and deploy this project.
-10. **Areas for Improvement**: Potential issues, technical debt, or suggestions.
+1. **Project Overview** – Explain what the project does and its main goals.
+2. **Architecture** – Describe the high-level architecture, core design patterns, and key modules.
+3. **Technology Stack** – Languages, frameworks, tools, and libraries used.
+4. **File/Module Map** – Identify and describe the most important files and directories.
+   - Only the meaningful and functionally significant files.
+   - Use real file paths. Group by directory using headers and lists.
+   - Summarize related files when appropriate (e.g., tests, utils, etc.).
+   - **Do not use a tree structure**
+5. **Entry Points** – Which files start or bootstrap the application.
+6. **Key Components** – Detail the most critical parts of the codebase and their responsibilities.
+7. **Dependencies** – Major external dependencies and what they're used for.
+8. **Configuration** – How the app is configured, with relevant files/envs/tools.
+9. **Build & Deployment** – How the project is installed, executed, and deployed.
+10. **Security Considerations** – Authentication patterns, data validation, potential vulnerabilities, security best practices.
+11. **Performance Characteristics** – Database queries, caching strategies, bottlenecks, optimization opportunities.
+12. **Testing Strategy** – Test coverage, frameworks used, test organization, missing test areas.
+13. **Areas for Improvement** – Potential improvements, refactors, missing docs, or technical debt.`
 
-Present this in a clear, organized format with specific file references where relevant."`
+---
+
+Using ONLY the above technical output as context, provide a comprehensive technical overview in properly formatted **Markdown**.
+
+For the file/module map:
+- **Prioritize clarity and hierarchy**, not completeness.
+- **Present real paths** with short descriptions.
+- Do NOT guess or fabricate structure.
+- Use bullet points, not tree diagrams.
+
+Then **hard stop**.
 """
+

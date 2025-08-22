@@ -17,9 +17,18 @@ name = "find-patterns"
 description = "Find specific coding patterns, anti-patterns, or code smells in the codebase"
 
 prompt = """
-`gemini --all_files -p "Find all instances of the coding pattern described. {{args}}
+The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
-**Pattern Analysis:**
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+
+You are an expert software architect/engineer.
+
+### Pattern Analysis
+`gemini -p "@{MAIN_DIRECTORY} Find all instances of the coding pattern described. {{args}}
 
 1.  **Pattern Occurrences**: List all files containing this pattern with specific line references.
 2.  **Implementation Variations**: Show the different ways this pattern is implemented (good and bad).
@@ -29,4 +38,10 @@ prompt = """
 6.  **Recommendations**: Suggest standardization, refactoring, or alternative patterns.
 
 Provide specific file paths and line numbers for all examples."`
+
+---
+
+Carefully review the Pattern Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
+
+Then **hard stop**.
 """

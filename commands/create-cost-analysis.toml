@@ -20,8 +20,8 @@ name = "create-cost-analysis"
 description = "Generates a high-level operational cost estimate for a project"
 
 prompt = """
-**Contextual Analysis:**
-`gemini -p "@planning/specifications/tdd.md" "Analyze the attached TDD to create a comprehensive cost projection. Your analysis must cover these areas:
+### Contextual Analysis
+`gemini -p "@planning/specifications/tdd.md Analyze the attached TDD to create a comprehensive cost projection. Your analysis must cover these areas:
 
 1.  **One-Time Development Cost:** Based on the TDD's 'Resource Planning' and 'Timeline' sections, calculate an estimated one-time development cost. **{{args|Assume a standard developer rate of $75/hour.}}**
 
@@ -55,5 +55,7 @@ Using ONLY the contextual analysis provided above, format the information into a
 
 ---
 
-Save the output as: @planning/specifications/cost-analysis.md
+Carefully review the output and correct any formatting issues that may have occured in the generation of the cost analysis. Save the output as: @planning/specifications/cost-analysis.md.
+
+Then **hard stop**.
 """

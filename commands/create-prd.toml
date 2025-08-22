@@ -60,5 +60,7 @@ Now, using ONLY the analysis above as context, create a comprehensive Product Re
 
 ---
 
-Save the output as: @planning/specifications/prd.md"`
+Carefully review the output and correct any formatting issues that may have occured in the generation of the PRD. Save the output as: @planning/specifications/prd.md
+
+Then **hard stop**.
 """
