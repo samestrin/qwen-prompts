@@ -184,14 +184,6 @@ Multi-layered analysis approach:
 /security-audit focusing on authentication and authorization
 ```
 
-## Advanced Features
-
-### Conditional Logic
-Prompts support conditional execution based on arguments:
-```toml
-if "{{args}}" != "" then `tree -L 2 $main_directory --gitignore`
-```
-
 ### Multi-Step Analysis
 Complex prompts perform sequential analysis steps:
 1. Project discovery
