@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /create-tutorial
+# Command: /create:tutorial
 #
 # Description:
 #   Calls the Gemini CLI to analyzes any codebase and creates comprehensive, 
@@ -8,31 +8,35 @@
 # Usage Examples:
 #
 #   1. Feature implementation tutorial:
-#      /create-tutorial Create a tutorial on implementing user authentication
+#      /create:tutorial Create a tutorial on implementing user authentication
 #
 #   2. Setup and configuration tutorial:
-#      /create-tutorial Create a beginner's guide to setting up the development environment
+#      /create:tutorial Create a beginner's guide to setting up the development environment
 #
 #   3. Architecture explanation tutorial:
-#      /create-tutorial Explain the microservices architecture used in this project
+#      /create:tutorial Explain the microservices architecture used in this project
 #
 #   4. Testing tutorial:
-#      /create-tutorial Create a tutorial on writing and running tests for this application
+#      /create:tutorial Create a tutorial on writing and running tests for this application
 # ---------------------------------------------------------------------------
 
-name = "create-tutorial"
+name = "create:tutorial"
 description = "Generate comprehensive tutorials from any codebase"
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Directory Detection
+
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
 1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
 2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
 3. **composer.json**: Check `autoload.psr-4` namespace mappings
 
-Return the actual package/module directory name that contains the application logic (not generic names like \"src\"). Print only the directory name without explanation.`"
+Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
 
-`gemini -p "@{MAIN_DIRECTORY} Analyze this codebase and create a comprehensive tutorial. {{args}}
+Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**."`"
+
+`gemini -p "{MAIN_DIRECTORIES} Analyze this codebase and create a comprehensive tutorial. {{args}}
 
 **ANALYSIS REQUIREMENTS:**
 First, examine the project structure, dependencies, documentation, and code patterns to understand:

@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /generate-docs-standard
+# Command: /docs:generate-from-standard
 #
 # Description:
 #   Generates new documentation for a project by following a specific
@@ -9,13 +9,13 @@
 # Usage Examples:
 #
 #   1. Generate docs for the current project using a standard file:
-#      /generate-docs-standard using the template @./docs/api_standard.md. The codebase is in the current directory.
+#      /docs:generate-from-standard using the template @./docs/api_standard.md. The codebase is in the current directory.
 #
 #   2. Generate docs for a specific part of a project:
-#      /generate-docs-standard for the 'utils' module, following the standard @./docs/module_standard.md. The code is in @./src/utils/.
+#      /docs:generate-from-standard for the 'utils' module, following the standard @./docs/module_standard.md. The code is in @./src/utils/.
 # ---------------------------------------------------------------------------
 
-name = "generate-docs-standard"
+name = "docs:generate-from-standard"
 description = "Generate documentation using a provided documentation standard/template"
 
 prompt = """

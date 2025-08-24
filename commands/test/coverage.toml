@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /test-coverage
+# Command: /test:coverage
 #
 # Description:
 #   Calls the Gemini CLI to analyze test coverage and quality.
@@ -7,20 +7,22 @@
 # Usage Examples:
 #
 #   1. Run a general analysis:
-#      /test-coverage
-#
+#      /test:coverage
+
 #   2. Analyze a specific module:
-#      /test-coverage for the authentication module
+#      /test:coverage for the authentication module
 # ---------------------------------------------------------------------------
 
-name = "test-coverage"
+name = "test:coverage"
 description = "Analyze test coverage and quality across the codebase"
 
 prompt = """
 Your primary role is that of a quality assurance engineer.
 
+The **TEST_DIRECTORIES** is "`find . -type d -name \"*test*\" -o -name \"*spec*\" -o -name \"e2e\" -o -name \"integration\" -o -name \"cypress\" | grep -v node_modules | grep -v \\.git | sed 's|^\\./||' | sort | while read dir; do echo \"@$dir\"; done`"
+
 ### Test Coverage Analysis
-`gemini -p "@tests/ @__tests__/ @spec/ @test/ @e2e/ @integration/ @cypress/ @src/test/ @testing/ Analyze the test coverage in this codebase. {{args}}
+`gemini -p "{TEST_DIRECTORIES} Analyze the test coverage in this codebase. {{args}}
 
 1.  **Test Structure Overview**: Frameworks, organization, test types, naming conventions.
 2.  **Coverage Assessment**: Which critical functionality lacks tests? Edge cases covered.

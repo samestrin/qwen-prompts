@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /create-doc-standard
+# Command: /docs:create-standard
 #
 # Description:
 #   Creates a comprehensive documentation standard and template. It can
@@ -9,13 +9,13 @@
 # Usage Examples:
 #
 #   1. Generate a standard from a simple description:
-#      /create-doc-standard for a public-facing REST API documentation
+#      /docs:create-standard for a public-facing REST API documentation
 #
 #   2. Generate a standard by analyzing existing documents for style:
-#      /create-doc-standard for our Python CLI tools, using these files as a style reference @doc1.md @doc2.md
+#      /docs:create-standard for our Python CLI tools, using these files as a style reference @doc1.md @doc2.md
 # ---------------------------------------------------------------------------
 
-name = "create-doc-standard"
+name = "docs:create-standard"
 description = "Create a documentation standard/template based on best practices and existing docs"
 
 prompt = """

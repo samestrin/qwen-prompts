@@ -1,2 +1,5 @@
 blog/
 .env
+.claude/
+.trae/
+planning/

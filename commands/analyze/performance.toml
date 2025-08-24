@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /performance-audit
+# Command: /analyze:performance
 #
 # Description:
 #   Calls the Gemini CLI to identify performance issues and bottlenecks.
@@ -7,29 +7,29 @@
 # Usage Examples:
 #
 #   1. Run a general audit:
-#      /performance-audit
+#      /analyze:performance
 #
 #   2. Focus on a specific area:
-#      /performance-audit focusing on database query performance
+#      /analyze:performance focusing on database query performance
 # ---------------------------------------------------------------------------
 
-name = "performance-audit"
+name = "analyze:performance"
 description = "Identify performance issues, bottlenecks, and optimization opportunities"
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Directory Detection
 
-1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
-2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
-3. **composer.json**: Check `autoload.psr-4` namespace mappings
-
-Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml to identify the primary source code directory by examining:
+1. **package.json**: main, module, exports fields, or scripts pointing to source dirs
+2. **composer.json**: autoload.psr-4 namespace mappings  
+3. **pyproject.toml**: [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
+Return the actual package/module directory names containing application logic, prefixed with @. Don't assume generic names like 'src'."`"
 
 You are an expert software architect/engineer.
 
 ### Performance Analysis
 
-`gemini -p "@main_directory Perform a comprehensive performance audit of this codebase. {{args}}
+`gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive performance audit of this codebase. {{args}}
 
 1.  **Database Performance**: Inefficient queries (N+1), missing indexes, unnecessary calls.
 2.  **API Performance**: Slow endpoints, missing caching, inefficient serialization.

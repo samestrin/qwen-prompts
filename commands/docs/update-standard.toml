@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /update-docs-standard
+# Command: /docs:update-standard
 #
 # Description:
 #   Updates an existing documentation file to make it conform to a
@@ -9,16 +9,16 @@
 # Usage Examples:
 #
 #   1. Reformat a document without changing content:
-#      /update-docs-standard Perform a 'format-only' update on @./docs/old_api.md using the standard @./docs/api_standard.md
+#      /docs:update-standard Perform a 'format-only' update on @./docs/old_api.md using the standard @./docs/api_standard.md
 #
 #   2. Refresh content and update code examples:
-#      /update-docs-standard Do a 'content-refresh' on the user guide @./docs/guide.md with the standard @./docs/style_guide.md
+#      /docs:update-standard Do a 'content-refresh' on the user guide @./docs/guide.md with the standard @./docs/style_guide.md
 #
 #   3. Completely rewrite a document based on the current code:
-#      /update-docs-standard Execute a 'full-rewrite' of @./README.md using the template @./docs/readme_standard.md
+#      /docs:update-standard Execute a 'full-rewrite' of @./README.md using the template @./docs/readme_standard.md
 # ---------------------------------------------------------------------------
 
-name = "update-docs-standard"
+name = "docs:update-standard"
 description = "Update existing documentation to match a documentation standard"
 
 prompt = """

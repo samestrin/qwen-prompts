@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /create-sprint
+# Command: /create:sprint
 #
 # Description:
 #   Analyzes a feature request and the project context to generate a
@@ -8,25 +8,27 @@
 # Usage Example:
 #
 #   1. Plan a new feature sprint:
-#      /create-sprint-plan Implement user authentication with JWT
+#      /create:sprint Implement user authentication with JWT
 # ---------------------------------------------------------------------------
 
-name = "create-sprint-plan"
+name = "create:sprint"
 description = "Generates a detailed sprint plan from a feature request"
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
 1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
 2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
 3. **composer.json**: Check `autoload.psr-4` namespace mappings
 
-Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
+
+Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**."`"
 
 You are an expert software architect and project manager creating a sprint plan for **{{args}}**. You are ONLY in planning mode - do NOT write code, create files, create directories, or start implementation. You are ONLY authoring a sprint plan document. After generating the plan content, you will stop and wait for further instructions.
 
 ### Analysis
-`gemini -p "@{MAIN_DIRECTORY} You are an expert software engineer performing ANALYSIS ONLY. Do NOT create files, directories, or make any changes to the codebase. Perform a comprehensive technical analysis of the feature request: **"{{args}}"**.
+`gemini -p "{MAIN_DIRECTORIES} You are an expert software engineer performing ANALYSIS ONLY. Do NOT create files, directories, or make any changes to the codebase. Perform a comprehensive technical analysis of the feature request: **"{{args}}"**.
 
 Your analysis **must** include:
 

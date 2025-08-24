@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /extract-business-logic
+# Command: /strategy:extract-business-logic
 #
 # Description:
 #   Calls the Gemini CLI to scan the codebase and document all
@@ -8,25 +8,25 @@
 # Usage Examples:
 #
 #   1. Run on the entire codebase:
-#      /extract-business-logic
+#      /strategy:extract-business-logic
 # ---------------------------------------------------------------------------
 
-name = "extract-business-logic"
+name = "strategy:extract-business-logic"
 description = "Extract and document business rules and logic from code"
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Directory Detection
 
-1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
-2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
-3. **composer.json**: Check `autoload.psr-4` namespace mappings
-
-Return the actual package/module directory name that contains the application logic (not generic names like \"src\"). Print only the directory name without explanation.`"
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml to identify the primary source code directory by examining:
+1. **package.json**: main, module, exports fields, or scripts pointing to source dirs
+2. **composer.json**: autoload.psr-4 namespace mappings  
+3. **pyproject.toml**: [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
+Return the actual package/module directory names containing application logic, prefixed with @. Don't assume generic names like 'src'."`"
 
 You are an expert software architect/engineer.
 
 ### Business Logic Documentation
-`gemini -p "@{MAIN_DIRECTORY} Extract all business logic and rules from this codebase:
+`gemini -p "{MAIN_DIRECTORIES} Extract all business logic and rules from this codebase:
 
 1.  **Core Business Rules**: What business rules are encoded in the software?
 2.  **Validation Logic**: Data validation rules and constraints.

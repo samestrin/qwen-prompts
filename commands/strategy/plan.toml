@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /plan
+# Command: /strategy:plan
 #
 # Description:
 #   Calls the Gemini CLI to investigate and create a strategic plan to
@@ -8,28 +8,28 @@
 # Usage Examples:
 #
 #   1. Create a plan for a new feature:
-#      /plan to implement a two-factor authentication system
+#      /strategy:plan to implement a two-factor authentication system
 #
 #   2. Devise a refactoring strategy:
-#      /plan a strategy to refactor the legacy user model to use the new repository pattern
+#      /strategy:plan a strategy to refactor the legacy user model to use the new repository pattern
 # ---------------------------------------------------------------------------
 
-name = "plan"
+name = "strategy:plan"
 description = "Investigates and creates a strategic plan to accomplish a task."
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Directory Detection
 
-1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
-2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
-3. **composer.json**: Check `autoload.psr-4` namespace mappings
-
-Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml to identify the primary source code directory by examining:
+1. **package.json**: main, module, exports fields, or scripts pointing to source dirs
+2. **composer.json**: autoload.psr-4 namespace mappings  
+3. **pyproject.toml**: [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
+Return the actual package/module directory names containing application logic, prefixed with @. Don't assume generic names like 'src'.`"
 
 Your primary role is that of a strategist, not an implementer.
 
 ### Plan
-`gemini -p "@{MAIN_DIRECTORY} Your primary role is that of a strategist, not an implementer.
+`gemini -p "{MAIN_DIRECTORIES} Your primary role is that of a strategist, not an implementer.
 Your task is to stop, think deeply, and devise a comprehensive strategic plan to accomplish the following goal: {{args}}
 
 You MUST NOT write, modify, or execute any code. Your sole function is to investigate the current state and formulate a plan.

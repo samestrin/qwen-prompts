@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /code-quality
+# Command: /code:quality
 #
 # Description:
 #   Calls the Gemini CLI to perform a comprehensive code quality analysis.
@@ -7,28 +7,32 @@
 # Usage Examples:
 #
 #   1. Run a general analysis:
-#      /code-quality
+#      /code:quality
 #
 #   2. Focus the analysis on a specific area:
-#      /code-quality focusing on naming conventions and code complexity
+#      /code:quality focusing on naming conventions and code complexity
 # ---------------------------------------------------------------------------
 
-name = "code-quality"
+name = "code:quality"
 description = "Comprehensive code quality analysis including maintainability, readability, and best practices"
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Directory Detection
+
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
 1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
 2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
 3. **composer.json**: Check `autoload.psr-4` namespace mappings
 
-Return the actual package/module directory name that contains the application logic (not generic names like \"src\"). Print only the directory name without explanation.`"
+Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
+
+Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**."`"
 
 You are an expert software architect/engineer.
 
 ### Code Quality Assessment
-`gemini -p "@{MAIN_DIRECTORY} Perform a comprehensive code quality analysis. {{args}}
+`gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive code quality analysis. {{args}}
 
 1.  **Code Structure & Organization**: File/folder organization, module separation, architecture.
 2.  **Naming Conventions**: Clarity and consistency of variable, function, and class names.

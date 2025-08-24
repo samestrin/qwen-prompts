@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /create-prd
+# Command: /create:prd
 #
 # Description:
 #   Calls the Gemini CLI to generate a Product Requirements Document (PRD)
@@ -8,15 +8,15 @@
 # Usage Examples:
 #
 #   1. Create a PRD for a simple feature:
-#      /create-prd for a new user authentication system using passkeys
+#      /create:prd for a new user authentication system using passkeys
 #
 #   2. Create a PRD from a more detailed concept:
-#      /create-prd for a CLI tool that automates blog post generation
+#      /create:prd for a CLI tool that automates blog post generation
 #      using LLMs, validates output against a JSON schema, and saves
 #      the results to a local file.
 # ---------------------------------------------------------------------------
 
-name = "create-prd"
+name = "create:prd"
 description = "Generates a Product Requirements Document (PRD) from a feature description"
 
 prompt = """First, perform a detailed analysis of the following concept: `gemini "Thoroughly brainstorm and outline the core components, user stories, functional and non-functional requirements, potential risks, target users, and a potential technical stack for the following idea: {{args}}"`

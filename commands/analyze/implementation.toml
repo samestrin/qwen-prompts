@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /check-implementation
+# Command: /analyze:implementation
 #
 # Description:
 #   Calls the Gemini CLI to check if a specific feature or pattern is
@@ -8,28 +8,32 @@
 # Usage Examples:
 #
 #   1. Check for a feature in default directories ('src/', 'lib/'):
-#      /check-implementation Has Stripe payment processing been implemented?
+#      /analyze:implementation Has Stripe payment processing been implemented?
 #
 #   2. Check for a feature in a specific directory:
-#      /check-implementation In the @./api/ and @./middleware/ directories, has user authentication been implemented?
+#      /analyze:implementation In the @./api/ and @./middleware/ directories, has user authentication been implemented?
 # ---------------------------------------------------------------------------
 
-name = "check-implementation"
+name = "analyze:implementation"
 description = "Check if a specific feature or pattern is implemented in the codebase"
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Directory Detection
+
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
 1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
 2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
 3. **composer.json**: Check `autoload.psr-4` namespace mappings
 
-Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like "src"). 
+
+Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
 
 You are an expert software architect/engineer.
 
 ### Analysis
-`gemini -p "@{MAIN_DIRECTORY} Has the following feature been implemented in this codebase? {{args}}
+`gemini -p "{MAIN_DIRECTORIES} Has the following feature been implemented in this codebase? {{args}}
 
 Please provide:
 1.  **Implementation Status**: Yes/No with confidence level.

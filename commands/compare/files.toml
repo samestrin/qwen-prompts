@@ -1,0 +1,64 @@
+# ---------------------------------------------------------------------------
+# Command: /compare:files
+#
+# Description:
+#   Calls the Gemini CLI to compare multiple files/directories.
+#
+# Usage Examples:
+#
+#   1. Compare two files:
+#      /compare:files Compare these files: @./service/legacy_api.js @./service/new_api.js
+#
+#   2. Compare directories with a specific focus:
+#      /compare:files Compare @./v1/ @./v2/, focusing on implementation differences and code quality
+# ---------------------------------------------------------------------------
+
+name = "compare:files"
+description = "Compare multiple files with detailed code-level analysis and line-by-line differences"
+
+prompt = """
+`gemini -p "Perform a detailed file-level comparison of the provided files. {{args}}
+
+### File Comparison Analysis
+
+1. **File Overview**:
+   - File sizes, line counts, and language/framework used
+   - Primary purpose and functionality of each file
+   - Dependencies and imports comparison
+
+2. **Code Structure Analysis**:
+   - Function/method signatures and their purposes
+   - Class definitions and inheritance patterns
+   - Variable declarations and scope differences
+   - Code organization and modularity
+
+3. **Line-by-Line Differences**:
+   - Specific line numbers where implementations differ
+   - Algorithm variations and logic flow changes
+   - Different approaches to solving the same problem
+   - Error handling and edge case coverage
+
+4. **Code Quality Metrics**:
+   - Readability and maintainability comparison
+   - Performance implications of different approaches
+   - Security considerations and best practices
+   - Code complexity and cyclomatic complexity
+
+5. **Functional Differences**:
+   - Input/output parameter variations
+   - Return value differences
+   - Side effects and state management
+   - API compatibility and breaking changes
+
+6. **Recommendations**:
+   - Which implementation is superior and why
+   - Specific refactoring suggestions with code examples
+   - Opportunities for code consolidation
+   - Best practices to adopt from either file
+
+Provide specific line references, code snippets, and concrete examples for each analysis point."`
+
+---
+Carefully review the output and correct any formatting issues that may have occured in the generation of the comparison. Then **hard stop**.
+
+"""

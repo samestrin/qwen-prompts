@@ -1,0 +1,67 @@
+# ---------------------------------------------------------------------------
+# Command: /analyze:security
+#
+# Description:
+#   Calls the Gemini CLI to perform a comprehensive security analysis.
+#
+# Usage Examples:
+#
+#   1. Run a general audit:
+#      /analyze:security
+#
+#   2. Focus on a specific area:
+#      /analyze:security focusing on authentication and authorization
+# ---------------------------------------------------------------------------
+
+name = "analyze:security"
+description = "Perform comprehensive security analysis of the codebase"
+
+prompt = """
+# Comprehensive Directory Detection
+
+## Method 1: Package File Analysis
+The **PACKAGE_DIRS** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml, @Cargo.toml, @go.mod to identify primary source directories. Look for:
+1. **pyproject.toml**: Check [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
+2. **package.json**: Check main, module, exports fields, or scripts pointing to source dirs
+3. **composer.json**: Check autoload.psr-4 namespace mappings
+4. **Cargo.toml**: Check [bin] or [lib] sections for source paths
+5. **go.mod**: Infer from module name and common Go patterns
+Return actual directory names (not generic like 'src'), one per line. Return empty if none found."`"
+
+## Method 2: Common Source Directory Patterns
+The **PATTERN_DIRS** is "`find . -maxdepth 2 -type d \\( -name src -o -name app -o -name lib -o -name components -o -name packages -o -name modules -o -name cmd -o -name internal -o -name pkg \\) 2>/dev/null | grep -v node_modules | grep -v .git | grep -v dist | grep -v build | sed 's|^\\.||' | head -5 | tr '\\n' ' '`"
+
+## Method 3: Code Density Analysis  
+The **DENSITY_DIRS** is "`find . -maxdepth 3 -type f \\( -name '*.py' -o -name '*.js' -o -name '*.ts' -o -name '*.tsx' -o -name '*.php' -o -name '*.go' -o -name '*.rs' -o -name '*.java' -o -name '*.cpp' -o -name '*.c' \\) 2>/dev/null | grep -v node_modules | grep -v .git | grep -v dist | grep -v build | grep -v __pycache__ | sed 's|/[^/]*$||' | sort | uniq -c | sort -nr | head -3 | awk '$1 >= 3 {print $2}' | sed 's|^\\.||' | tr '\\n' ' '`"
+
+## Directory Combination Logic
+The **COMBINED_DIRS** is "`echo \"$PACKAGE_DIRS $PATTERN_DIRS $DENSITY_DIRS\" | tr ' ' '\\n' | grep -v '^$' | sort | uniq | head -5 | tr '\\n' ' '`"
+
+## Final Formatted Output
+The **MAIN_DIRECTORIES** is "`if [ -n \"$COMBINED_DIRS\" ]; then echo \"$COMBINED_DIRS\" | tr ' ' '\\n' | grep -v '^$' | sed 's/^/@/' | tr '\\n' ' ' | sed 's/ $//' | tr ' ' ' '; else echo '@.'; fi`"
+
+Your primary role is that of a software engineer/security specialist/grayhat hacker.
+
+### Security Checklist Analysis
+`gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive security audit of this codebase. {{args}}
+
+1.  **Authentication & Authorization**: JWT/session handling, password hashing, access controls.
+2.  **Input Validation & Sanitization**: Protections against SQL injection, XSS, and CSRF.
+3.  **Data Protection**: Encryption at rest/in transit, sensitive data handling, secret management.
+4.  **Error Handling**: Information disclosure in errors, proper logging.
+5.  **Rate Limiting & DoS Protection**: API rate limiting, request size limits, timeouts.
+6.  **Dependencies**: Outdated or vulnerable packages.
+
+**For each area, provide:**
+- ✅ What's implemented well.
+- ⚠️ Potential vulnerabilities found.
+- ❌ Missing security measures.
+- 📁 Specific files and line references.
+- 💡 Recommendations for improvements."`
+
+---
+
+Carefully review the Security Checklist Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
+
+Then **hard stop**.
+"""

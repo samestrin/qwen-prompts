@@ -1,0 +1,354 @@
+# ---------------------------------------------------------------------------
+# Command: /test:review-and-correct
+#
+# Description:
+#   Creates a comprehensive review and correct document for a failing test suite
+#   with platform detection and systematic resolution tracking.
+#
+# Usage Examples:
+#
+#   1. Create review document for a Python test:
+#      /test:review-and-correct @test_authentication.py
+#
+#   2. Create review document for a Node.js test:
+#      /test:review-and-correct @auth.test.js
+#
+#   3. Create review document for a PHP test:
+#      /test:review-and-correct @AuthenticationTest.php
+# ---------------------------------------------------------------------------
+
+name = "test:review-and-correct"
+description = "Create a comprehensive review and correct document for a failing test suite"
+
+prompt = """
+The **TEST_DIRECTORIES** is "`find . -type d \\( -name "*test*" -o -name "*spec*" -o -name "e2e" -o -name "integration" -o -name "cypress" -o -name "__tests__" \\) | grep -v node_modules | grep -v \\.git | sed 's|^\\./||' | sort | while read dir; do echo "@$dir"; done`"
+
+The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name "*.md" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1`"
+
+### Platform and Framework Detection
+`gemini -p "{TEST_DIRECTORIES} Analyze the project structure to detect the testing platform and framework for {{args}}:
+
+1. **Platform Detection**:
+   - Python: Look for `pytest`, `unittest`, `pyproject.toml`, `requirements.txt`, `.py` test files
+   - Node.js: Look for `jest`, `mocha`, `vitest`, `package.json`, `npm test` scripts, `.js/.ts` test files
+   - PHP: Look for `phpunit`, `composer.json`, `pest`, `.php` test files
+
+2. **Project Structure Analysis**:
+   - Identify test directories and their organization
+   - Locate configuration files (pytest.ini, jest.config.js, phpunit.xml)
+   - Find dependency management files
+   - Determine virtual environment setup
+   - Analyze test file naming patterns
+
+3. **Test Framework Commands**:
+   Based on detected platform, provide the correct commands for:
+   - Running full test suite
+   - Running individual tests
+   - Running with verbose output
+   - Running with debugging information
+
+4. **Environment Requirements**:
+   - Dependency installation commands
+   - Environment variable requirements
+   - Virtual environment activation (if applicable)
+
+Based on your analysis, provide SPECIFIC VALUES (not placeholders) for these variables:
+- DETECTED_PLATFORM: (e.g., 'Python', 'Node.js', 'PHP')
+- DETECTED_FRAMEWORK: (e.g., 'pytest', 'unittest', 'jest', 'mocha', 'phpunit')
+- DETECTED_DEPENDENCY_MANAGER: (e.g., 'poetry', 'pip', 'npm', 'yarn', 'composer')
+- DETECTED_TEST_DIRECTORY: (e.g., 'tests/', 'test/', '__tests__/')
+- DETECTED_CONFIG_FILES: (e.g., 'pytest.ini, pyproject.toml', 'jest.config.js', 'phpunit.xml')
+- DETECTED_FILE_PATTERN: (e.g., 'test_*.py', '*.test.js', '*Test.php')
+- DEPENDENCY_INSTALL_COMMAND: (e.g., 'poetry install', 'npm install', 'composer install')
+- FULL_SUITE_COMMAND: (e.g., 'python -m pytest tests/', 'npm test', 'vendor/bin/phpunit')
+- INDIVIDUAL_TEST_COMMAND: (e.g., 'python -m pytest tests/test_file.py::test_method', 'npm test -- --testNamePattern="test_name"')
+- DEBUG_COMMAND: (e.g., 'python -m pytest -v -s', 'npm test -- --verbose')
+- ENVIRONMENT_VALIDATION_COMMAND: (e.g., 'python --version && pip list', 'node --version && npm list')
+- DEPENDENCY_CHECK_COMMAND: (e.g., 'poetry check', 'npm audit', 'composer validate')
+
+Provide a comprehensive analysis of the testing setup for {{args}}."` 
+
+---
+
+### Test Suite Analysis
+`gemini -p "{{args}} Perform a detailed analysis of the attached test file:
+
+1. **Test Structure Analysis**:
+   - Identify all test cases/methods in the file (provide ACTUAL method names, not placeholders)
+   - Analyze test dependencies and imports
+   - Identify setup/teardown methods
+   - Check for test data requirements
+
+2. **Potential Failure Points**:
+   - External dependencies (APIs, databases, files)
+   - Environment variable requirements
+   - Mock/stub requirements
+   - Timing-sensitive operations
+   - Resource cleanup issues
+
+3. **Test Execution Strategy**:
+   - Recommended order for running individual tests
+   - Dependencies between tests
+   - Isolation requirements
+   - Performance considerations
+
+Provide ACTUAL test method names and specific insights for systematic test resolution. Generate content for these variables:
+- IDENTIFIED_TEST_CASES: List each actual test method with purpose, dependencies, and potential issues
+- DETAILED_FAILURE_ANALYSIS: For each failing test, provide specific error analysis with actual method names
+- INDIVIDUAL_TEST_RESOLUTION_SECTIONS: Create resolution sections for each actual test method
+- TOTAL_TEST_COUNT: Actual number of tests found
+- FAILED_TEST_COUNT: Actual number of failing tests
+- SUITE_ATTEMPTS: Number of suite-level attempts
+- INDIVIDUAL_ATTEMPTS: Number of individual test attempts
+- WARNINGS_ENCOUNTERED: Any actual warnings found
+- PRIORITY_1_ACTIONS: Critical actions based on actual failures
+- PRIORITY_2_ACTIONS: Important actions based on actual issues
+- PRIORITY_3_ACTIONS: Improvement actions based on actual analysis
+- REVIEW_AREAS: Specific areas needing human review
+- PLATFORM_EXPERTISE_NEEDED: Specific platform expertise required
+- CODE_REVIEW_REQUIREMENTS: Specific code review needs
+- CODE_CHANGES_REQUIRED: Actual code changes needed with file paths
+- CONFIG_UPDATES_REQUIRED: Actual configuration updates needed
+- DEPENDENCY_UPDATES_REQUIRED: Actual dependency updates needed
+- DOCUMENTATION_UPDATES_REQUIRED: Actual documentation updates needed
+- PERFORMANCE_TEST_COMMANDS: Actual performance testing commands
+- INTEGRATION_TEST_COMMANDS: Actual integration testing commands
+- ATTEMPT_1_RESULT: Result of first environment setup attempt
+- ATTEMPT_1_ISSUES: Issues found in first attempt
+- ATTEMPT_2_RESULT: Result of second full suite attempt
+- ATTEMPT_2_FAILED_TESTS: Failed tests from second attempt
+- ATTEMPT_2_WARNINGS: Warnings from second attempt
+- ATTEMPT_3_FIXES: Fixes applied in third attempt
+- ATTEMPT_3_RESULT: Result of third attempt
+- COMPLETION_SUMMARY: Summary when all tests are resolved
+- PRIMARY_ISSUES_IDENTIFIED: List of primary issues with descriptions and resolutions
+- SYSTEMIC_PROBLEMS: List of systemic problems with prevention strategies
+- FINAL_TOTAL_TESTS: Final count of total tests
+- FINAL_PASSING_TESTS: Final count of passing tests
+- FINAL_FAILING_TESTS: Final count of failing tests
+- FINAL_SKIPPED_TESTS: Final count of skipped tests
+- FINAL_OVERALL_RESULT: Final overall result (PASS/PARTIAL/FAIL)
+- TOTAL_RESOLUTION_TIME: Total time taken for resolution
+- LESSONS_LEARNED_SUMMARY: Summary of key insights and improvements
+- PROCESS_IMPROVEMENTS: List of process improvements with descriptions
+- TECHNICAL_INSIGHTS: List of technical insights with descriptions
+- PREVENTION_STRATEGIES: List of prevention strategies with descriptions
+
+Do not use generic placeholders - use real method names and specific content from the test file."`
+
+---
+
+Using the platform detection and test analysis above, create a comprehensive Review and Correct document. Calculate the next sprint number by adding 0.1 to the current highest sprint number (if {CURRENT_HIGHEST_SPRINT} is empty, start with 1.0).
+
+**DETERMINED_SPRINT_NUMBER** = {CURRENT_HIGHEST_SPRINT} + 0.1 (or 1.0 if no existing sprints)
+
+**BASENAME** is "`echo \"{{args}}\" | sed 's/^@//' | sed 's|.*/||'`".
+
+**DETERMINED_FILENAME** = "planning/sprints/active/{DETERMINED_SPRINT_NUMBER}_review_and_correct_{BASENAME}.md"
+
+**IMPORTANT**: Replace ALL template variables with actual values from your analysis:
+- Extract DETECTED_PLATFORM, DETECTED_FRAMEWORK, etc. from platform detection
+- Extract actual test method names for IDENTIFIED_TEST_CASES and DETAILED_FAILURE_ANALYSIS
+- Generate specific commands for FULL_SUITE_COMMAND, INDIVIDUAL_TEST_COMMAND, etc.
+- Provide actual counts for TOTAL_TEST_COUNT, FAILED_TEST_COUNT, etc.
+- Create specific action items for PRIORITY_1_ACTIONS, PRIORITY_2_ACTIONS, etc.
+- Fill in all other {VARIABLE} placeholders with real content
+
+Create the review document using this comprehensive template. Ensure all checkboxes are generated as unchecked (empty brackets with space: [ ]), not filled with content. The checkboxes should remain as literal `[ ]` characters throughout the document.
+
+```markdown
+# Review and Correct: {BASENAME} (Sprint {DETERMINED_SPRINT_NUMBER})
+
+## Instructions
+
+1. Review the issues and resolve this test suite by incrementally resolving each test case found in the test suite.
+   1. That means run and resolve each test individually
+2. Make your progress as you go along using the check boxes. When finished, add completion notes/root cause analysis to the bottom of the document.
+3. Finally move this Review and Correct document to /planning/sprints/completed/ folder.
+
+## Platform & Framework Detection
+- **Detected Platform**: {DETECTED_PLATFORM}
+- **Testing Framework**: {DETECTED_FRAMEWORK}
+- **Dependency Manager**: {DETECTED_DEPENDENCY_MANAGER}
+- **Test Directory**: {DETECTED_TEST_DIRECTORY}
+- **Configuration Files**: {DETECTED_CONFIG_FILES}
+- **Test File Pattern**: {DETECTED_FILE_PATTERN}
+
+## Environment Setup Requirements
+
+### Dependencies Installation
+- [ ] **Install/Update Dependencies**
+  - Command: `{DEPENDENCY_INSTALL_COMMAND}`
+
+- [ ] **Environment Variables**
+  - Check for `.env` file
+  - Verify required API keys: {REQUIRED_API_KEYS}
+  - Validate configuration settings: {REQUIRED_CONFIGS}
+
+- [ ] **Virtual Environment**
+  - Setup: {VIRTUAL_ENV_SETUP}
+
+## Test Execution Commands
+
+### Full Suite Execution
+```bash
+{FULL_SUITE_COMMAND}
+```
+
+### Individual Test Execution
+```bash
+{INDIVIDUAL_TEST_COMMAND}
+```
+
+### Debugging Commands
+```bash
+{DEBUG_COMMAND}
+```
+
+## Test Structure Analysis
+
+### Identified Test Cases
+{IDENTIFIED_TEST_CASES}
+
+## Test Failures Summary
+- **Suite**: {BASENAME}
+- **Total Test Cases**: {TOTAL_TEST_COUNT}
+- **Failed Tests**: {FAILED_TEST_COUNT} of {TOTAL_TEST_COUNT}
+- **Attempts Made**: {SUITE_ATTEMPTS} + {INDIVIDUAL_ATTEMPTS}
+- **Platform**: {DETECTED_PLATFORM}
+- **Framework**: {DETECTED_FRAMEWORK}
+- **Sprint**: {DETERMINED_SPRINT_NUMBER}
+
+## Detailed Failure Analysis
+
+{DETAILED_FAILURE_ANALYSIS}
+
+## Systematic Resolution Strategy
+
+### Phase 1: Environment Validation (Suite-Level)
+1. [ ] **Attempt 1**: Verify environment setup
+   - Command: `{ENVIRONMENT_VALIDATION_COMMAND}`
+   - Dependencies: `{DEPENDENCY_CHECK_COMMAND}`
+   - Result: {ATTEMPT_1_RESULT}
+   - Issues: {ATTEMPT_1_ISSUES}
+
+2. [ ] **Attempt 2**: Run full suite
+   - Command: `{FULL_SUITE_COMMAND}`
+   - Result: {ATTEMPT_2_RESULT}
+   - Failed Tests: {ATTEMPT_2_FAILED_TESTS}
+   - Warnings: {ATTEMPT_2_WARNINGS}
+
+3. [ ] **Attempt 3**: Address environment issues
+   - Fixes applied: {ATTEMPT_3_FIXES}
+   - Command: `{FULL_SUITE_COMMAND}`
+   - Result: {ATTEMPT_3_RESULT}
+
+### Phase 2: Individual Test Resolution
+*Trigger: If >5 errors OR suite attempts fail*
+
+{INDIVIDUAL_TEST_RESOLUTION_SECTIONS}
+
+## Warning Management
+
+### Warnings Encountered
+{WARNINGS_ENCOUNTERED}
+
+## Recommended Actions by Priority
+
+### Priority 1 (Critical - Blocking)
+{PRIORITY_1_ACTIONS}
+
+### Priority 2 (High - Important)
+{PRIORITY_2_ACTIONS}
+
+### Priority 3 (Medium - Improvement)
+{PRIORITY_3_ACTIONS}
+
+## Implementation Tracking
+
+### Git Strategy
+- **Branch**: `fix/test-{BASENAME}-sprint-{DETERMINED_SPRINT_NUMBER}`
+- **Commits**: Frequent commits with conventional format
+- **Testing**: All fixes must be verified before commit
+
+### Progress Checkpoints
+1. [ ] **Environment Setup Complete**
+   - All dependencies installed
+   - Environment variables configured
+   - Virtual environment activated
+
+2. [ ] **Critical Issues Resolved**
+   - All Priority 1 actions completed
+   - Core functionality tests passing
+
+3. [ ] **Full Suite Validation**
+   - All tests in {{args}} passing
+   - No new warnings introduced
+   - Performance within acceptable limits
+
+## Next Steps
+
+1. [ ] **Human Review Required**
+   - Specific areas needing attention: {REVIEW_AREAS}
+   - Platform expertise needed: {PLATFORM_EXPERTISE_NEEDED}
+   - Code review requirements: {CODE_REVIEW_REQUIREMENTS}
+
+2. [ ] **Implementation Needed**
+   - Code changes required: {CODE_CHANGES_REQUIRED}
+   - Configuration updates: {CONFIG_UPDATES_REQUIRED}
+   - Dependency updates: {DEPENDENCY_UPDATES_REQUIRED}
+   - Documentation updates: {DOCUMENTATION_UPDATES_REQUIRED}
+
+3. [ ] **Final Validation**
+   - Full suite command: `{FULL_SUITE_COMMAND}`
+   - Individual test commands: `{INDIVIDUAL_TEST_COMMAND}`
+   - Performance validation: `{PERFORMANCE_TEST_COMMANDS}`
+   - Integration validation: `{INTEGRATION_TEST_COMMANDS}`
+
+## Completion Notes
+
+### Root Cause Analysis
+*{COMPLETION_SUMMARY}*
+
+**Primary Issues Identified:**
+{PRIMARY_ISSUES_IDENTIFIED}
+
+**Systemic Problems:**
+{SYSTEMIC_PROBLEMS}
+
+### Final Status
+- **Total Tests**: {FINAL_TOTAL_TESTS}
+- **Passing**: {FINAL_PASSING_TESTS}
+- **Failing**: {FINAL_FAILING_TESTS}
+- **Skipped**: {FINAL_SKIPPED_TESTS}
+- **Overall Result**: {FINAL_OVERALL_RESULT}
+- **Sprint**: {DETERMINED_SPRINT_NUMBER}
+- **Resolution Time**: {TOTAL_RESOLUTION_TIME}
+
+### Lessons Learned
+*{LESSONS_LEARNED_SUMMARY}*
+
+**Process Improvements:**
+{PROCESS_IMPROVEMENTS}
+
+**Technical Insights:**
+{TECHNICAL_INSIGHTS}
+
+**Prevention Strategies:**
+{PREVENTION_STRATEGIES}
+
+---
+
+**Document Status**: [ ] In Progress [ ] Ready for Review [ ] Completed
+**Sprint Number**: {DETERMINED_SPRINT_NUMBER}
+**Move to Completed**: When finished, move this document to `/planning/sprints/completed/` folder
+```
+
+---
+
+**CRITICAL INSTRUCTION**: All checkboxes in this document must be generated as literal unchecked boxes using `[ ]` (bracket-space-bracket). Do not fill them with any content or mark them as checked. These are placeholders for manual completion during the review process.
+
+Save the review document to @{DETERMINED_FILENAME}. Ensure the sprint number calculation is correct and the filename follows the pattern. The filename should be a single .md file, not a directory.
+
+Then **hard stop**.
+"""

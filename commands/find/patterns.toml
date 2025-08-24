@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /find-patterns
+# Command: /find:patterns
 #
 # Description:
 #   Calls the Gemini CLI to find all instances of a specific coding pattern.
@@ -7,28 +7,28 @@
 # Usage Examples:
 #
 #   1. Find a pattern in default directories ('src/'):
-#      /find-patterns Find all instances of React hooks usage in the @src/ directory
+#      /find:patterns Find all instances of React hooks usage in the @src/ directory
 #
 #   2. Find a pattern in a specific directory:
-#      /find-patterns Find all instances of async/await error handling in the @./api/v1/ directory
+#      /find:patterns Find all instances of async/await error handling in the @./api/v1/ directory
 # ---------------------------------------------------------------------------
 
-name = "find-patterns"
+name = "find:patterns"
 description = "Find specific coding patterns, anti-patterns, or code smells in the codebase"
 
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Directory Detection
 
-1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
-2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
-3. **composer.json**: Check `autoload.psr-4` namespace mappings
-
-Return the actual package/module directory name that contains the application logic (not generic names like "src"). Print only the directory name without explanation.`"
+The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml to identify the primary source code directory by examining:
+1. **package.json**: main, module, exports fields, or scripts pointing to source dirs
+2. **composer.json**: autoload.psr-4 namespace mappings  
+3. **pyproject.toml**: [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
+Return the actual package/module directory names containing application logic, prefixed with @. Don't assume generic names like 'src'.`"
 
 You are an expert software architect/engineer.
 
 ### Pattern Analysis
-`gemini -p "@{MAIN_DIRECTORY} Find all instances of the coding pattern described. {{args}}
+`gemini -p "{MAIN_DIRECTORIES} Find all instances of the coding pattern described. {{args}}
 
 1.  **Pattern Occurrences**: List all files containing this pattern with specific line references.
 2.  **Implementation Variations**: Show the different ways this pattern is implemented (good and bad).

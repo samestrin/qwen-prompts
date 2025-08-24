@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# Command: /compare:dirs
+#
+# Description:
+#   Calls the Gemini CLI to compare multiple directories for structural and
+#   architectural differences.
+#
+# Usage Examples:
+#
+#   1. Compare two project structures:
+#      /compare:dirs Compare these project structures: @./frontend/ @./backend/
+#
+#   2. Compare version directories:
+#      /compare:dirs Compare @./v1/ @./v2/, focusing on architectural changes and file organization
+# ---------------------------------------------------------------------------
+
+name = "compare:dirs"
+description = "Compare multiple directories for structural, architectural, and organizational differences"
+
+prompt = """
+`gemini -p "Perform a comprehensive directory-level comparison of the provided directories. {{args}}
+
+### Directory Structure Analysis
+
+1. **Directory Overview**:
+   - Total file counts and directory depth
+   - Primary languages and frameworks used
+   - Project type and architectural patterns
+   - Build systems and configuration files
+
+2. **File Organization Patterns**:
+   - Directory naming conventions and structure
+   - Separation of concerns (src, tests, docs, config)
+   - Module organization and package structure
+   - Asset and resource file placement
+
+3. **Architectural Differences**:
+   - Design patterns and architectural styles
+   - Dependency management approaches
+   - Configuration and environment handling
+   - Testing strategy and test organization
+
+4. **Technology Stack Comparison**:
+   - Framework and library differences
+   - Build tools and development workflows
+   - Database and external service integrations
+   - Deployment and infrastructure patterns
+
+5. **Code Organization Quality**:
+   - Modularity and separation of concerns
+   - Consistency in naming and structure
+   - Documentation and README quality
+   - Maintainability and scalability factors
+
+6. **Migration and Evolution Analysis**:
+   - What changed between versions/implementations
+   - Breaking changes and compatibility issues
+   - Improvement opportunities and modernization
+   - Best practices adoption and technical debt
+
+7. **Recommendations**:
+   - Which directory structure is better organized
+   - Specific structural improvements to implement
+   - Consolidation and standardization opportunities
+   - Migration path and refactoring suggestions
+
+Provide specific directory paths, file examples, and architectural insights for each analysis point."`
+
+---
+Carefully review the output and correct any formatting issues that may have occured in the generation of the comparison. Then **hard stop**.
+
+"""

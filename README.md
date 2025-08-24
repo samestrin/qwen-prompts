@@ -1,4 +1,5 @@
 # Qwen-Prompts
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%98%83-yellow.svg)](https://buymeacoffee.com/samestrin)
 
 A comprehensive collection of slash prompts for [qwen-code](https://github.com/QwenLM/qwen-code) CLI tool. These prompts leverage Gemini's large context window and advanced capabilities to provide powerful development workflow automation.
 
@@ -51,83 +52,100 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 
 ## Command Categories
 
-### 🔍 Code Analysis Commands
+### 🔍 Analysis Commands
 
 | Command | Description | Type |
 |---------|-------------|------|
-| `/analyze-codebase` | Comprehensive codebase architecture analysis | Multi-shot |
-| `/dependency-analysis` | Analyze project dependencies and relationships | Multi-shot |
-| `/find-patterns` | Discover code patterns and anti-patterns | Multi-shot |
-| `/extract-business-logic` | Extract and document business logic | Multi-shot |
+| `/analyze:dependency` | Analyze project dependencies and relationships | Multi-shot |
+| `/analyze:implementation` | Verify implementation against requirements | Multi-shot |
+| `/analyze:performance` | Performance bottleneck analysis | Multi-shot |
+| `/analyze:security` | Comprehensive security vulnerability assessment | Multi-shot |
+| `/analyze:tech-debt` | Technical debt identification and prioritization | Multi-shot |
 
-### 📋 Planning & Strategy Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/plan` | Create strategic implementation plans | Multi-shot |
-| `/create-sprint` | Generate detailed sprint plans with shell integration | Multi-shot + Shell |
-| `/create-prd` | Product Requirements Document generation | Multi-shot |
-| `/create-cost-analysis` | Project cost and resource analysis | Multi-shot |
-
-### 🔒 Quality & Security Commands
+### 🔍 Code Commands
 
 | Command | Description | Type |
 |---------|-------------|------|
-| `/security-audit` | Comprehensive security vulnerability assessment | Multi-shot |
-| `/code-quality` | Code quality metrics and recommendations | Multi-shot |
-| `/tech-debt` | Technical debt identification and prioritization | Multi-shot |
-| `/performance-audit` | Performance bottleneck analysis | Multi-shot |
-| `/test-coverage` | Test coverage analysis and recommendations | Multi-shot |
+| `/code:analysis` | High-level codebase analysis with architecture mapping | Multi-shot |
+| `/code:quality` | Comprehensive code quality analysis and recommendations | Multi-shot |
+| `/code:review` | Comprehensive code review with severity-based findings | Multi-shot |
+
+### 📋 Creation & Strategy Commands
+
+| Command | Description | Type |
+|---------|-------------|------|
+| `/create:cost-analysis` | Project cost and resource analysis | Multi-shot |
+| `/create:prd` | Product Requirements Document generation | Multi-shot |
+| `/create:sprint` | Generate detailed sprint plans with shell integration | Multi-shot + Shell |
+| `/create:tdd` | Test-Driven Development documentation | Multi-shot |
+| `/create:tutorial` | Create step-by-step tutorials | Multi-shot |
+
+### 🔍 Comparison Commands
+
+| Command | Description | Type |
+|---------|-------------|------|
+| `/compare:files` | Compare and analyze file differences | Multi-shot |
 
 ### 📚 Documentation Commands
 
 | Command | Description | Type |
 |---------|-------------|------|
-| `/create-doc-standard` | Establish documentation standards | Multi-shot |
-| `/generate-docs-standard` | Generate documentation following standards | Multi-shot |
-| `/update-docs-standard` | Update existing documentation | Multi-shot |
-| `/create-tutorial` | Create step-by-step tutorials | Multi-shot |
-| `/create-tdd` | Test-Driven Development documentation | Multi-shot |
+| `/docs:generate-standard` | Generate documentation following standards | Multi-shot |
+| `/docs:standard` | Establish documentation standards | Multi-shot |
+| `/docs:update-standard` | Update existing documentation | Multi-shot |
 
-### 🔧 Development Commands
+### 🔍 Find Commands
 
 | Command | Description | Type |
 |---------|-------------|------|
-| `/check-implementation` | Verify implementation against requirements | Multi-shot |
-| `/compare-files` | Compare and analyze file differences | Multi-shot |
+| `/find:main-dirs` | Locate main source directories in projects | Multi-shot |
+
+### 📊 Strategy Commands
+
+| Command | Description | Type |
+|---------|-------------|------|
+| `/strategy:plan` | Create strategic implementation plans | Multi-shot |
+| `/strategy:roadmap` | Generate development roadmaps | Multi-shot |
+
+### 🧪 Test Commands
+
+| Command | Description | Type |
+|---------|-------------|------|
+| `/test:coverage` | Test coverage analysis and recommendations | Multi-shot |
+| `/test:review-and-correct` | Generate review and correction documents for test failures | Multi-shot |
 
 ## Prompt Types
 
 ### Single-Shot Prompts
 Simple, direct commands that execute once and return results immediately.
 
-**Example**: `/analyze-codebase`
+**Example**: `/code:analysis`
 ```toml
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "..."`"
+The **MAIN_DIRECTORIES** is "`gemini -p "..."`"
 
 ### Analysis
-`gemini -p "@{MAIN_DIRECTORY} Provide comprehensive analysis..."`
+`gemini -p "{MAIN_DIRECTORIES} Provide comprehensive analysis..."`
 """
 ```
 
 ### Multi-Shot Prompts
 Complex prompts that perform multiple analysis steps, often with conditional logic and comprehensive reporting.
 
-**Example**: `/analyze-codebase`
+**Example**: `/code:analysis`
 ```toml
 prompt = """
-The **MAIN_DIRECTORY** is "`gemini -p "..."`"
+The **MAIN_DIRECTORIES** is "`gemini -p "..."`"
 
 ### Analysis
-`gemini -p "@{MAIN_DIRECTORY} Provide comprehensive analysis..."`
+`gemini -p "{MAIN_DIRECTORIES} Provide comprehensive analysis..."`
 """
 ```
 
 ### Shell-Integrated Prompts
 Advanced prompts that leverage shell command execution for dynamic behavior and file system operations.
 
-**Example**: `/create-sprint` with sprint numbering
+**Example**: `/create:sprint` with sprint numbering
 ```toml
 The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name "*.md" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1`"
 ```
@@ -160,28 +178,28 @@ Multi-layered analysis approach:
 ### Basic Code Analysis
 ```bash
 # Analyze entire codebase
-/analyze-codebase
+/code:analysis
 
 # Analyze specific directory
-/analyze-codebase analyzing the @./server/api/ directory
+/code:analysis analyzing the @./server/api/ directory
 ```
 
 ### Sprint Planning
 ```bash
 # Create sprint plan for new feature
-/create-sprint Implement user authentication with JWT
+/create:sprint Implement user authentication with JWT
 
 # Plan database migration
-/create-sprint Migrate user data to new schema
+/create:sprint Migrate user data to new schema
 ```
 
 ### Security Assessment
 ```bash
 # General security audit
-/security-audit
+/analyze:security
 
 # Focus on specific area
-/security-audit focusing on authentication and authorization
+/analyze:security focusing on authentication and authorization
 ```
 
 ### Multi-Step Analysis
@@ -214,18 +232,30 @@ This collection is part of an upcoming blog series on dev.to exploring advanced 
 
 ## Version
 
-**Current Version: 1.0**
+**Current Version: 1.1**
 
-This is the initial release of qwen-prompts, featuring:
-- 20 comprehensive slash prompts
+This release includes significant improvements to directory detection and analysis capabilities:
+- 23 comprehensive slash prompts organized into logical namespaces
+- Dual directory detection patterns: Original and Comprehensive scanning
+- Advanced test file detection and analysis patterns
 - Multi-shot prompt architecture with intelligent main directory detection
 - Shell execution capabilities for advanced automation
 - Comprehensive security documentation and guidelines
 - Full integration with Gemini CLI for enhanced AI capabilities
+- Variable syntax update: Changed from `@{MAIN_DIRECTORIES}` to `{MAIN_DIRECTORIES}` to support multiple directory detection (each directory now comes with its own @ prefix when processed)
+- Namespace organization: Commands are now organized into logical namespaces (`/code:`, `/analyze:`, `/create:`, `/test:`, etc.)
+
+For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
+
+## Support
+
+If you find these prompts helpful, consider supporting the project:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%98%83-yellow.svg)](https://buymeacoffee.com/samestrin)
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT License - see [LICENSE](LICENSE.md) file for details.
 
 ## Related Projects
 

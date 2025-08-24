@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Command: /create-cost-analysis
+# Command: /create:cost-analysis
 #
 # Description:
 #   Calls the Gemini CLI to perform a high-level cost analysis of a TDD and generates a cost analysis.
@@ -7,16 +7,16 @@
 # Usage Examples:
 #
 #   1. Analyze a TDD using the default developer rate ($75/hr):
-#      /create-cost-analysis
+#      /create:cost-analysis
 #
 #   2. Analyze a TDD with a custom senior developer rate:
-#      /create-cost-analysis Assume a developer rate of $120/hour.
+#      /create:cost-analysis Assume a developer rate of $120/hour.
 #
 #   3. Analyze a TDD with a different rate:
-#      /create-cost-analysis Assume a developer rate of $95/hour.
+#      /create:cost-analysis Assume a developer rate of $95/hour.
 # ---------------------------------------------------------------------------
 
-name = "create-cost-analysis"
+name = "create:cost-analysis"
 description = "Generates a high-level operational cost estimate for a project"
 
 prompt = """
