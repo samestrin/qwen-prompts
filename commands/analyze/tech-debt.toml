@@ -26,7 +26,7 @@ The **PACKAGE_DIRS** is "`gemini -p "Analyze @package.json, @composer.json, @pyp
 3. **composer.json**: Check autoload.psr-4 namespace mappings
 4. **Cargo.toml**: Check [bin] or [lib] sections for source paths
 5. **go.mod**: Infer from module name and common Go patterns
-Return actual directory names (not generic like 'src'), one per line. Return empty if none found."`"
+Return actual directory names (not generic like 'src'), one per line. Return empty if none found.`"
 
 ## Method 2: Common Source Directory Patterns
 The **PATTERN_DIRS** is "`find . -maxdepth 2 -type d \\( -name src -o -name app -o -name lib -o -name components -o -name packages -o -name modules -o -name cmd -o -name internal -o -name pkg \\) 2>/dev/null | grep -v node_modules | grep -v .git | grep -v dist | grep -v build | sed 's|^\\.||' | head -5 | tr '\\n' ' '`"
@@ -37,9 +37,11 @@ The **DENSITY_DIRS** is "`find . -maxdepth 3 -type f \\( -name '*.py' -o -name '
 ## Directory Combination Logic
 The **MAIN_DIRECTORIES** is "`echo "${PACKAGE_DIRS} ${PATTERN_DIRS} ${DENSITY_DIRS}" | tr ' ' '\\n' | grep -v '^$' | sort -u | head -10 | tr '\\n' ' ' | sed 's/ $//'`"
 
+---
+
 Your primary role is that of a software engineer.
 
-### Technical Debt Analysis
+# Technical Debt Analysis
 `gemini -p "{MAIN_DIRECTORIES} Identify and analyze technical debt in this codebase. {{args}}
 
 1.  **Code Debt**: Outdated patterns, TODOs, commented-out code, workarounds.

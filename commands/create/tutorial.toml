@@ -34,7 +34,7 @@ The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, 
 
 Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
 
-Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**."`"
+Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
 
 `gemini -p "{MAIN_DIRECTORIES} Analyze this codebase and create a comprehensive tutorial. {{args}}
 

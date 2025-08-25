@@ -30,7 +30,7 @@ The **PACKAGE_DIRS** is "`gemini -p "Analyze @package.json, @composer.json, @pyp
 3. **composer.json**: Check autoload.psr-4 namespace mappings
 4. **Cargo.toml**: Check [bin] or [lib] sections for source paths
 5. **go.mod**: Infer from module name and common Go patterns
-Return actual directory names (not generic like 'src'), one per line. Return empty if none found."`"
+Return actual directory names (not generic like 'src'), one per line. Return empty if none found.`"
 
 ## Method 2: Common Source Directory Patterns
 The **PATTERN_DIRS** is "`find . -maxdepth 2 -type d \\( -name src -o -name app -o -name lib -o -name components -o -name packages -o -name modules -o -name cmd -o -name internal -o -name pkg \\) 2>/dev/null | grep -v node_modules | grep -v .git | grep -v dist | grep -v build | sed 's|^\\.||' | head -5 | tr '\\n' ' '`"
@@ -48,7 +48,7 @@ The **MAIN_DIRECTORIES** is "`if [ -n \"$COMBINED_DIRS\" ]; then echo \"$COMBINE
 
 You are an expert senior software engineer and code reviewer.
 
-## Comprehensive Code Review
+# Comprehensive Code Review
 `gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive code review of this codebase. {{args}}
 
 Your review should include:

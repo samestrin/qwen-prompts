@@ -17,10 +17,17 @@ name = "analyze:dependency"
 description = "Analyze project dependencies, their usage, and potential issues"
 
 prompt = """
+## File Detection
+
+The **DEPENDENCY_FILES** is "`files=(package.json requirements.txt composer.json Gemfile go.mod Cargo.toml pom.xml build.gradle package-lock.json yarn.lock Pipfile.lock Gemfile.lock go.sum Cargo.lock); existing_files=""; for file 
+in "${files[@]}"; do if [ -f "$file" ]; then existing_files="$existing_files @$file"; fi; done; echo "$existing_files"`"
+
+---
+
 You are an expert software architect/engineer.
 
-### Dependency Analysis
-`gemini -p "@package.json @requirements.txt @composer.json @Gemfile @go.mod @Cargo.toml @pom.xml @build.gradle @src/ @lib/ Analyze the dependencies in this project. {{args}}
+# Dependency Analysis
+`gemini -p "{DEPENDENCY_FILES} @src/ @lib/ Analyze the dependencies in this project. {{args}}
 
 1.  **Dependency Overview**: Total number of dependencies, main package manager(s) used.
 2.  **Direct Dependencies**: List major dependencies with their versions and purpose.

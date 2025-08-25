@@ -20,15 +20,19 @@ prompt = """
 # Directory Detection
 
 The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml to identify the primary source code directory by examining:
+
 1. **package.json**: main, module, exports fields, or scripts pointing to source dirs
 2. **composer.json**: autoload.psr-4 namespace mappings  
 3. **pyproject.toml**: [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
-Return the actual package/module directory names containing application logic, prefixed with @. Don't assume generic names like 'src'."`"
+
+Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like "src"). 
+Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
+
+---
 
 You are an expert software architect/engineer.
 
-### Performance Analysis
-
+# Performance Analysis
 `gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive performance audit of this codebase. {{args}}
 
 1.  **Database Performance**: Inefficient queries (N+1), missing indexes, unnecessary calls.

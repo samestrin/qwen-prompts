@@ -1,0 +1,192 @@
+# ---------------------------------------------------------------------------
+# Command: /initialize:planning
+#
+# Description:
+#   Creates a standardized project planning directory structure for new
+#   projects. Sets up directories for sprints, analysis, specifications,
+#   and prompts to support the qwen-prompts workflow.
+#
+# Usage Examples:
+#
+#   1. Initialize basic planning structure:
+#      /initialize:planning
+#
+#   2. Initialize with custom project name:
+#      /initialize:planning MyProject
+# ---------------------------------------------------------------------------
+
+name = "initialize:planning"
+description = "Creates standardized project planning directory structure"
+
+prompt = """
+You are setting up a new project's planning directory structure. Create the following directory tree and initial files:
+
+**Project Name**: {{args}}
+
+### Directory Structure to Create:
+
+```
+planning/
+├── sprints/
+│   ├── active/
+│   │   └── README.md
+│   └── completed/
+│       └── README.md
+├── analysis/
+│   └── README.md
+├── specifications/
+│   └── README.md
+└── prompts/
+    └── README.md
+```
+
+### File Contents:
+
+**planning/README.md**:
+```markdown
+# Project Planning Directory
+
+This directory contains all planning artifacts for the {{args}} project.
+
+## Structure
+
+- **sprints/**: Sprint planning and tracking
+  - **active/**: Current sprint plans and progress
+  - **completed/**: Archived completed sprints
+- **analysis/**: Technical analysis and research
+- **specifications/**: Project requirements and specifications
+- **prompts/**: Custom prompts and templates for this project
+
+## Workflow
+
+1. Use `/create:prd` to generate product requirements in `specifications/`
+2. Use `/create:tdd` to create technical design documents in `specifications/`
+3. Use `/create:sprint` to plan sprints in `sprints/active/`
+4. Move completed sprints to `sprints/completed/`
+5. Store analysis results in `analysis/`
+
+## Integration with qwen-prompts
+
+This structure is designed to work seamlessly with the qwen-prompts command suite:
+- PRD and TDD files can be referenced by `/initialize:coding-rules`
+- Sprint plans integrate with `/test:review-and-correct`
+- Analysis files support `/strategy:plan` decisions
+```
+
+**planning/sprints/active/README.md**:
+```markdown
+# Active Sprints
+
+This directory contains current sprint plans and progress tracking.
+
+## Usage
+
+- Use `/create:sprint [feature description]` to generate new sprint plans
+- Each sprint should have its own markdown file
+- Update progress regularly
+- Move completed sprints to `../completed/`
+
+## File Naming Convention
+
+- `##.#_[feature-name].md`
+- Example: `1.0-authentication.md`
+```
+
+**planning/sprints/completed/README.md**:
+```markdown
+# Completed Sprints
+
+Archive of completed sprint plans and their outcomes.
+
+## Structure
+
+- Maintain original sprint files
+- Add completion notes and lessons learned
+- Reference actual implementation files
+
+## Review Process
+
+- Document what went well
+- Note deviations from plan
+- Capture lessons for future sprints
+```
+
+**planning/analysis/README.md**:
+```markdown
+# Technical Analysis
+
+This directory contains technical research, analysis, and investigation results.
+
+## Types of Analysis
+
+- Architecture decisions
+- Technology evaluations
+- Performance analysis
+- Security assessments
+- Dependency analysis
+
+## Integration with Commands
+
+- Use `/analyze:*` commands to generate analysis files
+- Reference analysis in sprint planning
+- Update analysis as project evolves
+```
+
+**planning/specifications/README.md**:
+```markdown
+# Project Specifications
+
+Formal project requirements and technical specifications.
+
+## Key Documents
+
+- **prd.md**: Product Requirements Document (use `/create:prd`)
+- **tdd.md**: Technical Design Document (use `/create:tdd`)
+
+## Maintenance
+
+- Keep specifications current with implementation
+- Version control major changes
+- Reference in coding rules generation
+```
+
+**planning/prompts/README.md**:
+```markdown
+# Project-Specific Prompts
+
+Custom prompts and templates specific to this project.
+
+## Usage
+
+- Store project-specific prompt variations
+- Document custom workflows
+- Share team-specific templates
+
+## Examples
+
+- Custom code review prompts
+- Project-specific analysis templates
+- Domain-specific documentation standards
+```
+
+### Implementation Steps:
+
+1. **Create Directory Structure**: Use mkdir -p to create all directories
+2. **Generate README Files**: Create each README.md with the content above
+3. **Set Permissions**: Ensure proper file permissions
+4. **Validate Structure**: Confirm all directories and files are created
+5. **Git Configuration**: Update .gitignore to exclude planning directory:
+   - Add 'planning/' to .gitignore if it exists
+   - Create .gitignore with 'planning/' entry if it doesn't exist
+   - Ensure planning directory is not tracked in version control
+
+### Success Criteria:
+
+- All directories exist with proper structure
+- All README files contain appropriate guidance
+- Structure supports qwen-prompts workflow
+- Planning directory is properly excluded from git tracking
+- Ready for immediate use with other commands
+
+Execute this setup now and confirm successful creation.
+"""

@@ -94,6 +94,16 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 | `/docs:standard` | Establish documentation standards | Multi-shot |
 | `/docs:update-standard` | Update existing documentation | Multi-shot |
 
+### 🚀 Initialize Commands
+
+| Command | Description | Type |
+|---------|-------------|------|
+| `/initialize:planning` | Set up project planning directory structure | Single-shot |
+| `/initialize:coding-standard` | Generate base coding standard template | Single-shot |
+| `/initialize:coding-rules` | Create platform-specific coding rules | Multi-shot |
+| `/initialize:gitignore` | Generate comprehensive .gitignore files | Single-shot |
+| `/initialize:update-coding-rules` | Update existing platform-specific rules | Multi-shot |
+
 ### 🔍 Find Commands
 
 | Command | Description | Type |
@@ -113,6 +123,15 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 |---------|-------------|------|
 | `/test:coverage` | Test coverage analysis and recommendations | Multi-shot |
 | `/test:review-and-correct` | Generate review and correction documents for test failures | Multi-shot |
+
+### 🧪 Single-Shot Testing Commands
+
+| Command | Description | Type |
+|---------|-------------|------|
+| `/single/analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
+| `/single/code:analysis` | Single-shot code analysis variant | Single-shot |
+
+**Note**: The `/single:` namespace contains single-shot variants of existing commands designed for testing and benchmarking purposes. These commands provide a direct comparison point against their multi-stage counterparts to evaluate performance and output quality differences.
 
 ## Prompt Types
 
@@ -232,18 +251,26 @@ This collection is part of an upcoming blog series on dev.to exploring advanced 
 
 ## Version
 
-**Current Version: 1.1**
+**Current Version: 1.3.0**
 
-This release includes significant improvements to directory detection and analysis capabilities:
-- 23 comprehensive slash prompts organized into logical namespaces
+This release introduces testing command organization and enhanced security analysis:
+- **New `/single:` namespace** with single-shot command variants for testing and benchmarking
+- **Enhanced security analysis** with severity levels and impact assessments
+- **30 comprehensive slash prompts** organized into logical namespaces
+- **New `/initialize:` namespace** with 5 commands for complete project setup automation
+- **Automatic .gitignore management** across all initialize commands
+- **Multi-platform coding rules** generation for Trae, Qwen, Claude, Gemini, and Cursor
+- **Workflow documentation** with detailed command sequences and best practices
+- **Project structure automation** through planning directory setup
+- **Platform-specific customization** for different AI development environments
 - Dual directory detection patterns: Original and Comprehensive scanning
 - Advanced test file detection and analysis patterns
 - Multi-shot prompt architecture with intelligent main directory detection
 - Shell execution capabilities for advanced automation
 - Comprehensive security documentation and guidelines
 - Full integration with Gemini CLI for enhanced AI capabilities
-- Variable syntax update: Changed from `@{MAIN_DIRECTORIES}` to `{MAIN_DIRECTORIES}` to support multiple directory detection (each directory now comes with its own @ prefix when processed)
-- Namespace organization: Commands are now organized into logical namespaces (`/code:`, `/analyze:`, `/create:`, `/test:`, etc.)
+- Variable syntax update: Changed from `@{MAIN_DIRECTORIES}` to `{MAIN_DIRECTORIES}` to support multiple directory detection
+- Namespace organization: Commands organized into logical namespaces (`/code:`, `/analyze:`, `/create:`, `/test:`, `/initialize:`, etc.)
 
 For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 

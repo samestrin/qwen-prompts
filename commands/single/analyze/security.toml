@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# Single-Shot Test Command: /single:analyze:security comparison
+#
+# Description:
+#   Single-shot security analysis using only qwen (no Gemini CLI integration)
+#   For benchmarking against the multi-shot hybrid version
+#
+# Usage:
+#   /single:analyze:security
+# ---------------------------------------------------------------------------
+
+name = "single:analyze:security"
+description = "Single-shot security analysis for benchmarking against multi-shot hybrid version"
+
+prompt = """
+You are an expert security specialist and penetration tester with extensive experience in vulnerability assessment and secure coding practices.
+
+Perform a comprehensive security audit of this codebase. Your analysis should include:
+
+## 1. Authentication & Authorization
+- Review authentication mechanisms and session management
+- Identify access control vulnerabilities
+- Check for privilege escalation risks
+- Analyze credential storage and transmission
+
+## 2. Input Validation & Data Handling
+- Examine input sanitization and validation
+- Look for injection vulnerabilities (SQL, XSS, command injection)
+- Review data parsing and processing logic
+- Check for buffer overflow risks
+
+## 3. Cryptography & Data Protection
+- Assess encryption implementations
+- Review key management practices
+- Check for weak cryptographic algorithms
+- Analyze data at rest and in transit protection
+
+## 4. Configuration & Deployment Security
+- Review configuration files for hardcoded secrets
+- Check for insecure default configurations
+- Analyze deployment and infrastructure security
+- Review logging and monitoring capabilities
+
+## 5. Dependencies & Supply Chain
+- Examine third-party dependencies for known vulnerabilities
+- Review dependency management practices
+- Check for outdated or unmaintained packages
+- Analyze package integrity verification
+
+## 6. Code Quality & Security Patterns
+- Review error handling and information disclosure
+- Check for race conditions and concurrency issues
+- Analyze logging practices and sensitive data exposure
+- Review security headers and protections
+
+For each identified issue, provide:
+- **Specific file and line references** where possible
+- **Severity level** (Critical/High/Medium/Low)
+- **Technical description** of the vulnerability
+- **Potential impact** and attack scenarios
+- **Concrete remediation steps** with code examples where helpful
+
+Format your response as a professional security assessment report suitable for technical stakeholders and security teams.
+
+Then **hard stop**.
+"""

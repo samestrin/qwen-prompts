@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid vs Single-Shot Performance Benchmarks</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .summary-card .metric {
+            font-size: 2em;
+            font-weight: bold;
+            color: #7ed321;
+            margin: 5px 0;
+        }
+        
+        .summary-card .description {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .table-container {
+            padding: 30px;
+            overflow-x: auto;
+        }
+        
+        .benchmark-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        
+        .benchmark-table th {
+            background: #34495e;
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .benchmark-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .benchmark-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .benchmark-table tr:hover {
+            background-color: #e8f5e8;
+        }
+        
+        .approach-hybrid {
+            background-color: #e8f5e8 !important;
+            border-left: 4px solid #7ed321;
+        }
+        
+        .approach-single {
+            background-color: #ffebee !important;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .metric-improvement {
+            color: #7ed321;
+            font-weight: bold;
+        }
+        
+        .metric-baseline {
+            color: #e74c3c;
+        }
+        
+        .repository-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .command-type {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #7ed321;
+        }
+        
+        .methodology {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .methodology h4 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .methodology ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .benchmark-table {
+                font-size: 0.8em;
+            }
+            
+            .benchmark-table th,
+            .benchmark-table td {
+                padding: 8px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hybrid vs Single-Shot Performance Benchmarks</h1>
+            <p>Comprehensive analysis across 6 repositories demonstrating hybrid prompt chaining advantages</p>
+        </div>
+        
+        <div class="summary-cards">
+            <div class="summary-card">
+                <h3>Average Time Reduction</h3>
+                <div class="metric">19-72%</div>
+                <div class="description">Faster execution for analysis tasks</div>
+            </div>
+            <div class="summary-card">
+                <h3>Token Efficiency</h3>
+                <div class="metric">36-83%</div>
+                <div class="description">Fewer tokens consumed for analysis</div>
+            </div>
+            <div class="summary-card">
+                <h3>Success Rate</h3>
+                <div class="metric">91.7%</div>
+                <div class="description">Hybrid advantages in 11/12 cases</div>
+            </div>
+            <div class="summary-card">
+                <h3>Repositories Tested</h3>
+                <div class="metric">6</div>
+                <div class="description">Different sizes and complexity</div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <h2 class="section-title">Security Analysis Performance</h2>
+            
+            <table class="benchmark-table">
+                <thead>
+                    <tr>
+                        <th>Repository</th>
+                        <th>Approach</th>
+                        <th>Wall Time</th>
+                        <th>Token Usage</th>
+                        <th>Cache Efficiency</th>
+                        <th>Time Improvement</th>
+                        <th>Token Reduction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="approach-hybrid">
+                        <td class="repository-name">advanced-console-log</td>
+                        <td><span class="command-type">Hybrid</span></td>
+                        <td class="metric-improvement">2m 2s</td>
+                        <td class="metric-improvement">749K</td>
+                        <td>90.1%</td>
+                        <td class="metric-improvement">46% faster</td>
+                        <td class="metric-improvement">69% fewer</td>
+                    </tr>
+                    <tr class="approach-single">
+                        <td class="repository-name">advanced-console-log</td>
+                        <td><span class="command-type" style="background: #e74c3c;">Single-shot</span></td>
+                        <td class="metric-baseline">3m 45s</td>
+                        <td class="metric-baseline">2.46M</td>
+                        <td>88.4%</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr class="approach-hybrid">
+                        <td class="repository-name">llm-file-processor</td>
+                        <td><span class="command-type">Hybrid</span></td>
+                        <td class="metric-improvement">1m 48s</td>
+                        <td class="metric-improvement">892K</td>
+                        <td>89.7%</td>
+                        <td class="metric-improvement">41% faster</td>
+                        <td class="metric-improvement">64% fewer</td>
+                    </tr>
+                    <tr class="approach-single">
+                        <td class="repository-name">llm-file-processor</td>
+                        <td><span class="command-type" style="background: #e74c3c;">Single-shot</span></td>
+                        <td class="metric-baseline">3m 4s</td>
+                        <td class="metric-baseline">2.48M</td>
+                        <td>88.9%</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr class="approach-hybrid">
+                        <td class="repository-name">scraper-python-ubuntu</td>
+                        <td><span class="command-type">Hybrid</span></td>
+                        <td class="metric-improvement">2m 15s</td>
+                        <td class="metric-improvement">1.12M</td>
+                        <td>88.8%</td>
+                        <td class="metric-improvement">38% faster</td>
+                        <td class="metric-improvement">58% fewer</td>
+                    </tr>
+                    <tr class="approach-single">
+                        <td class="repository-name">scraper-python-ubuntu</td>
+                        <td><span class="command-type" style="background: #e74c3c;">Single-shot</span></td>
+                        <td class="metric-baseline">3m 38s</td>
+                        <td class="metric-baseline">2.67M</td>
+                        <td>87.2%</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2 class="section-title">Code Analysis Performance</h2>
+            
+            <table class="benchmark-table">
+                <thead>
+                    <tr>
+                        <th>Repository</th>
+                        <th>Approach</th>
+                        <th>Wall Time</th>
+                        <th>Token Usage</th>
+                        <th>Cache Efficiency</th>
+                        <th>Time Improvement</th>
+                        <th>Token Reduction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="approach-hybrid">
+                        <td class="repository-name">advanced-console-log</td>
+                        <td><span class="command-type">Hybrid</span></td>
+                        <td class="metric-improvement">1m 52s</td>
+                        <td class="metric-improvement">684K</td>
+                        <td>91.2%</td>
+                        <td class="metric-improvement">44% faster</td>
+                        <td class="metric-improvement">72% fewer</td>
+                    </tr>
+                    <tr class="approach-single">
+                        <td class="repository-name">advanced-console-log</td>
+                        <td><span class="command-type" style="background: #e74c3c;">Single-shot</span></td>
+                        <td class="metric-baseline">3m 21s</td>
+                        <td class="metric-baseline">2.44M</td>
+                        <td>89.1%</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr class="approach-hybrid">
+                        <td class="repository-name">llm-file-processor</td>
+                        <td><span class="command-type">Hybrid</span></td>
+                        <td class="metric-improvement">2m 8s</td>
+                        <td class="metric-improvement">798K</td>
+                        <td>90.5%</td>
+                        <td class="metric-improvement">36% faster</td>
+                        <td class="metric-improvement">67% fewer</td>
+                    </tr>
+                    <tr class="approach-single">
+                        <td class="repository-name">llm-file-processor</td>
+                        <td><span class="command-type" style="background: #e74c3c;">Single-shot</span></td>
+                        <td class="metric-baseline">3m 20s</td>
+                        <td class="metric-baseline">2.42M</td>
+                        <td>88.7%</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="table-container">
+            <div class="methodology">
+                <h4>Methodology</h4>
+                <ul>
+                    <li><strong>Models:</strong> qwen3-coder-plus and gemini-1.5-pro-002</li>
+                    <li><strong>Commands:</strong> /analyze:security vs /analyze:security-single, /code:analysis vs /code:analysis-single, /create:sprint vs /single:create:sprint</li>
+                    <li><strong>Repositories:</strong> 6 different codebases (JavaScript, Python, commercial applications)</li>
+                    <li><strong>Metrics:</strong> Wall time, agent active time, token usage, cache efficiency</li>
+                </ul>
+                
+                <h4>Key Findings</h4>
+                <ul>
+                    <li>Hybrid approach shows advantages in 11 out of 12 test cases</li>
+                    <li>For analysis tasks: Time savings range from 19% to 72%, token efficiency 36% to 83%</li>
+                    <li>For sprint creation: Single-shot is faster but hybrid produces higher quality output</li>
+                    <li>Cache efficiency remains high (88-91%) for both approaches</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Data collected from comprehensive benchmark testing across multiple repositories and command types. For detailed analysis, see comprehensive-benchmarks.md</p>
+        </div>
+    </div>
+</body>
+</html>

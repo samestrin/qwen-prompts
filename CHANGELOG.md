@@ -5,6 +5,38 @@ All notable changes to qwen-prompts will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-08-25
+
+### Added
+- **New `/single:` namespace**: Single-shot command variants for testing and benchmarking
+- **Testing Command Structure**: Organized single-shot versions of existing commands for performance comparison
+  - `/single:analyze:security` - Single-shot security analysis for benchmarking against multi-stage version
+  - `/single:code:analysis` - Single-shot code analysis variant
+- **Enhanced Security Analysis**: Added severity levels and impact assessments to `/analyze:security` output
+
+### Enhanced
+- **Command Organization**: Better structure for testing and production command variants
+- **Security Analysis**: Improved output format with risk prioritization and severity classification
+
+## [1.2.0] - 2025-08-24
+
+### Added
+- **New `/initialize:` namespace**: Complete project initialization and setup automation
+- **5 New Initialize Commands**:
+  - `/initialize:planning` - Sets up project planning directory structure with automatic .gitignore management
+  - `/initialize:coding-standard` - Generates comprehensive base coding standard template (CODING_STANDARD.md)
+  - `/initialize:coding-rules` - Creates platform-specific coding rules for Trae, Qwen, Claude, Gemini, and Cursor
+  - `/initialize:gitignore` - Generates comprehensive, language-specific .gitignore files
+  - `/initialize:update-coding-rules` - Updates and maintains existing platform-specific coding rules
+- **Automatic .gitignore management**: All initialize commands automatically update .gitignore to exclude generated files
+- **Multi-platform support**: Coding rules generation supports multiple AI platforms and development environments
+- **Project workflow documentation**: Added comprehensive usage workflows documentation (blog/usage-workflows.md)
+
+### Enhanced
+- **Workflow automation**: Complete project setup can now be automated through initialize commands
+- **Platform-specific customization**: Dynamic generation of coding rules tailored to specific AI platforms
+- **File organization**: Systematic approach to project structure and file management
+
 ## [1.1.0] - 2025-08-23
 
 ### Added

@@ -1,0 +1,335 @@
+# ---------------------------------------------------------------------------
+# Command: /initialize:coding-rules
+#
+# Description:
+#   Generates platform-specific coding rules files based on project
+#   specifications (TDD/PRD) and the base coding standard. Supports
+#   multiple platforms like Trae, Qwen, Claude, Gemini, etc.
+#
+# Usage Examples:
+#
+#   1. Generate rules for multiple platforms:
+#      /initialize:coding-rules trae,qwen,claude
+#
+#   2. Generate rules for a single platform:
+#      /initialize:coding-rules gemini
+#
+#   3. Generate all common platform rules:
+#      /initialize:coding-rules all
+# ---------------------------------------------------------------------------
+
+name = "initialize:coding-rules"
+description = "Generates platform-specific coding rules from project specifications"
+
+prompt = """
+Generate platform-specific coding rules based on project specifications and the base coding standard.
+
+**Target Platforms**: {{args}}
+
+### Phase 1: Project Analysis
+
+`gemini -p "Perform comprehensive project analysis to inform coding rules generation:
+
+1. **Specification Analysis**: Read and analyze available specification files:
+   - @planning/specifications/tdd.md (if exists)
+   - @planning/specifications/prd.md (if exists)
+   - @CODING_STANDARD.md (if exists)
+   - Any other specification files in planning/specifications/
+
+2. **Technology Stack Detection**: Examine project configuration:
+   - @package.json, @composer.json, @pyproject.toml, @Cargo.toml, @go.mod
+   - Identify primary languages, frameworks, and tools
+   - Note testing frameworks and development dependencies
+   - Identify build systems and deployment targets
+
+3. **Existing Code Patterns**: Analyze current codebase (if any):
+   - Code organization and structure
+   - Naming conventions in use
+   - Error handling patterns
+   - Testing approaches
+   - Documentation styles
+
+4. **Platform Requirements**: Based on the target platforms ({{args}}), identify:
+   - Platform-specific file naming conventions
+   - Required directory structures
+   - Platform-specific coding guidelines
+   - Integration requirements with each platform
+
+Provide a comprehensive analysis summary that will inform the coding rules generation."`
+
+### Phase 2: Platform-Specific Rules Generation
+
+Based on the analysis, generate coding rules for the specified platforms. Parse {{args}} to determine which platforms to target:
+
+- **trae**: Generate `./trae/rules/project_rules.md`
+- **qwen**: Generate `./QWEN.md`
+- **claude**: Generate `./CLAUDE.md`
+- **gemini**: Generate `./GEMINI.md`
+- **cursor**: Generate `./CURSOR.md`
+- **all**: Generate rules for all supported platforms
+
+### Platform-Specific Rule Templates:
+
+#### For Trae AI (./trae/rules/project_rules.md):
+```markdown
+# Project Rules - [Project Name]
+
+## Project Overview
+
+[Based on PRD/TDD analysis]
+
+## Technology Stack
+
+[From project analysis]
+
+## Code Quality Standards
+
+### Structure & Complexity
+- **Function Length**: [Project-specific limits]
+- **File Length**: [Project-specific limits]
+- **Cognitive Complexity**: [Project-specific guidelines]
+- **DRY Principle**: [Project-specific implementation]
+- **Single Responsibility**: [Project-specific examples]
+
+### Naming Conventions
+- **CRUD Operations**: [Project-specific patterns]
+- **Boolean Functions**: [Project-specific prefixes]
+- **Event Handlers**: [Project-specific patterns]
+- **Async Functions**: [Project-specific conventions]
+- **Private Functions**: [Language-specific indicators]
+
+### Documentation
+- **Function Documentation**: [Project-specific requirements]
+- **Inline Comments**: [Project-specific guidelines]
+- **README Files**: [Project-specific structure]
+
+## Development Approach
+
+### Implementation Strategy
+- **Incremental Development**: [Project-specific workflow]
+- **Error Handling First**: [Project-specific error patterns]
+- **Configuration-Driven**: [Project-specific config approach]
+- **Modular Design**: [Project-specific module patterns]
+
+### Testing & Quality
+- **Test Alongside Development**: [Project-specific test strategy]
+- **Environment Isolation**: [Project-specific test setup]
+- **Comprehensive Coverage**: [Project-specific coverage requirements]
+
+## Technology Preferences
+
+### Architecture
+[Project-specific architectural decisions]
+
+### Frontend (when applicable)
+[Project-specific frontend guidelines]
+
+## Communication & Collaboration
+
+### Development Process
+[Project-specific workflow]
+
+### Code Delivery
+[Project-specific delivery requirements]
+
+## Project-Specific Rules
+
+[Custom rules based on TDD/PRD analysis]
+
+## Validation
+
+[Project-specific validation commands and processes]
+```
+
+#### For Qwen (./QWEN.md):
+```markdown
+# Qwen Coding Assistant Rules
+
+## Project Context
+
+[Project overview from specifications]
+
+## Code Generation Guidelines
+
+### Language-Specific Rules
+[Based on detected technology stack]
+
+### Framework Integration
+[Based on detected frameworks]
+
+### Testing Requirements
+[Based on project testing strategy]
+
+### Documentation Standards
+[Based on project documentation requirements]
+
+## Project Architecture
+
+[Based on TDD analysis]
+
+## Performance Requirements
+
+[Based on PRD performance specifications]
+
+## Security Considerations
+
+[Based on project security requirements]
+
+## Integration Points
+
+[Based on project dependencies and APIs]
+
+## Custom Instructions
+
+[Project-specific coding instructions]
+```
+
+#### For Claude (./CLAUDE.md):
+```markdown
+# Claude Development Assistant Rules
+
+## Project Overview
+
+[From PRD/TDD analysis]
+
+## Development Context
+
+### Technology Stack
+[Detected technologies and versions]
+
+### Project Structure
+[Current directory organization]
+
+### Development Workflow
+[Project-specific development process]
+
+## Coding Standards
+
+### Code Quality
+[Project-specific quality requirements]
+
+### Testing Strategy
+[Project-specific testing approach]
+
+### Documentation Requirements
+[Project-specific documentation standards]
+
+## Architecture Guidelines
+
+[Based on technical design document]
+
+## Performance and Scalability
+
+[Based on project requirements]
+
+## Security and Compliance
+
+[Based on project security requirements]
+
+## Collaboration Guidelines
+
+[Project-specific collaboration rules]
+```
+
+#### For Gemini (./GEMINI.md):
+```markdown
+# Gemini AI Development Rules
+
+## Project Information
+
+[Project context from specifications]
+
+## Development Guidelines
+
+### Code Generation
+[Project-specific code generation rules]
+
+### Analysis and Review
+[Project-specific analysis requirements]
+
+### Testing and Validation
+[Project-specific testing guidelines]
+
+### Documentation
+[Project-specific documentation standards]
+
+## Technical Specifications
+
+[Based on TDD analysis]
+
+## Business Requirements
+
+[Based on PRD analysis]
+
+## Integration Requirements
+
+[Project-specific integration guidelines]
+
+## Quality Assurance
+
+[Project-specific QA requirements]
+```
+
+### Phase 3: Platform Selection and Implementation
+
+`gemini -p "Based on the project analysis, generate coding rules files ONLY for the platforms specified in: {{args}}
+
+**IMPORTANT**: Parse {{args}} to determine which platforms to generate. Only create files for explicitly requested platforms.
+
+**Platform Mapping**:
+- If {{args}} contains 'trae' → Create ./trae/rules/project_rules.md
+- If {{args}} contains 'qwen' → Create ./QWEN.md  
+- If {{args}} contains 'claude' → Create ./CLAUDE.md
+- If {{args}} contains 'gemini' → Create ./GEMINI.md
+- If {{args}} contains 'cursor' → Create ./CURSOR.md
+- If {{args}} contains 'all' → Create all platform files above
+
+**Implementation Steps**:
+
+1. **Parse Arguments**: Extract platform names from {{args}} (comma-separated list)
+
+2. **Conditional Generation**: For EACH platform found in {{args}}:
+   - Create the appropriate directory structure if needed
+   - Generate the platform-specific file with project context
+   - Include technology stack details from analysis
+   - Apply platform-specific formatting and structure
+
+3. **Content Customization**: Each generated file should contain:
+   - Project overview from specifications analysis
+   - Technology stack from project detection
+   - Coding standards tailored to the platform
+   - Integration requirements specific to the platform
+
+4. **Validation**: Confirm only the requested platform files are created
+
+5. **Git Configuration**: Add .gitignore entries only for the generated files
+
+**Example**: If {{args}} = 'trae,qwen,gemini', create ONLY:
+- ./trae/rules/project_rules.md
+- ./QWEN.md
+- ./GEMINI.md
+
+Do NOT create files for platforms not specified in {{args}}.
+
+Generate the coding rules files now based on the parsed platform requirements."`
+
+### Success Criteria:
+
+- Platform-specific coding rules files are generated for all requested platforms
+- Each file contains project-specific information derived from specifications
+- Rules are consistent with the base coding standard
+- Files are properly formatted for their target platform
+- Directory structure is created as needed (e.g., ./trae/rules/)
+- Generated rules integrate with existing project workflow
+
+### Platform Support:
+
+- **trae**: Trae AI IDE integration
+- **qwen**: Qwen coding assistant
+- **claude**: Claude AI assistant
+- **gemini**: Google Gemini AI
+- **cursor**: Cursor AI editor
+- **all**: Generate for all supported platforms
+
+Execute the coding rules generation process now.
+"""

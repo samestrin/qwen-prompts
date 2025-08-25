@@ -1,0 +1,92 @@
+# ---------------------------------------------------------------------------
+# Single-Shot Test Command: /single:code:analysis comparison
+#
+# Description:
+#   Single-shot code analysis using only qwen (no Gemini CLI integration)
+#   For benchmarking against the multi-shot hybrid version
+#
+# Usage:
+#   /single:code:analysis
+# ---------------------------------------------------------------------------
+
+name = "single:code:analysis"
+description = "Single-shot codebase analysis for benchmarking against multi-shot hybrid version"
+
+prompt = """
+You are an expert software architect and senior developer with extensive experience in code analysis, system design, and technical assessment.
+
+Provide a comprehensive technical analysis of this codebase. Your analysis should include:
+
+## 1. Project Overview
+Explain what the project does, its main goals, and target use cases.
+
+## 2. Architecture & Design Patterns  
+- Describe the high-level architecture and core design patterns
+- Identify key modules and their relationships
+- Analyze separation of concerns and modularity
+- Review design decisions and architectural trade-offs
+
+## 3. Technology Stack
+- Languages, frameworks, libraries, and tools used
+- Major external dependencies and their purposes
+- Build system and development toolchain
+- Runtime requirements and environment setup
+
+## 4. File/Module Map
+- Identify and describe the most important files and directories
+- Focus on meaningful and functionally significant components
+- Use real file paths and group by directory with headers and lists
+- Summarize related files when appropriate (tests, utils, etc.)
+- **Do not use a tree structure**
+
+## 5. Entry Points & Key Components
+- Which files start or bootstrap the application
+- Detail the most critical parts of the codebase and their responsibilities
+- Explain the main execution flows and data processing pipelines
+
+## 6. Code Quality Assessment
+- Code organization and maintainability
+- Adherence to coding standards and best practices
+- Error handling and edge case coverage
+- Documentation quality and completeness
+
+## 7. Performance Characteristics
+- Database queries, caching strategies, and optimization opportunities  
+- Memory usage patterns and resource management
+- Concurrency handling and scalability considerations
+- Identified bottlenecks and performance issues
+
+## 8. Testing Strategy
+- Test coverage, frameworks used, and test organization
+- Unit, integration, and end-to-end testing approaches
+- Missing test areas and quality assurance gaps
+- CI/CD and automated testing setup
+
+## 9. Security Considerations
+- Authentication patterns and authorization mechanisms
+- Data validation and input sanitization
+- Potential vulnerabilities and security risks
+- Security best practices implementation
+
+## 10. Configuration & Deployment
+- How the application is configured (files, environment variables, tools)
+- Installation, execution, and deployment processes
+- Environment-specific configurations and dependencies
+- Build and distribution strategies
+
+## 11. Dependencies & Integration
+- Major external dependencies and their usage
+- Integration points with external systems or APIs
+- Dependency management and version control
+- Potential upgrade paths and compatibility issues
+
+## 12. Areas for Improvement
+- Potential improvements, refactoring opportunities
+- Missing documentation or technical debt
+- Scalability and maintainability enhancements
+- Development workflow and tooling improvements
+
+Format your response as a professional technical assessment suitable for architects, technical leads, and development teams making decisions about code adoption, contribution, or integration.
+
+Then **hard stop**.
+"""

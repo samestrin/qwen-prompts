@@ -1,0 +1,263 @@
+# ---------------------------------------------------------------------------
+# Command: /initialize:coding-standard
+#
+# Description:
+#   Creates a base coding standard template that can be customized for
+#   different platforms and projects. This serves as the foundation for
+#   generating platform-specific coding rules.
+#
+# Usage Examples:
+#
+#   1. Create a general coding standard:
+#      /initialize:coding-standard
+#
+#   2. Create a standard for a specific project type:
+#      /initialize:coding-standard for a Python web API project
+# ---------------------------------------------------------------------------
+
+name = "initialize:coding-standard"
+description = "Creates a base coding standard template for project customization"
+
+prompt = """
+The **THIS_DATE** is "`date`"
+
+---
+
+Create a comprehensive base coding standard template that can be customized for different platforms and projects.
+
+**Project Context**: {{args}}
+
+### Analysis Phase
+
+`gemini -p "Analyze the current project structure to understand the technology stack and development context:
+
+1. **Technology Detection**: Examine @package.json, @composer.json, @pyproject.toml, @Cargo.toml, @go.mod, or other config files to identify:
+   - Primary programming language(s)
+   - Framework(s) in use
+   - Build tools and package managers
+   - Testing frameworks
+   - Development dependencies
+
+2. **Project Structure Analysis**: Identify:
+   - Source code organization patterns
+   - Existing coding conventions
+   - Documentation patterns
+   - Testing structure
+
+3. **Development Environment**: Note:
+   - IDE/editor configurations present
+   - Linting/formatting tools configured
+   - CI/CD pipeline indicators
+   - Container/deployment configurations
+
+Provide a summary of the technology stack and current conventions to inform the coding standard creation."`
+
+### Base Coding Standard Template
+
+Create or Update a file named `CODING_STANDARD.md` with the following comprehensive template:
+
+```markdown
+# Coding Standard Template
+
+> **Note**: This is a base template. Use `/initialize:coding-rules` to generate platform-specific versions.
+
+## Project Information
+
+- **Project**: [Project Name]
+- **Technology Stack**: [Languages, Frameworks, Tools]
+- **Last Updated**: {{THIS_DATE}}
+- **Version**: [Version]
+
+## 1. General Principles
+
+### Code Quality Standards
+- **Readability First**: Code should be self-documenting
+- **Consistency**: Follow established patterns throughout the project
+- **Simplicity**: Prefer simple solutions over complex ones
+- **Maintainability**: Write code that's easy to modify and extend
+
+### Performance Guidelines
+- **Efficiency**: Optimize for performance where it matters
+- **Resource Management**: Properly handle memory, files, and connections
+- **Scalability**: Consider future growth and load requirements
+
+## 2. Code Structure
+
+### File Organization
+- **Directory Structure**: [Define project-specific structure]
+- **File Naming**: [Specify naming conventions]
+- **Module Organization**: [Describe how to organize code modules]
+
+### Function and Class Design
+- **Single Responsibility**: Each function/class should have one clear purpose
+- **Function Length**: Keep functions focused and reasonably sized
+- **Parameter Limits**: Limit function parameters for clarity
+- **Return Values**: Be consistent with return value patterns
+
+## 3. Naming Conventions
+
+### Variables and Functions
+- **Descriptive Names**: Use clear, descriptive names
+- **Consistency**: Follow language-specific conventions
+- **Abbreviations**: Avoid unclear abbreviations
+
+### Constants and Configuration
+- **Constants**: [Define constant naming rules]
+- **Configuration**: [Specify config variable patterns]
+- **Environment Variables**: [Define env var conventions]
+
+## 4. Documentation Standards
+
+### Code Comments
+- **When to Comment**: Explain why, not what
+- **Comment Style**: [Specify comment formatting]
+- **Documentation Strings**: [Define docstring requirements]
+
+### README and Documentation
+- **Project README**: Must include setup, usage, and contribution guidelines
+- **API Documentation**: [Specify API doc requirements]
+- **Change Documentation**: [Define changelog requirements]
+
+## 5. Testing Standards
+
+### Test Organization
+- **Test Structure**: [Define test directory organization]
+- **Test Naming**: [Specify test file and function naming]
+- **Test Categories**: Unit, integration, and end-to-end test guidelines
+
+### Test Quality
+- **Coverage Requirements**: [Specify minimum coverage]
+- **Test Data**: [Define test data management]
+- **Mocking Strategy**: [Specify when and how to mock]
+
+## 6. Error Handling
+
+### Exception Management
+- **Error Types**: [Define custom error categories]
+- **Error Messages**: [Specify error message format]
+- **Logging**: [Define logging standards]
+
+### Validation and Input Handling
+- **Input Validation**: [Specify validation requirements]
+- **Sanitization**: [Define data sanitization rules]
+- **Security**: [Include security considerations]
+
+## 7. Version Control
+
+### Commit Standards
+- **Commit Messages**: [Define commit message format]
+- **Branch Naming**: [Specify branch naming conventions]
+- **Pull Request Process**: [Define PR requirements]
+
+### Code Review
+- **Review Checklist**: [Define what to check in reviews]
+- **Approval Process**: [Specify approval requirements]
+- **Merge Strategy**: [Define merge/rebase preferences]
+
+## 8. Dependencies and Libraries
+
+### Dependency Management
+- **Approved Libraries**: [List preferred libraries]
+- **Version Pinning**: [Define version management strategy]
+- **Security Updates**: [Specify update procedures]
+
+### Custom Code vs Libraries
+- **When to Build**: [Define when to write custom code]
+- **When to Use Libraries**: [Specify library selection criteria]
+- **Evaluation Criteria**: [Define how to evaluate new dependencies]
+
+## 9. Performance and Optimization
+
+### Performance Standards
+- **Response Times**: [Define acceptable response times]
+- **Resource Usage**: [Specify memory/CPU guidelines]
+- **Monitoring**: [Define performance monitoring requirements]
+
+### Optimization Guidelines
+- **Premature Optimization**: [Define when to optimize]
+- **Profiling**: [Specify profiling requirements]
+- **Caching Strategy**: [Define caching guidelines]
+
+## 10. Security Standards
+
+### Security Practices
+- **Authentication**: [Define auth requirements]
+- **Authorization**: [Specify access control patterns]
+- **Data Protection**: [Define data handling rules]
+
+### Vulnerability Management
+- **Security Reviews**: [Define security review process]
+- **Dependency Scanning**: [Specify vulnerability scanning]
+- **Incident Response**: [Define security incident procedures]
+
+## 11. Platform-Specific Sections
+
+### [Language/Framework Specific]
+- **Language Features**: [Define which language features to use/avoid]
+- **Framework Patterns**: [Specify framework-specific patterns]
+- **Tooling**: [Define required development tools]
+
+### Development Environment
+- **IDE Configuration**: [Specify IDE setup requirements]
+- **Linting and Formatting**: [Define code formatting rules]
+- **Build Process**: [Specify build and deployment procedures]
+
+## 12. Enforcement and Compliance
+
+### Automated Checks
+- **Linting**: [Define linting rules and tools]
+- **Testing**: [Specify automated test requirements]
+- **CI/CD Integration**: [Define pipeline checks]
+
+### Manual Reviews
+- **Code Review Process**: [Define manual review requirements]
+- **Architecture Reviews**: [Specify when architectural review is needed]
+- **Documentation Reviews**: [Define documentation review process]
+
+## 13. Exceptions and Flexibility
+
+### When to Deviate
+- **Performance Requirements**: [Define when performance trumps standards]
+- **Legacy Code**: [Specify how to handle existing code]
+- **Third-party Integration**: [Define exceptions for external requirements]
+
+### Approval Process
+- **Exception Requests**: [Define how to request exceptions]
+- **Documentation**: [Specify how to document exceptions]
+- **Review Process**: [Define exception review and approval]
+
+---
+
+## Customization Notes
+
+This template should be customized using:
+- `/initialize:coding-rules [platforms]` - Generate platform-specific versions
+- `/initialize:update-coding-rules` - Update existing rules based on project evolution
+
+## References
+
+- Project specifications in `planning/specifications/`
+- Team agreements and decisions
+- Industry best practices and standards
+```
+
+### Implementation Steps:
+
+1. **Create the base template file**: Generate `CODING_STANDARD.md` with the template above
+2. **Analyze current project**: Use the Gemini analysis to identify current conventions
+3. **Customize sections**: Fill in project-specific details where indicated
+4. **Validate completeness**: Ensure all sections are relevant and complete
+5. **Git Configuration**: Update .gitignore to exclude the coding standard file:
+   - Add 'CODING_STANDARD.md' to .gitignore if it exists
+   - Create .gitignore with 'CODING_STANDARD.md' entry if it doesn't exist
+   - Ensure coding standard file is not tracked in version control
+
+### Success Criteria:
+
+- Base coding standard template is created
+- Template includes all major coding standard categories
+- Template is ready for platform-specific customization
+- Template integrates with existing project structure
+
+Execute this setup now and create the comprehensive coding standard template.
+"""

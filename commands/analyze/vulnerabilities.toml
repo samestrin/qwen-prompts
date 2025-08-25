@@ -1,0 +1,67 @@
+# ---------------------------------------------------------------------------
+# Command: /analyze:vulnerabilities
+#
+# Description:
+#   Calls the Gemini CLI to analyze project dependencies for potential security
+#   vulnerabilities and provide guidance on vulnerability scanning approaches.
+#
+# Usage Examples:
+#
+#   1. Run a general vulnerability analysis:
+#      /analyze:vulnerabilities
+#
+#   2. Focus on specific package manager:
+#      /analyze:vulnerabilities focusing on npm dependencies
+#
+#   3. Target specific security concerns:
+#      /analyze:vulnerabilities focusing on outdated packages with known CVEs
+# ---------------------------------------------------------------------------
+
+name = "analyze:vulnerabilities"
+description = "Analyze project dependencies for potential vulnerabilities and provide scanning guidance"
+
+prompt = """
+## File Detection
+
+The **DEPENDENCY_FILES** is "`files=(package.json requirements.txt composer.json Gemfile go.mod Cargo.toml pom.xml build.gradle package-lock.json yarn.lock Pipfile.lock Gemfile.lock go.sum Cargo.lock); existing_files=""; for file 
+in "${files[@]}"; do if [ -f "$file" ]; then existing_files="$existing_files @$file"; fi; done; echo "$existing_files"`"
+
+---
+
+You are a security expert and software architect.
+
+# Vulnerability Analysis
+
+`gemini -p "{DEPENDENCY_FILES} Analyze the dependencies in this project for potential security vulnerabilities. {{args}}
+
+1. **Dependency Overview**: Identify package managers and dependency files present.
+2. **Risk Assessment**: Analyze dependency versions, age, and maintenance status.
+3. **Known Vulnerability Patterns**: Look for commonly vulnerable packages or outdated versions.
+4. **Security Configuration**: Review lock files and version constraints for security implications.
+5. **Vulnerability Scanning Strategy**: Recommend appropriate scanning tools and approaches.
+6. **Remediation Guidance**: Suggest update strategies and security best practices.
+7. **Scanning Commands**: Provide specific commands to run vulnerability scans.
+
+**For each package manager found, provide:**
+- 📦 **Dependency Analysis**: Version patterns, lock file status, constraint analysis
+- ⚠️ **Risk Indicators**: Outdated packages, deprecated dependencies, loose version constraints
+- 🔍 **Recommended Scanners**: Appropriate tools for the technology stack
+- 📋 **Scanning Commands**: Ready-to-run commands for vulnerability detection
+- 🛡️ **Security Recommendations**: Best practices for dependency management
+
+**Include scanning guidance for detected technologies:**
+- **Node.js**: `npm audit`, `yarn audit`, `pnpm audit`, Snyk CLI
+- **Python**: `pip-audit`, `safety check`, `bandit`
+- **Java**: OWASP Dependency-Check, `mvn dependency:check`
+- **Ruby**: `bundle audit`, `brakeman`
+- **PHP**: `composer audit`, Symfony Security Checker
+- **Go**: `govulncheck`, `nancy`
+- **Rust**: `cargo audit`
+- **Multi-language**: OWASP dep-scan, Trivy, Snyk"`
+
+---
+
+Carefully review the Vulnerability Analysis, correct any formatting issues, and display in properly formatted **Markdown**.
+
+Then **hard stop**.
+"""

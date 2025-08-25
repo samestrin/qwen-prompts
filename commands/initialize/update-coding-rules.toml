@@ -1,0 +1,240 @@
+# ---------------------------------------------------------------------------
+# Command: /initialize:update-coding-rules
+#
+# Description:
+#   Updates existing platform-specific coding rules based on project
+#   evolution, new specifications, or changes in requirements. Maintains
+#   consistency across all platform rule files.
+#
+# Usage Examples:
+#
+#   1. Update all existing platform rules:
+#      /initialize:update-coding-rules
+#
+#   2. Update specific platform rules:
+#      /initialize:update-coding-rules trae,claude
+#
+#   3. Update rules based on new specifications:
+#      /initialize:update-coding-rules --from-specs
+# ---------------------------------------------------------------------------
+
+name = "initialize:update-coding-rules"
+description = "Updates existing coding rules based on project evolution and new specifications"
+
+prompt = """
+Update existing platform-specific coding rules to reflect current project state and requirements.
+
+**Update Scope**: {{args}}
+
+### Phase 1: Current State Analysis
+
+`gemini -p "Analyze the current state of the project and existing coding rules to determine what needs updating:
+
+1. **Existing Rules Inventory**: Identify all current coding rules files:
+   - ./trae/rules/project_rules.md
+   - ./QWEN.md
+   - ./CLAUDE.md
+   - ./GEMINI.md
+   - ./CURSOR.md
+   - ./CODING_STANDARD.md
+
+2. **Specification Changes**: Compare current specifications with rules:
+   - @planning/specifications/tdd.md (check for updates)
+   - @planning/specifications/prd.md (check for updates)
+   - Any new specification files
+   - Changes in project requirements
+
+3. **Project Evolution Analysis**: Examine project changes:
+   - New dependencies or technologies added
+   - Changes in project structure
+   - New coding patterns or conventions
+   - Updated testing strategies
+   - New security or performance requirements
+
+4. **Technology Stack Updates**: Check for:
+   - Framework version updates
+   - New development tools
+   - Changed build processes
+   - Updated deployment strategies
+
+5. **Gap Analysis**: Identify:
+   - Inconsistencies between platform rules
+   - Missing rules for new project aspects
+   - Outdated rules that need revision
+   - New best practices to incorporate
+
+Provide a comprehensive analysis of what needs to be updated and why."`
+
+### Phase 2: Update Strategy Planning
+
+`gemini -p "Based on the current state analysis, develop an update strategy:
+
+1. **Prioritize Updates**: Determine which updates are:
+   - Critical (security, breaking changes)
+   - Important (new features, performance)
+   - Nice-to-have (style improvements, clarifications)
+
+2. **Platform-Specific Considerations**: For each platform, identify:
+   - Platform-specific update requirements
+   - Integration changes needed
+   - Compatibility considerations
+   - Migration requirements
+
+3. **Consistency Requirements**: Ensure:
+   - All platforms reflect the same core standards
+   - Platform-specific adaptations are appropriate
+   - No conflicting rules between platforms
+   - Unified approach to new requirements
+
+4. **Validation Strategy**: Plan how to:
+   - Test updated rules
+   - Validate consistency
+   - Ensure backward compatibility where needed
+   - Document changes made
+
+Provide a detailed update strategy and implementation plan."`
+
+### Phase 3: Rules Update Implementation
+
+`gemini -p "Execute the coding rules updates based on the analysis and strategy:
+
+**Target Platforms**: Parse {{args}} to determine scope:
+- If empty or 'all': Update all existing platform files
+- If specific platforms listed: Update only those platforms
+- If '--from-specs': Focus on specification-driven updates
+
+**Update Process**:
+
+1. **Base Standard Update**: If CODING_STANDARD.md exists, update it with:
+   - New project requirements
+   - Technology stack changes
+   - Updated best practices
+   - New sections for evolved project needs
+
+2. **Platform-Specific Updates**: For each target platform:
+
+   **Trae Rules (./trae/rules/project_rules.md)**:
+   - Update project overview with current state
+   - Revise technology stack information
+   - Update code quality standards based on project evolution
+   - Add new naming conventions if needed
+   - Update testing and validation requirements
+   - Incorporate new architectural decisions
+   - Add project-specific rules for new features
+
+   **Qwen Rules (./QWEN.md)**:
+   - Update project context
+   - Revise code generation guidelines
+   - Update framework integration requirements
+   - Modify testing requirements
+   - Update performance and security considerations
+   - Add new custom instructions
+
+   **Claude Rules (./CLAUDE.md)**:
+   - Update project overview
+   - Revise development context
+   - Update coding standards
+   - Modify architecture guidelines
+   - Update collaboration guidelines
+
+   **Gemini Rules (./GEMINI.md)**:
+   - Update project information
+   - Revise development guidelines
+   - Update technical specifications
+   - Modify business requirements
+   - Update quality assurance requirements
+
+   **Cursor Rules (./CURSOR.md)** (if exists):
+   - Update editor-specific configurations
+   - Revise code completion preferences
+   - Update refactoring guidelines
+
+3. **Consistency Validation**: Ensure:
+   - Core principles are consistent across platforms
+   - Platform-specific adaptations are appropriate
+   - No conflicting requirements
+   - All files reference current project state
+
+4. **Change Documentation**: Create or update:
+   - Change log for rule updates
+   - Migration notes if needed
+   - Updated README sections
+   - Team communication about changes
+
+5. **Backup and Versioning**: 
+   - Create backups of existing rules before updating
+   - Version the updated rules appropriately
+   - Document the update process
+
+Execute the update process now, ensuring all changes are properly implemented and validated."`
+
+### Phase 4: Validation and Finalization
+
+`gemini -p "Validate the updated coding rules and finalize the update process:
+
+1. **Content Validation**: Verify that updated rules:
+   - Accurately reflect current project state
+   - Are consistent across platforms
+   - Include all necessary new requirements
+   - Maintain backward compatibility where appropriate
+
+2. **Format Validation**: Ensure:
+   - Proper markdown formatting
+   - Consistent structure across files
+   - Correct file paths and references
+   - Proper platform-specific formatting
+
+3. **Integration Testing**: Check that updated rules:
+   - Work with current development workflow
+   - Are compatible with existing tools
+   - Support current project requirements
+   - Don't conflict with other project standards
+
+4. **Documentation Update**: Ensure:
+   - All changes are documented
+   - Team is informed of updates
+   - Migration instructions are provided if needed
+   - Update process is recorded for future reference
+
+5. **Git Configuration Management**: Ensure .gitignore is properly maintained:
+   - Verify all updated rule files are in .gitignore
+   - Add any new platform files to .gitignore
+   - Ensure trae/rules/ directory is excluded if it exists
+   - Maintain consistent .gitignore entries for all rule files
+
+6. **Final Report**: Provide summary of:
+   - What was updated and why
+   - Key changes made to each platform
+   - Any breaking changes or migration requirements
+   - Recommendations for team adoption
+   - .gitignore updates made
+
+Complete the validation and provide a comprehensive update report."`
+
+### Success Criteria:
+
+- All existing coding rules files are updated to reflect current project state
+- Updates are consistent across all platforms
+- New requirements and specifications are properly incorporated
+- Backward compatibility is maintained where appropriate
+- All changes are documented and validated
+- Team has clear guidance on adopting updated rules
+
+### Update Triggers:
+
+- **Specification Updates**: New or modified TDD/PRD documents
+- **Technology Changes**: New frameworks, tools, or dependencies
+- **Process Evolution**: New development workflows or practices
+- **Team Feedback**: Issues or improvements identified in current rules
+- **Compliance Requirements**: New security, performance, or regulatory needs
+
+### Rollback Strategy:
+
+If issues are discovered after update:
+- Restore from backups created during update process
+- Document issues and lessons learned
+- Plan corrective updates
+- Communicate rollback to team
+
+Execute the comprehensive coding rules update process now.
+"""

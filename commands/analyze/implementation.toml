@@ -27,12 +27,13 @@ The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, 
 3. **composer.json**: Check `autoload.psr-4` namespace mappings
 
 Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like "src"). 
-
 Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
+
+---
 
 You are an expert software architect/engineer.
 
-### Analysis
+# Implementation Analysis
 `gemini -p "{MAIN_DIRECTORIES} Has the following feature been implemented in this codebase? {{args}}
 
 Please provide:
