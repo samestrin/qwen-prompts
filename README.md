@@ -1,11 +1,11 @@
 # Qwen-Prompts
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%98%83-yellow.svg)](https://buymeacoffee.com/samestrin)
 
-A comprehensive collection of slash prompts for [qwen-code](https://github.com/QwenLM/qwen-code) CLI tool. These prompts leverage Gemini's large context window and advanced capabilities to provide powerful development workflow automation.
+A powerful collections of "hybrid prompt chaining" slash prompts for [`qwen-code`](https://github.com/QwenLM/qwen-code) CLI tool. These prompts leverage the large context window and advanced capabilities of [`gemini-cli`](https://github.com/google-gemini/gemini-cli) from within `qwen-code` to provide powerful development workflows.
 
 ## Overview
 
-This repository contains carefully crafted TOML prompt files that extend qwen-code's functionality with specialized commands for code analysis, project planning, security auditing, and more. Each prompt is designed to work seamlessly within qwen-code's interactive mode, taking advantage of Gemini's speed, context handling, and free tier benefits.
+This repository contains carefully crafted TOML prompt files that extend qwen-code's functionality with specialized commands for code analysis, project planning, security auditing, and more. Each prompt is designed to work seamlessly within qwen-code's interactive mode, taking advantage of gemini-cli's speed, context handling, and free tier benefits.
 
 ## Features
 
@@ -242,7 +242,7 @@ MIT License - see [LICENSE](LICENSE.md) file for details.
 ## Related Projects
 
 - [qwen-code](https://github.com/QwenLM/qwen-code) - The main CLI tool
-- [qweb-prompts](https://github.com/samestrin/qweb-prompts) - Web-focused prompt collection (planned)
+- [gemini-cli](https://github.com/google-gemini/gemini-cli) - The underlying CLI tool
 
 ---
 
