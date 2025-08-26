@@ -52,86 +52,39 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 
 ## Command Categories
 
-### 🔍 Analysis Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/analyze:dependency` | Analyze project dependencies and relationships | Multi-shot |
-| `/analyze:implementation` | Verify implementation against requirements | Multi-shot |
-| `/analyze:performance` | Performance bottleneck analysis | Multi-shot |
-| `/analyze:security` | Comprehensive security vulnerability assessment | Multi-shot |
-| `/analyze:tech-debt` | Technical debt identification and prioritization | Multi-shot |
-| `/analyze:vulnerabilities` | Comprehensive vulnerability scanning and assessment | Multi-shot |
-
-### 🔍 Code Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/code:analysis` | High-level codebase analysis with architecture mapping | Multi-shot |
-| `/code:quality` | Comprehensive code quality analysis and recommendations | Multi-shot |
-| `/code:review` | Comprehensive code review with severity-based findings | Multi-shot |
-
-### 📋 Creation & Strategy Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/create:cost-analysis` | Project cost and resource analysis | Multi-shot |
-| `/create:prd` | Product Requirements Document generation | Multi-shot |
-| `/create:sprint` | Generate detailed sprint plans with shell integration | Multi-shot + Shell |
-| `/create:tdd` | Test-Driven Development documentation | Multi-shot |
-| `/create:tutorial` | Create step-by-step tutorials | Multi-shot |
-
-### 🔍 Comparison Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/compare:dirs` | Compare and analyze directory structures | Multi-shot |
-| `/compare:files` | Compare and analyze file differences | Multi-shot |
-
-### 📚 Documentation Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/docs:create-standard` | Establish documentation standards | Multi-shot |
-| `/docs:generate-from-standard` | Generate documentation following standards | Multi-shot |
-| `/docs:update-standard` | Update existing documentation | Multi-shot |
-
-### 🚀 Initialize Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/initialize:planning` | Set up project planning directory structure | Single-shot |
-| `/initialize:coding-standard` | Generate base coding standard template | Single-shot |
-| `/initialize:coding-rules` | Create platform-specific coding rules | Multi-shot |
-| `/initialize:gitignore` | Generate comprehensive .gitignore files | Single-shot |
-| `/initialize:update-coding-rules` | Update existing platform-specific rules | Multi-shot |
-
-### 🔍 Find Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/find:patterns` | Find and analyze code patterns across projects | Multi-shot |
-
-### 📊 Strategy Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/strategy:extract-business-logic` | Extract and analyze business logic patterns | Multi-shot |
-| `/strategy:plan` | Create strategic implementation plans | Multi-shot |
-
-### 🧪 Test Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/test:coverage` | Test coverage analysis and recommendations | Multi-shot |
-| `/test:review-and-correct` | Generate review and correction documents for test failures | Multi-shot |
-
-### 🧪 Single-Shot Testing Commands
-
-| Command | Description | Type |
-|---------|-------------|------|
-| `/single:analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
-| `/single:code:analysis` | Single-shot code analysis variant | Single-shot |
+| Category | Command | Description | Type |
+|----------|---------|-------------|------|
+| 🔍 **Analysis** | `/analyze:dependency` | Analyze project dependencies and relationships | Multi-shot |
+| 🔍 **Analysis** | `/analyze:implementation` | Verify implementation against requirements | Multi-shot |
+| 🔍 **Analysis** | `/analyze:performance` | Performance bottleneck analysis | Multi-shot |
+| 🔍 **Analysis** | `/analyze:security` | Comprehensive security vulnerability assessment | Multi-shot |
+| 🔍 **Analysis** | `/analyze:tech-debt` | Technical debt identification and prioritization | Multi-shot |
+| 🔍 **Analysis** | `/analyze:vulnerabilities` | Comprehensive vulnerability scanning and assessment | Multi-shot |
+| 💻 **Code** | `/code:analysis` | High-level codebase analysis with architecture mapping | Multi-shot |
+| 💻 **Code** | `/code:quality` | Comprehensive code quality analysis and recommendations | Multi-shot |
+| 💻 **Code** | `/code:review` | Comprehensive code review with severity-based findings | Multi-shot |
+| 🔄 **Comparison** | `/compare:dirs` | Compare and analyze directory structures | Multi-shot |
+| 🔄 **Comparison** | `/compare:files` | Compare and analyze file differences | Multi-shot |
+| 📋 **Creation** | `/create:cost-analysis` | Project cost and resource analysis | Multi-shot |
+| 📋 **Creation** | `/create:prd` | Product Requirements Document generation | Multi-shot |
+| 📋 **Creation** | `/create:sprint` | Generate detailed sprint plans with shell integration | Multi-shot + Shell |
+| 📋 **Creation** | `/create:tdd` | Test-Driven Development documentation | Multi-shot |
+| 📋 **Creation** | `/create:tutorial` | Create step-by-step tutorials | Multi-shot |
+| 📚 **Documentation** | `/docs:create-standard` | Establish documentation standards | Multi-shot |
+| 📚 **Documentation** | `/docs:generate-from-standard` | Generate documentation following standards | Multi-shot |
+| 📚 **Documentation** | `/docs:update-standard` | Update existing documentation | Multi-shot |
+| 🔍 **Find** | `/find:patterns` | Find and analyze code patterns across projects | Multi-shot |
+| 🚀 **Initialize** | `/initialize:coding-rules` | Create platform-specific coding rules | Multi-shot |
+| 🚀 **Initialize** | `/initialize:coding-standard` | Generate base coding standard template | Single-shot |
+| 🚀 **Initialize** | `/initialize:gitignore` | Generate comprehensive .gitignore files | Single-shot |
+| 🚀 **Initialize** | `/initialize:planning` | Set up project planning directory structure | Single-shot |
+| 🚀 **Initialize** | `/initialize:update-coding-rules` | Update existing platform-specific rules | Multi-shot |
+| 🧪 **Single-Shot** | `/single:analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
+| 🧪 **Single-Shot** | `/single:code:analysis` | Single-shot code analysis variant | Single-shot |
+| 📊 **Strategy** | `/strategy:extract-business-logic` | Extract and analyze business logic patterns | Multi-shot |
+| 📊 **Strategy** | `/strategy:plan` | Create strategic implementation plans | Multi-shot |
+| 🧪 **Test** | `/test:coverage` | Test coverage analysis and recommendations | Multi-shot |
+| 🧪 **Test** | `/test:review-and-correct` | Generate review and correction documents for test failures | Multi-shot |
 
 **Note**: The `/single:` namespace contains single-shot variants of existing commands designed for testing and benchmarking purposes. These commands provide a direct comparison point against their multi-stage counterparts to evaluate performance and output quality differences.
 
