@@ -61,6 +61,7 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 | `/analyze:performance` | Performance bottleneck analysis | Multi-shot |
 | `/analyze:security` | Comprehensive security vulnerability assessment | Multi-shot |
 | `/analyze:tech-debt` | Technical debt identification and prioritization | Multi-shot |
+| `/analyze:vulnerabilities` | Comprehensive vulnerability scanning and assessment | Multi-shot |
 
 ### 🔍 Code Commands
 
@@ -84,14 +85,15 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 
 | Command | Description | Type |
 |---------|-------------|------|
+| `/compare:dirs` | Compare and analyze directory structures | Multi-shot |
 | `/compare:files` | Compare and analyze file differences | Multi-shot |
 
 ### 📚 Documentation Commands
 
 | Command | Description | Type |
 |---------|-------------|------|
-| `/docs:generate-standard` | Generate documentation following standards | Multi-shot |
-| `/docs:standard` | Establish documentation standards | Multi-shot |
+| `/docs:create-standard` | Establish documentation standards | Multi-shot |
+| `/docs:generate-from-standard` | Generate documentation following standards | Multi-shot |
 | `/docs:update-standard` | Update existing documentation | Multi-shot |
 
 ### 🚀 Initialize Commands
@@ -108,14 +110,14 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 
 | Command | Description | Type |
 |---------|-------------|------|
-| `/find:main-dirs` | Locate main source directories in projects | Multi-shot |
+| `/find:patterns` | Find and analyze code patterns across projects | Multi-shot |
 
 ### 📊 Strategy Commands
 
 | Command | Description | Type |
 |---------|-------------|------|
+| `/strategy:extract-business-logic` | Extract and analyze business logic patterns | Multi-shot |
 | `/strategy:plan` | Create strategic implementation plans | Multi-shot |
-| `/strategy:roadmap` | Generate development roadmaps | Multi-shot |
 
 ### 🧪 Test Commands
 
@@ -128,8 +130,8 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 
 | Command | Description | Type |
 |---------|-------------|------|
-| `/single/analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
-| `/single/code:analysis` | Single-shot code analysis variant | Single-shot |
+| `/single:analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
+| `/single:code:analysis` | Single-shot code analysis variant | Single-shot |
 
 **Note**: The `/single:` namespace contains single-shot variants of existing commands designed for testing and benchmarking purposes. These commands provide a direct comparison point against their multi-stage counterparts to evaluate performance and output quality differences.
 
