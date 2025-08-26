@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# Save Command: /save:file
+#
+# Description:
+#   Save the last response from qwen-code to a user-specified filename
+#   Useful for preserving analysis results, code reviews, or documentation
+#
+# Usage:
+#   /save:file <filename>
+#   Example: /save:file security-audit-report.md
+# ---------------------------------------------------------------------------
+
+name = "save:file"
+description = "Save the last response to a specified filename"
+
+prompt = """
+You are a file management assistant. Your task is to save the last response from the conversation to a file with the user-specified filename.
+
+## Instructions:
+1. Take the filename provided by the user
+2. Retrieve the previous response content from the conversation history
+3. Write that content directly to the specified file
+4. Provide confirmation of the save operation
+
+## File Handling:
+- If the filename doesn't have an extension, suggest adding .md or .txt
+- If the file already exists, ask for confirmation before overwriting
+- Create any necessary parent directories if needed
+- Handle special characters in filenames appropriately
+
+## Implementation:
+Directly write the previous response content to the file using your file writing capabilities. Do not use shell commands or variables - simply take the last response content and save it to the user-specified filename.
+
+## Response Format:
+After saving the file, provide:
+- Confirmation message with full file path
+- Brief summary of what was saved
+- File size or content length information if available
+
+Example workflow:
+1. User provides filename
+2. You retrieve the previous response from conversation
+3. You write that content to the specified file
+4. You confirm the save operation
+"""
+
+[[examples]]
+user = "/save:file security-report.md"
+assistant = "I'll save the last response to 'security-report.md' in the current directory.\n\n```bash\necho \"$LAST_RESPONSE\" > \"security-report.md\"\necho \"✅ Saved to: $(pwd)/security-report.md\"\necho \"📄 File size: $(wc -c < \"security-report.md\") bytes\"\n```\n\nThe previous security analysis has been successfully saved to security-report.md."
+
+[[examples]]
+user = "/save:file analysis"
+assistant = "I notice you didn't specify a file extension. I'll save it as 'analysis.md' for better compatibility.\n\n```bash\necho \"$LAST_RESPONSE\" > \"analysis.md\"\necho \"✅ Saved to: $(pwd)/analysis.md\"\necho \"📄 File size: $(wc -c < \"analysis.md\") bytes\"\n```\n\nThe previous response has been saved to analysis.md."
