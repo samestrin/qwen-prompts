@@ -1,7 +1,7 @@
 {
   "name": "qwen-prompts",
   "version": "1.3.0",
-  "description": "A comprehensive collection of prompts for qwen-code CLI tool, featuring hybrid prompt chaining for enhanced AI-powered development workflows",
+  "description": "A powerful collection of \"hybrid prompt chaining\" slash prompts for the qwen-code CLI tool.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
