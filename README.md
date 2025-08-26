@@ -213,7 +213,8 @@ This collection is featured in the blog article ["Maximizing AI Efficiency: Buil
 **Current Version: 1.3.1**
 
 This release introduces testing command organization and enhanced security analysis:
-- **New `/single:` namespace** with single-shot command variants for testing and benchmarking
+- **New `/save:file` slash prompt** that quickly saves the last response
+- **New `/single:` namespace** with single-shot command variants 
 - **Enhanced security analysis** with severity levels and impact assessments
 - **31 comprehensive slash prompts** organized into logical namespaces
 - **New `/initialize:` namespace** with 5 commands for complete project setup automation
