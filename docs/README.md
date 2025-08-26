@@ -60,7 +60,6 @@ When adding new documentation:
 ## Related Resources
 
 - [Main Repository](https://github.com/samestrin/qwen-prompts) - Complete qwen-prompts collection
-- [Blog Articles](../blog/) - Technical articles explaining hybrid prompt chaining concepts
 - [Commands](../commands/) - TOML configuration files for all available commands
 - [Security Policy](../SECURITY.md) - Important security guidelines for shell-integrated workflows
 
