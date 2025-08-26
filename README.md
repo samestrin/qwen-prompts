@@ -202,7 +202,7 @@ Contributions are welcome! When adding new prompts:
 
 ## Blog Series
 
-This collection is part of an upcoming blog series on dev.to exploring advanced qwen-code usage patterns and prompt engineering techniques.
+This collection is featured in the blog article ["Maximizing AI Efficiency: Building Hybrid Workflows with Qwen Code and Gemini CLI"](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c) on dev.to, which explores advanced qwen-code usage patterns and prompt engineering techniques.
 
 ## Version
 
