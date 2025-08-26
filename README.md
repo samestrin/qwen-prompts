@@ -1,7 +1,7 @@
 # Qwen-Prompts
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%98%83-yellow.svg)](https://buymeacoffee.com/samestrin)
 
-A powerful collections of "[hybrid prompt chaining](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c)" slash prompts for [`qwen-code`](https://github.com/QwenLM/qwen-code) CLI tool. These prompts leverage the large context window and advanced capabilities of [`gemini-cli`](https://github.com/google-gemini/gemini-cli) from within `qwen-code` to provide powerful development workflows.
+A powerful collection of "[hybrid prompt chaining](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c)" slash prompts for [`qwen-code`](https://github.com/QwenLM/qwen-code) CLI tool. These prompts leverage the large context window and advanced capabilities of [`gemini-cli`](https://github.com/google-gemini/gemini-cli) from within `qwen-code` to provide powerful development workflows.
 
 ## Overview
 
@@ -206,7 +206,7 @@ Contributions are welcome! When adding new prompts:
 
 ## Blog Series
 
-This collection is featured in the blog article ["Maximizing AI Efficiency: Building Hybrid Workflows with Qwen Code and Gemini CLI"](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c) on dev.to, which explores advanced qwen-code usage patterns and prompt engineering techniques.
+This collection is featured in the blog article ["72% Faster AI Workflows: How Hybrid Prompt Chaining with Qwen Code and Gemini CLI Boosts Efficiency"](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c) on dev.to, which explores advanced qwen-code usage patterns and prompt engineering techniques.
 
 ## Version
 
