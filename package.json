@@ -1,6 +1,6 @@
 {
   "name": "qwen-prompts",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A powerful collection of \"hybrid prompt chaining\" slash prompts for the qwen-code CLI tool.",
   "main": "index.js",
   "scripts": {
