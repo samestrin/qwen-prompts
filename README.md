@@ -79,6 +79,7 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 | **Initialize** | `/initialize:gitignore` | Generate comprehensive .gitignore files | Single-shot |
 | **Initialize** | `/initialize:planning` | Set up project planning directory structure | Single-shot |
 | **Initialize** | `/initialize:update-coding-rules` | Update existing platform-specific rules | Multi-shot |
+| **Save** | `/save:file` | Save the last response to a specified filename | Single-shot |
 | **Single-Shot** | `/single:analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
 | **Single-Shot** | `/single:code:analysis` | Single-shot code analysis variant | Single-shot |
 | **Strategy** | `/strategy:extract-business-logic` | Extract and analyze business logic patterns | Multi-shot |
@@ -96,7 +97,7 @@ Simple, direct commands that execute once and return results immediately.
 **Example**: `/code:analysis`
 ```toml
 prompt = """
-The **MAIN_DIRECTORIES** is "`gemini -p "..."`"
+The **MAIN_DIRECTORIES** is "`gemini -p ...`"
 
 ### Analysis
 `gemini -p "{MAIN_DIRECTORIES} Provide comprehensive analysis..."`
@@ -109,7 +110,7 @@ Complex prompts that perform multiple analysis steps, often with conditional log
 **Example**: `/code:analysis`
 ```toml
 prompt = """
-The **MAIN_DIRECTORIES** is "`gemini -p "..."`"
+The **MAIN_DIRECTORIES** is "`gemini -p ...`"
 
 ### Analysis
 `gemini -p "{MAIN_DIRECTORIES} Provide comprehensive analysis..."`
@@ -121,7 +122,7 @@ Advanced prompts that leverage shell command execution for dynamic behavior and 
 
 **Example**: `/create:sprint` with sprint numbering
 ```toml
-The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name "*.md" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\\\.[0-9]+)*$' | sort -V | tail -1`"
+The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name \"*.md\" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1`"
 ```
 
 ## Key Features
@@ -156,6 +157,9 @@ Multi-layered analysis approach:
 
 # Analyze specific directory
 /code:analysis analyzing the @./server/api/ directory
+
+# Save your code analysis to a file, after running either previous command
+/save:file code_analysis.md
 ```
 
 ### Sprint Planning
@@ -206,12 +210,12 @@ This collection is featured in the blog article ["Maximizing AI Efficiency: Buil
 
 ## Version
 
-**Current Version: 1.3.0**
+**Current Version: 1.3.1**
 
 This release introduces testing command organization and enhanced security analysis:
 - **New `/single:` namespace** with single-shot command variants for testing and benchmarking
 - **Enhanced security analysis** with severity levels and impact assessments
-- **30 comprehensive slash prompts** organized into logical namespaces
+- **31 comprehensive slash prompts** organized into logical namespaces
 - **New `/initialize:` namespace** with 5 commands for complete project setup automation
 - **Automatic .gitignore management** across all initialize commands
 - **Multi-platform coding rules** generation for Trae, Qwen, Claude, Gemini, and Cursor
