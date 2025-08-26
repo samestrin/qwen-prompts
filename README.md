@@ -122,7 +122,7 @@ Advanced prompts that leverage shell command execution for dynamic behavior and 
 
 **Example**: `/create:sprint` with sprint numbering
 ```toml
-The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name \"*.md\" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1`"
+The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name \"*.md\" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\\\.[0-9]+)*$' | sort -V | tail -1`"
 ```
 
 ## Key Features
