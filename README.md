@@ -9,22 +9,22 @@ This repository contains carefully crafted TOML prompt files that extend qwen-co
 
 ## Features
 
-- **🔍 Intelligent Code Analysis**: Deep codebase understanding with architecture mapping
-- **📋 Project Planning**: Sprint planning and strategic development roadmaps  
-- **🔒 Security Auditing**: Comprehensive security vulnerability assessment
-- **⚡ Shell Integration**: Advanced prompts with embedded shell command execution
-- **📊 Quality Metrics**: Code quality, technical debt, and performance analysis
-- **📚 Documentation**: Automated documentation generation and standards
+- **Intelligent Code Analysis**: Deep codebase understanding with architecture mapping
+- **Project Planning**: Sprint planning and strategic development roadmaps  
+- **Security Auditing**: Comprehensive security vulnerability assessment
+- **Shell Integration**: Advanced prompts with embedded shell command execution
+- **Quality Metrics**: Code quality, technical debt, and performance analysis
+- **Documentation**: Automated documentation generation and standards
 
 ## Security Considerations
 
 Slash prompts have **shell execution capabilities** and can run commands on your system. Malicious prompts could potentially harm your system, access sensitive files, or exfiltrate data. _Be responsible, and review prompts prior to installation._
 
 **Before installing:**
-- 📖 Read our [SECURITY.md](SECURITY.md) file completely
-- 🔍 Manually review each `.toml` file for suspicious commands
-- 🧪 Test in isolated environments first
-- ✅ Verify all shell commands (backticks) are safe
+- Read our [SECURITY.md](SECURITY.md) file completely
+- Manually review each `.toml` file for suspicious commands
+- Test in isolated environments first
+- Verify all shell commands (backticks) are safe
 
 **Never install prompts from untrusted sources without thorough review.**
 
@@ -54,37 +54,37 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 
 | Category | Command | Description | Type |
 |----------|---------|-------------|------|
-| 🔍 **Analysis** | `/analyze:dependency` | Analyze project dependencies and relationships | Multi-shot |
-| 🔍 **Analysis** | `/analyze:implementation` | Verify implementation against requirements | Multi-shot |
-| 🔍 **Analysis** | `/analyze:performance` | Performance bottleneck analysis | Multi-shot |
-| 🔍 **Analysis** | `/analyze:security` | Comprehensive security vulnerability assessment | Multi-shot |
-| 🔍 **Analysis** | `/analyze:tech-debt` | Technical debt identification and prioritization | Multi-shot |
-| 🔍 **Analysis** | `/analyze:vulnerabilities` | Comprehensive vulnerability scanning and assessment | Multi-shot |
-| 💻 **Code** | `/code:analysis` | High-level codebase analysis with architecture mapping | Multi-shot |
-| 💻 **Code** | `/code:quality` | Comprehensive code quality analysis and recommendations | Multi-shot |
-| 💻 **Code** | `/code:review` | Comprehensive code review with severity-based findings | Multi-shot |
-| 🔄 **Comparison** | `/compare:dirs` | Compare and analyze directory structures | Multi-shot |
-| 🔄 **Comparison** | `/compare:files` | Compare and analyze file differences | Multi-shot |
-| 📋 **Creation** | `/create:cost-analysis` | Project cost and resource analysis | Multi-shot |
-| 📋 **Creation** | `/create:prd` | Product Requirements Document generation | Multi-shot |
-| 📋 **Creation** | `/create:sprint` | Generate detailed sprint plans with shell integration | Multi-shot + Shell |
-| 📋 **Creation** | `/create:tdd` | Test-Driven Development documentation | Multi-shot |
-| 📋 **Creation** | `/create:tutorial` | Create step-by-step tutorials | Multi-shot |
-| 📚 **Documentation** | `/docs:create-standard` | Establish documentation standards | Multi-shot |
-| 📚 **Documentation** | `/docs:generate-from-standard` | Generate documentation following standards | Multi-shot |
-| 📚 **Documentation** | `/docs:update-standard` | Update existing documentation | Multi-shot |
-| 🔍 **Find** | `/find:patterns` | Find and analyze code patterns across projects | Multi-shot |
-| 🚀 **Initialize** | `/initialize:coding-rules` | Create platform-specific coding rules | Multi-shot |
-| 🚀 **Initialize** | `/initialize:coding-standard` | Generate base coding standard template | Single-shot |
-| 🚀 **Initialize** | `/initialize:gitignore` | Generate comprehensive .gitignore files | Single-shot |
-| 🚀 **Initialize** | `/initialize:planning` | Set up project planning directory structure | Single-shot |
-| 🚀 **Initialize** | `/initialize:update-coding-rules` | Update existing platform-specific rules | Multi-shot |
-| 🧪 **Single-Shot** | `/single:analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
-| 🧪 **Single-Shot** | `/single:code:analysis` | Single-shot code analysis variant | Single-shot |
-| 📊 **Strategy** | `/strategy:extract-business-logic` | Extract and analyze business logic patterns | Multi-shot |
-| 📊 **Strategy** | `/strategy:plan` | Create strategic implementation plans | Multi-shot |
-| 🧪 **Test** | `/test:coverage` | Test coverage analysis and recommendations | Multi-shot |
-| 🧪 **Test** | `/test:review-and-correct` | Generate review and correction documents for test failures | Multi-shot |
+| **Analysis** | `/analyze:dependency` | Analyze project dependencies and relationships | Multi-shot |
+| **Analysis** | `/analyze:implementation` | Verify implementation against requirements | Multi-shot |
+| **Analysis** | `/analyze:performance` | Performance bottleneck analysis | Multi-shot |
+| **Analysis** | `/analyze:security` | Comprehensive security vulnerability assessment | Multi-shot |
+| **Analysis** | `/analyze:tech-debt` | Technical debt identification and prioritization | Multi-shot |
+| **Analysis** | `/analyze:vulnerabilities` | Comprehensive vulnerability scanning and assessment | Multi-shot |
+| **Code** | `/code:analysis` | High-level codebase analysis with architecture mapping | Multi-shot |
+| **Code** | `/code:quality` | Comprehensive code quality analysis and recommendations | Multi-shot |
+| **Code** | `/code:review` | Comprehensive code review with severity-based findings | Multi-shot |
+| **Comparison** | `/compare:dirs` | Compare and analyze directory structures | Multi-shot |
+| **Comparison** | `/compare:files` | Compare and analyze file differences | Multi-shot |
+| **Creation** | `/create:cost-analysis` | Project cost and resource analysis | Multi-shot |
+| **Creation** | `/create:prd` | Product Requirements Document generation | Multi-shot |
+| **Creation** | `/create:sprint` | Generate detailed sprint plans with shell integration | Multi-shot + Shell |
+| **Creation** | `/create:tdd` | Test-Driven Development documentation | Multi-shot |
+| **Creation** | `/create:tutorial` | Create step-by-step tutorials | Multi-shot |
+| **Documentation** | `/docs:create-standard` | Establish documentation standards | Multi-shot |
+| **Documentation** | `/docs:generate-from-standard` | Generate documentation following standards | Multi-shot |
+| **Documentation** | `/docs:update-standard` | Update existing documentation | Multi-shot |
+| **Find** | `/find:patterns` | Find and analyze code patterns across projects | Multi-shot |
+| **Initialize** | `/initialize:coding-rules` | Create platform-specific coding rules | Multi-shot |
+| **Initialize** | `/initialize:coding-standard` | Generate base coding standard template | Single-shot |
+| **Initialize** | `/initialize:gitignore` | Generate comprehensive .gitignore files | Single-shot |
+| **Initialize** | `/initialize:planning` | Set up project planning directory structure | Single-shot |
+| **Initialize** | `/initialize:update-coding-rules` | Update existing platform-specific rules | Multi-shot |
+| **Single-Shot** | `/single:analyze:security` | Single-shot security analysis for benchmarking | Single-shot |
+| **Single-Shot** | `/single:code:analysis` | Single-shot code analysis variant | Single-shot |
+| **Strategy** | `/strategy:extract-business-logic` | Extract and analyze business logic patterns | Multi-shot |
+| **Strategy** | `/strategy:plan` | Create strategic implementation plans | Multi-shot |
+| **Test** | `/test:coverage` | Test coverage analysis and recommendations | Multi-shot |
+| **Test** | `/test:review-and-correct` | Generate review and correction documents for test failures | Multi-shot |
 
 **Note**: The `/single:` namespace contains single-shot variants of existing commands designed for testing and benchmarking purposes. These commands provide a direct comparison point against their multi-stage counterparts to evaluate performance and output quality differences.
 
@@ -126,20 +126,20 @@ The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sp
 
 ## Key Features
 
-### 🧠 Intelligent Main Directory Detection
+### Intelligent Main Directory Detection
 All prompts automatically detect the primary source code directory by analyzing:
 - `package.json` (Node.js projects)
 - `pyproject.toml` (Python projects)  
 - `composer.json` (PHP projects)
 
-### 🔄 Dynamic Shell Execution
+### Dynamic Shell Execution
 Advanced prompts use backtick shell execution for:
 - File system analysis
 - Dynamic content generation
 - Project state detection
 - Automated numbering systems
 
-### 📊 Comprehensive Analysis
+### Comprehensive Analysis
 Multi-layered analysis approach:
 1. **Project Structure Analysis**
 2. **Architecture Assessment** 
