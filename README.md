@@ -1,5 +1,6 @@
 # Qwen-Prompts
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%98%83-yellow.svg)](https://buymeacoffee.com/samestrin)
+[![Star on GitHub](https://img.shields.io/github/stars/samestrin/qwen-prompts?style=social)](https://github.com/samestrin/qwen-prompts/stargazers) [![Fork on GitHub](https://img.shields.io/github/forks/samestrin/qwen-prompts?style=social)](https://github.com/samestrin/qwen-prompts/network/members) [![Watch on GitHub](https://img.shields.io/github/watchers/samestrin/qwen-prompts?style=social)](https://github.com/samestrin/qwen-prompts/watchers)
+![Version 1.4.1](https://img.shields.io/badge/Version-1.4.1-blue) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Built with TOML](https://img.shields.io/badge/Built%20with-TOML-orange)](https://nodejs.org/)
 
 A powerful collection of "[hybrid prompt chaining](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c)" slash prompts for [`qwen-code`](https://github.com/QwenLM/qwen-code) CLI tool. These prompts combine multi-shot analysis with single-shot efficiency, leveraging [`gemini-cli`](https://github.com/google-gemini/gemini-cli) integration to deliver **72% faster execution** and **91.7% success rate** across development workflows (tested across 6 repositories).
 
@@ -52,7 +53,6 @@ Slash prompts have **shell execution capabilities** and can run commands on your
    cd your-project-directory
    qwen
    ```
-
 ## Command Categories
 
 | Category | Command | Description | Type | Output |
@@ -280,9 +280,9 @@ This collection is featured in the blog article ["72% Faster AI Workflows: How H
 
 For detailed version history, feature updates, and breaking changes, see [CHANGELOG.md](CHANGELOG.md).
 
-## Support
+## Find This Useful?
 
-If you find these prompts helpful, consider supporting the project:
+If you find `qwen-prompts` useful, please consider starring the repository and supporting the project:
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%F0%9F%98%83-yellow.svg)](https://buymeacoffee.com/samestrin)
 
