@@ -5,7 +5,7 @@ A powerful collection of "[hybrid prompt chaining](https://dev.to/samestrin/maxi
 
 ## Overview
 
-This repository contains 47 carefully crafted TOML prompt files that extend qwen-code's functionality with specialized commands for code analysis, project planning, security auditing, and more. Each prompt uses **hybrid prompt chaining** - a technique that combines the thoroughness of multi-shot prompts with the efficiency of single-shot execution, resulting in **36-83% fewer tokens** while maintaining comprehensive analysis quality.
+This repository contains 45 carefully crafted TOML prompt files that extend qwen-code's functionality with specialized commands for code analysis, project planning, security auditing, and more. Each prompt uses **hybrid prompt chaining** - a technique that combines the thoroughness of multi-shot prompts with the efficiency of single-shot execution, resulting in **36-83% fewer tokens** while maintaining comprehensive analysis quality.
 
 ## Features
 
