@@ -266,7 +266,7 @@ Contributions are welcome! When adding new prompts:
 
 ## Blog Series
 
-This collection is featured in the blog article ["72% Faster AI Workflows: How Hybrid Prompt Chaining with Qwen Code and Gemini CLI Boosts Efficiency"](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c) on dev.to. The article demonstrates how **Hybrid Prompt Chaining** revolutionizes AI development workflows by combining the best of both multi-shot and single-shot approaches.
+This collection is featured in the blog article ["72% Faster AI Workflows: How Hybrid Prompt Chaining with Qwen Code and Gemini CLI Boosts Efficiency"](https://medium.com/@sam.estrin/72-faster-ai-workflows-how-hybrid-prompt-chaining-with-qwen-code-and-gemini-cli-boosts-efficiency-1d3dc8a29778) on medium.com. The article demonstrates how **Hybrid Prompt Chaining** revolutionizes AI development workflows by combining the best of both multi-shot and single-shot approaches.
 
 **Proven Performance**: Benchmarks across six diverse repositories consistently show:
 - **72% faster execution** compared to traditional multi-shot approaches
