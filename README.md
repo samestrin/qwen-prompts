@@ -40,7 +40,7 @@ Slash prompts have **shell execution capabilities** and can run commands on your
    cd qwen-prompts
    ```
 
-3. **Review each prompt file** in the `commands/` directory before copying
+3. **Review each prompt file** in the [`commands/`](commands/) directory before copying
 
 4. Copy the command files to your qwen-code commands directory:
    ```bash
