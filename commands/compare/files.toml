@@ -7,10 +7,10 @@
 # Usage Examples:
 #
 #   1. Compare two files:
-#      /compare:files Compare these files: @./service/legacy_api.js @./service/new_api.js
+#      /compare:files Compare these files: @service/legacy_api.js @service/new_api.js
 #
 #   2. Compare directories with a specific focus:
-#      /compare:files Compare @./v1/ @./v2/, focusing on implementation differences and code quality
+#      /compare:files Compare @v1/ @v2/, focusing on implementation differences and code quality
 # ---------------------------------------------------------------------------
 
 name = "compare:files"

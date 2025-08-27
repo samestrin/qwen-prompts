@@ -11,7 +11,7 @@
 #      /code:analysis
 #
 #   2. Analyze a specific directory:
-#      /code:analysis analyzing the @./server/api/ directory
+#      /code:analysis analyzing the @server/api/ directory
 # ---------------------------------------------------------------------------
 
 name = "code:analysis"
@@ -43,40 +43,103 @@ The **MAIN_DIRECTORIES** is "`if [ -n \"$COMBINED_DIRS\" ]; then echo \"$COMBINE
 
 ---
 
-You are an expert software architect/engineer.
+You are an expert technical consultant providing professional code assessments.
 
 # Code Analysis
-`gemini -p "{MAIN_DIRECTORIES} Provide a comprehensive technical analysis of this codebase. {{args}}
+`gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive technical analysis of this codebase. {{args}}
 
-Your analysis should include:
+1. **Project Overview**: Purpose, domain, target users, business context.
+2. **Architecture & Design Patterns**: High-level architecture, design patterns used, architectural decisions.
+3. **Technology Stack**: Languages, frameworks, libraries, databases, external services.
+4. **File & Module Structure**: Directory organization, module relationships, entry points.
+5. **Code Quality**: Readability, maintainability, consistency, documentation coverage.
+6. **Performance Considerations**: Bottlenecks, optimization opportunities, scalability concerns.
+7. **Testing Strategy**: Test coverage, testing frameworks, test quality and organization.
+8. **Security Assessment**: Security practices, potential vulnerabilities, authentication/authorization.
+9. **Configuration & Environment**: Environment setup, configuration management, deployment considerations.
+10. **Dependencies & Package Management**: Dependency analysis, version management, security of dependencies.
+11. **Areas for Improvement**: Technical debt, refactoring opportunities, modernization suggestions.
+12. **Development Workflow**: Build process, CI/CD, development tools, code standards.
 
-1. **Project Overview** – Explain what the project does and its main goals.
-2. **Architecture** – Describe the high-level architecture, core design patterns, and key modules.
-3. **Technology Stack** – Languages, frameworks, tools, and libraries used.
-4. **File/Module Map** – Identify and describe the most important files and directories.
-   - Only the meaningful and functionally significant files.
-   - Use real file paths. Group by directory using headers and lists.
-   - Summarize related files when appropriate (e.g., tests, utils, etc.).
-   - **Do not use a tree structure**
-5. **Entry Points** – Which files start or bootstrap the application.
-6. **Key Components** – Detail the most critical parts of the codebase and their responsibilities.
-7. **Dependencies** – Major external dependencies and what they're used for.
-8. **Configuration** – How the app is configured, with relevant files/envs/tools.
-9. **Build & Deployment** – How the project is installed, executed, and deployed.
-10. **Security Considerations** – Authentication patterns, data validation, potential vulnerabilities, security best practices.
-11. **Performance Characteristics** – Database queries, caching strategies, bottlenecks, optimization opportunities.
-12. **Testing Strategy** – Test coverage, frameworks used, test organization, missing test areas.
-13. **Areas for Improvement** – Potential improvements, refactors, missing docs, or technical debt.`
+**For each area, provide:**
+- ✅ Strengths and well-implemented aspects.
+- ⚠️ Areas of concern or potential issues.
+- 💡 Specific recommendations for improvement.
+- 📁 Relevant files and code examples.
+- 🎯 Priority level for addressing issues (High/Medium/Low).`
 
 ---
 
-Using ONLY the above technical output as context, provide a comprehensive technical overview in properly formatted **Markdown**.
+# Output Format Selection
 
-For the file/module map:
-- **Prioritize clarity and hierarchy**, not completeness.
-- **Present real paths** with short descriptions.
-- Do NOT guess or fabricate structure.
-- Use bullet points, not tree diagrams.
+**Check for --comprehensive flag in arguments:**
+- If `--comprehensive` is present in {{args}}, provide technical Markdown output
+- Otherwise, provide professional technical assessment report
+
+## Professional Technical Assessment (Default)
+
+Using ONLY the above technical analysis as context, provide a **professional technical assessment report** formatted for technical leads, architects, and stakeholders:
+
+### Executive Summary
+- Project overview and technical maturity assessment
+- Key architectural strengths and concerns
+- Overall code quality and maintainability rating
+- Critical recommendations requiring immediate attention
+
+### Technical Architecture
+**Architecture Overview**
+- System design and architectural patterns
+- Technology stack evaluation
+- Scalability and performance characteristics
+
+**Design Quality**
+- Code organization and modularity
+- Design pattern implementation
+- Separation of concerns
+
+### Code Quality Assessment
+**Strengths**
+- Well-implemented features and practices
+- Code quality highlights
+
+**Areas for Improvement**
+- Technical debt identification
+- Code quality concerns
+- Maintainability issues
+
+### Risk Assessment
+**High Priority Issues** (Immediate Attention)
+- Critical technical risks
+- Performance bottlenecks
+- Security concerns
+
+**Medium Priority Issues** (Next Sprint/Quarter)
+- Moderate technical debt
+- Optimization opportunities
+
+**Low Priority Issues** (Future Considerations)
+- Minor improvements
+- Enhancement opportunities
+
+### Technology & Dependencies
+- Technology stack assessment
+- Dependency analysis and recommendations
+- Upgrade and modernization opportunities
+
+### Development Process
+- Testing strategy evaluation
+- CI/CD and deployment assessment
+- Development workflow recommendations
+
+### Recommendations
+- Prioritized action plan
+- Resource requirements
+- Implementation roadmap
+- Success metrics
+
+## Technical Analysis (--comprehensive flag)
+
+If `--comprehensive` flag is detected, instead provide the detailed technical analysis in properly formatted **Markdown** with comprehensive technical findings, code references, and implementation details.
 
 Then **hard stop**.
 """

@@ -1,0 +1,164 @@
+# ---------------------------------------------------------------------------
+# Command: /analyze:repo
+#
+# Description:
+#   Calls shell commands to complete a repository analysis of the current directory.
+#
+# Usage:
+#   /analyze:repo
+# ---------------------------------------------------------------------------
+
+name = "analyze:repo"
+description = "Repository analysis with comprehensive statistics and insights"
+
+prompt = """
+You are an expert software architect and repository analyst with extensive experience in codebase assessment and project evaluation.
+
+Perform a comprehensive analysis of this repository. Start by gathering repository statistics using shell commands, then provide detailed insights.
+
+## 1. Repository Statistics Collection
+
+The **REPOSITORY_STATS** is "`# Basic Repository Stats
+echo "=== Repository Analysis ==="
+echo -n "Repository: "
+pwd | xargs basename
+echo -n "Date: "
+date
+echo ""
+
+# Repository size and file counts
+echo "--- Basic Repository Stats ---"
+echo -n "Total size: "
+du -sh . 2>/dev/null | cut -f1
+echo -n "Total files: "
+find . -type f | wc -l | tr -d ' '
+echo -n "Total directories: "
+find . -type d | wc -l | tr -d ' '
+echo ""
+
+# Code statistics by language
+echo "--- Code Statistics ---"
+echo "Lines of code by file type:"
+echo -n "  JavaScript/TypeScript: "
+find . -name '*.js' -o -name '*.ts' -o -name '*.jsx' -o -name '*.tsx' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  Python: "
+find . -name '*.py' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  Java: "
+find . -name '*.java' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  C/C++: "
+find . -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  Go: "
+find . -name '*.go' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  Rust: "
+find . -name '*.rs' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  PHP: "
+find . -name '*.php' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  Ruby: "
+find . -name '*.rb' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo -n "  Shell: "
+find . -name '*.sh' -o -name '*.bash' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+echo ""
+
+# Project structure analysis
+echo "--- Project Structure ---"
+echo -n "Directory depth: "
+find . -type d | awk -F/ '{print NF-1}' | sort -n | tail -1
+echo -n "Source directories: "
+find . -type d \\( -name src -o -name source -o -name lib -o -name app \\) | wc -l | tr -d ' '
+echo -n "Test directories: "
+find . -type d \\( -name test -o -name tests -o -name __tests__ -o -name spec \\) | wc -l | tr -d ' '
+echo -n "Documentation directories: "
+find . -type d \\( -name docs -o -name doc -o -name documentation \\) | wc -l | tr -d ' '
+echo ""
+
+# File type distribution
+echo "--- File Type Distribution ---"
+echo "Top 10 file extensions:"
+find . -type f -name '*.*' | sed 's/.*\\.//' | sort | uniq -c | sort -nr | head -10 | awk '{printf "  .%s: %s files\\n", $2, $1}'
+echo ""
+
+# Git repository metrics
+if [ -d ".git" ]; then
+    echo "--- Git Repository Metrics ---"
+    echo -n "Total commits: "
+    git rev-list --all --count 2>/dev/null || echo 'N/A'
+    echo -n "Contributors: "
+    git shortlog -sn --all 2>/dev/null | wc -l | tr -d ' ' || echo 'N/A'
+    echo -n "Branches: "
+    git branch -a 2>/dev/null | wc -l | tr -d ' ' || echo 'N/A'
+    echo -n "Repository age: "
+    git log --reverse --format='%ai' | head -1 | cut -d' ' -f1 || echo 'N/A'
+    echo -n "Last commit: "
+    git log -1 --format='%ai' | cut -d' ' -f1 || echo 'N/A'
+else
+    echo "--- Git Repository Metrics ---"
+    echo "Not a Git repository"
+fi
+echo ""
+
+# Complexity indicators
+echo "--- Complexity Indicators ---"
+echo "Largest files (by lines):"
+find . -type f -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.java' -o -name '*.go' -o -name '*.rs' -o -name '*.php' -o -name '*.rb' -o -name '*.c' -o -name '*.cpp' | xargs wc -l 2>/dev/null | sort -nr | head -5 | awk '{printf "  %s: %s lines\\n", $2, $1}'
+echo ""
+echo "Configuration files:"
+find . -maxdepth 2 -type f \\( -name '*.json' -o -name '*.yaml' -o -name '*.yml' -o -name '*.toml' -o -name '*.ini' -o -name '*.conf' -o -name '*.config' \\) | head -10
+echo ""
+echo "Dependency files:"
+find . -maxdepth 2 -type f \\( -name 'package.json' -o -name 'requirements.txt' -o -name 'Gemfile' -o -name 'pom.xml' -o -name 'build.gradle' -o -name 'Cargo.toml' -o -name 'go.mod' -o -name 'composer.json' \\) 2>/dev/null
+echo ""`"
+
+## 2. Repository Report Formatting
+
+You are an expert in **Markdown**. Your job is to carefully review this text based report, and convert it into a summary report using Markdown tables; strip out table entries with 0 as their value and minimize new lines between the headers and tables. this summary report is the **SUMMARY_REPORT**: 
+{REPOSITORY_STATS}
+
+## 3. Repository Analysis
+
+**CRITICAL REQUIREMENT**: Begin your response displaying the {SUMMARY_REPORT}
+
+
+After presenting the formatted report, provide a comprehensive analysis of {REPOSITORY_STATS} covering:
+
+### 2.1 Project Classification & Technology Stack
+- **Primary Language**: Identify the dominant programming language
+- **Technology Stack**: Analyze the technology choices and frameworks
+- **Project Type**: Classify as library, application, tool, framework, etc.
+- **Architecture Pattern**: Identify architectural patterns and design approaches
+
+### 2.2 Code Quality Assessment
+- **Code Organization**: Evaluate directory structure and file organization
+- **Complexity Analysis**: Assess codebase complexity based on file sizes and structure
+- **Documentation Coverage**: Review documentation quality and completeness
+- **Testing Strategy**: Analyze test coverage and testing approaches
+
+### 2.3 Development Practices
+- **Version Control**: Evaluate Git usage patterns and commit history
+- **Dependency Management**: Review dependency files and package management
+- **Configuration Management**: Assess configuration file organization
+- **Build and Deployment**: Identify build tools and deployment strategies
+
+### 2.4 Maintainability & Scalability
+- **Code Maintainability**: Assess factors affecting long-term maintenance
+- **Scalability Considerations**: Identify potential scaling challenges
+- **Technical Debt Indicators**: Highlight areas of concern
+- **Refactoring Opportunities**: Suggest improvement areas
+
+### 2.5 Security & Best Practices
+- **Security Considerations**: Identify potential security concerns
+- **Best Practice Adherence**: Evaluate adherence to industry standards
+- **Performance Implications**: Assess performance-related factors
+- **Compliance**: Check for license files and compliance indicators
+
+## 3. Recommendations & Action Items
+
+Provide specific, actionable recommendations for:
+- **Immediate Improvements**: Quick wins and low-effort enhancements
+- **Medium-term Goals**: Strategic improvements requiring moderate effort
+- **Long-term Vision**: Major architectural or structural changes
+- **Risk Mitigation**: Address identified risks and vulnerabilities
+
+Format your response as a professional repository assessment report suitable for technical stakeholders, project managers, and development teams.
+
+Then **hard stop**.
+"""

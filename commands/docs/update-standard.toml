@@ -9,19 +9,21 @@
 # Usage Examples:
 #
 #   1. Reformat a document without changing content:
-#      /docs:update-standard Perform a 'format-only' update on @./docs/old_api.md using the standard @./docs/api_standard.md
+#      /docs:update-standard Perform a 'format-only' update on @docs/old_api.md using the standard @docs/api_standard.md
 #
 #   2. Refresh content and update code examples:
-#      /docs:update-standard Do a 'content-refresh' on the user guide @./docs/guide.md with the standard @./docs/style_guide.md
+#      /docs:update-standard Do a 'content-refresh' on the user guide @docs/guide.md with the standard @docs/style_guide.md
 #
 #   3. Completely rewrite a document based on the current code:
-#      /docs:update-standard Execute a 'full-rewrite' of @./README.md using the template @./docs/readme_standard.md
+#      /docs:update-standard Execute a 'full-rewrite' of @README.md using the template @docs/readme_standard.md
 # ---------------------------------------------------------------------------
 
 name = "docs:update-standard"
 description = "Update existing documentation to match a documentation standard"
 
 prompt = """
+The **THIS_DATE** is "`date`"
+
 Update the existing documentation to match the documentation standard provided.
 
 **Update Details:**
@@ -41,7 +43,7 @@ Depending on the **Update Type** specified, follow these rules:
 * **content-refresh**: Keep existing content but refresh it with current codebase information. Update code examples, add missing sections from the standard, and update outdated information.
 * **full-rewrite**: Use the existing doc only as a reference for what to cover. Completely rewrite the documentation following the standard's structure and style, extracting fresh information from the current codebase.
 
-Output the complete updated documentation in markdown format.
+Include/Add "Updated: {THIS_DATE}" on the line after the title. Output the complete updated documentation in markdown format.
 
 Then **hard stop**.
 """

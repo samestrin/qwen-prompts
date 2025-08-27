@@ -19,6 +19,8 @@ name = "docs:create-standard"
 description = "Create a documentation standard/template based on best practices and existing docs"
 
 prompt = """
+The **THIS_DATE** is "`date`"
+
 Create a comprehensive documentation standard/template based on the following details:
 
 {{args}}
@@ -61,7 +63,7 @@ Create a template that includes:
     - Common mistakes to avoid
     - Quality indicators to look for
 
-Output as a complete markdown template that can be used as a standard for future documentation. 
+Include/Add "Created: {THIS_DATE}" on the line after the title. Output as a complete markdown template that can be used as a standard for future documentation. 
 
 Then **hard stop**.
 """

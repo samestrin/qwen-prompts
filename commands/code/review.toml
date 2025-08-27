@@ -11,7 +11,7 @@
 #      /code:review
 #
 #   2. Review specific files or directories:
-#      /code:review @./src/auth/ @./src/api/
+#      /code:review @src/auth/ @src/api/
 #
 #   3. Focus on specific aspects:
 #      /code:review focusing on security vulnerabilities and performance issues

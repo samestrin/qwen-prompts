@@ -11,7 +11,7 @@
 #      /analyze:implementation Has Stripe payment processing been implemented?
 #
 #   2. Check for a feature in a specific directory:
-#      /analyze:implementation In the @./api/ and @./middleware/ directories, has user authentication been implemented?
+#      /analyze:implementation In the @api/ and @middleware/ directories, has user authentication been implemented?
 # ---------------------------------------------------------------------------
 
 name = "analyze:implementation"

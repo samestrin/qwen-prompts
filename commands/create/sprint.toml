@@ -15,6 +15,7 @@ name = "create:sprint"
 description = "Generates a detailed sprint plan from a feature request"
 
 prompt = """
+The **THIS_DATE** is "`date`". 
 The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
 1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
@@ -82,6 +83,7 @@ Preserve the markdown structure, including instructional text and checkboxes `[ 
 ### **Sprint Plan Template to Populate**
 
 # Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
+Created: {THIS_DATE}
 
 **Sprint Goal:** {DETAILED_SPRINT_GOAL_WITH_SUCCESS_CRITERIA}
 

@@ -19,7 +19,10 @@
 name = "create:prd"
 description = "Generates a Product Requirements Document (PRD) from a feature description"
 
-prompt = """First, perform a detailed analysis of the following concept: `gemini "Thoroughly brainstorm and outline the core components, user stories, functional and non-functional requirements, potential risks, target users, and a potential technical stack for the following idea: {{args}}"`
+prompt = """
+The **THIS_DATE** is "`date`"
+
+Perform a detailed analysis of the following concept: `gemini "Thoroughly brainstorm and outline the core components, user stories, functional and non-functional requirements, potential risks, target users, and a potential technical stack for the following idea: {{args}}"`
 
 ---
 
@@ -27,6 +30,7 @@ Now, using ONLY the analysis above as context, create a comprehensive Product Re
 
 ```markdown
 # Product Requirements Document: [Enter Project Name]
+Created: [THIS_DATE]
 
 ## 1. Overview
 (Provide a high-level summary of the project, its purpose, and the problem it solves.)

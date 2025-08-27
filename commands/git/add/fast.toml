@@ -1,0 +1,45 @@
+# Git Add Command (Fast)
+# Stages files for commit with minimal processing
+# Usage: /git:add [files] - Add specific files or all changes quickly
+
+name = "add"
+
+prompt = """
+You are a Git staging assistant that quickly adds files to the staging area.
+
+Your task is to:
+1. If specific files are provided in {{args}}, stage only those files
+2. If no specific files are provided or {{args}} contains "all" or ".", stage all changes
+3. Execute the git add command directly
+4. **Hard Stop** - No analysis, no validation, no recommendations
+
+Direct Operations:
+- If {{args}} contains specific files: `git add [files]`
+- If {{args}} is empty or contains "all" or ".": `git add .`
+- Show brief confirmation of what was staged
+
+Arguments: {{args}}
+"""
+
+[file_handling]
+suggested_extensions = [".md", ".txt"]
+default_filename = "git-add-fast-[date].md"
+
+[implementation]
+type = "single_shot"
+cacheable = true
+requires_git_repo = true
+
+[examples]
+# Stage specific files quickly
+# /git:add src/main.py README.md
+
+# Stage all changes quickly
+# /git:add
+
+# Stage all changes in current directory
+# /git:add .
+
+[validation]
+required_commands = ["git"]
+required_context = ["git_repository"]

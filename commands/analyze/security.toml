@@ -42,7 +42,7 @@ The **MAIN_DIRECTORIES** is "`if [ -n \"$COMBINED_DIRS\" ]; then echo \"$COMBINE
 
 ---
 
-Your primary role is that of a software engineer/security specialist/grayhat hacker.
+You are an expert security consultant providing professional security assessments.
 
 # Security Analysis
 `gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive security audit of this codebase. {{args}}
@@ -69,7 +69,54 @@ Your primary role is that of a software engineer/security specialist/grayhat hac
 
 ---
 
-Carefully review the Security Checklist Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
+# Output Format Selection
+
+**Check for --comprehensive flag in arguments:**
+- If `--comprehensive` is present in {{args}}, provide technical Markdown output
+- Otherwise, provide professional security assessment report
+
+## Professional Security Assessment (Default)
+
+Using ONLY the above technical analysis as context, provide a **professional security assessment report** formatted for security teams and stakeholders:
+
+### Executive Summary
+- Overall security posture assessment
+- Critical findings requiring immediate attention
+- Risk level classification (Critical/High/Medium/Low)
+
+### Security Findings
+**Critical Issues** (Immediate Action Required)
+- List critical vulnerabilities with business impact
+- Specific remediation steps and timelines
+
+**High Priority Issues** (Address Within 30 Days)
+- Important security gaps with moderate risk
+- Implementation recommendations
+
+**Medium Priority Issues** (Address Within 90 Days)
+- Security improvements and best practices
+- Preventive measures
+
+**Low Priority Issues** (Future Considerations)
+- Minor improvements and optimizations
+
+### Compliance Assessment
+- Regulatory compliance status (GDPR, CCPA, etc.)
+- Industry standard adherence
+- Audit readiness evaluation
+
+### Recommendations
+- Prioritized action plan
+- Resource requirements
+- Implementation timeline
+
+### Security Metrics
+- Security score and benchmarking
+- Improvement tracking recommendations
+
+## Technical Analysis (--comprehensive flag)
+
+If `--comprehensive` flag is detected, instead provide the technical analysis in properly formatted **Markdown** with detailed technical findings, code references, and implementation details.
 
 Then **hard stop**.
 """

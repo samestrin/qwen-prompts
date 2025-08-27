@@ -9,16 +9,18 @@
 # Usage Examples:
 #
 #   1. Generate docs for the current project using a standard file:
-#      /docs:generate-from-standard using the template @./docs/api_standard.md. The codebase is in the current directory.
+#      /docs:generate-from-standard using the template @docs/api_standard.md. The codebase is in the current directory.
 #
 #   2. Generate docs for a specific part of a project:
-#      /docs:generate-from-standard for the 'utils' module, following the standard @./docs/module_standard.md. The code is in @./src/utils/.
+#      /docs:generate-from-standard for the 'utils' module, following the standard @docs/module_standard.md. The code is in @src/utils/.
 # ---------------------------------------------------------------------------
 
 name = "docs:generate-from-standard"
 description = "Generate documentation using a provided documentation standard/template"
 
 prompt = """
+The **THIS_DATE** is "`date`"
+
 Generate documentation for this project following the EXACT structure, format, and style defined in the provided standard.
 
 **Details:**
@@ -39,7 +41,7 @@ Generate documentation for this project following the EXACT structure, format, a
 - Use real file paths, function names, and code snippets.
 - Include working examples that developers can copy-paste.
 
-Output the complete documentation in markdown format, ready to save as a file.
+Include/Add "Created: {THIS_DATE}" on the line after the title. Output the complete documentation in markdown format, ready to save as a file.
 
 Then **hard stop**.
 """

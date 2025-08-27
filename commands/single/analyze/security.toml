@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Single-Shot Test Command: /single:analyze:security comparison
+# Single-Shot Command: /single:analyze:security comparison
 #
 # Description:
 #   Single-shot security analysis using only qwen (no Gemini CLI integration)

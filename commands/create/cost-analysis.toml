@@ -20,6 +20,8 @@ name = "create:cost-analysis"
 description = "Generates a high-level operational cost estimate for a project"
 
 prompt = """
+The **THIS_DATE** is "`date`"
+
 ### Contextual Analysis
 `gemini -p "@planning/specifications/tdd.md Analyze the attached TDD to create a comprehensive cost projection. Your analysis must cover these areas:
 
@@ -38,6 +40,7 @@ Using ONLY the contextual analysis provided above, format the information into a
 
 ```markdown
 # Cost Analysis Report
+Created: {THIS_DATE}
 
 ## 1. One-Time Development Cost Estimate
 (Summarize the estimated hours and total cost for the initial build of the project based on the provided developer rate.)

@@ -1,0 +1,70 @@
+# ---------------------------------------------------------------------------
+# Save Command: /file:save
+#
+# Description:
+#   Save the last response from qwen-code to a user-specified filename
+#   Useful for preserving analysis results, code reviews, or documentation
+#
+# Usage:
+#   /file:save <filename>
+#   Examples: 
+#     /file:save @security-audit-report.md
+#     /file:save @report-[date].md  # [date] will be replaced with current date, [time] will be replaced with current time
+# ---------------------------------------------------------------------------
+
+name = "file:save"
+description = "Save the last response to a file"
+
+prompt = """
+You are a file management assistant. Your task is to save the last response from the conversation to a file with the user-specified filename.
+
+The **CURRENT_DATE** is `date`. The **FN_DATE** is the date in YYYYMMDD format; it is a file-name friendly version of {CURRENT_DATE}. 
+The **FN_TIME** is the time in HHMMSS format; is a file-name friendly version of {CURRENT_DATE}.
+
+## Instructions:
+1. Take the filename provided by the user
+2. Check if the filename contains any placeholders, if yes:
+  - Replace the [date] placeholder with {FN_DATE}
+  - Replace the [time] placeholder with {FN_TIME}
+3. Retrieve the previous response content from the conversation history
+4. Write that content directly to the specified file
+5. Provide confirmation of the save operation
+
+## File Handling:
+- If the filename doesn't have an extension, suggest adding .md or .txt
+- If the file already exists, ask for confirmation before overwriting
+- Create any necessary parent directories if needed
+- Handle special characters in filenames appropriately
+- Process any [date] placeholder in the filename and replace it with the current date and time in format YYYYMMDD
+
+## Implementation:
+Directly write the previous response content to the file using your file writing capabilities. Do not use shell commands or variables - simply take the last response content and save it to the user-specified filename.
+
+If the filename contains a [date] placeholder, replace it with the current date and time in the format YYYYMMDD before saving. For example, if the user specifies 'report-[date].md', save it as 'report-20230415.md' (using the actual current date e.g. {FN_DATE}).
+If the filename contains a [time] placeholder, replace it with the current date and time in the format HHMMSS before saving. For example, if the user specifies 'report-[date].md', save it as 'report-123033.md' (using the actual current time e.g. {FN_TIME}).
+
+## Response Format:
+After saving the file, provide:
+- Confirmation message with full file path
+- Brief summary of what was saved
+- File size or content length information if available
+
+Example workflow:
+1. User provides filename (possibly with [date] placeholder)
+2. If [date] placeholder exists, replace it with current date and time
+3. You retrieve the previous response from conversation
+4. You write that content to the specified file
+5. You confirm the save operation
+"""
+
+[[examples]]
+user = "/file:save @security-report.md"
+assistant = "I'll save the last response to 'security-report.md' in the current directory.\n\n```bash\necho \"$LAST_RESPONSE\" > \"security-report.md\"\necho \"✅ Saved to: $(pwd)/security-report.md\"\necho \"📄 File size: $(wc -c < \"security-report.md\") bytes\"\n```\n\nThe previous security analysis has been successfully saved to security-report.md."
+
+[[examples]]
+user = "/file:save @analysis"
+assistant = "I notice you didn't specify a file extension. I'll save it as 'analysis.md' for better compatibility.\n\n```bash\necho \"$LAST_RESPONSE\" > \"analysis.md\"\necho \"✅ Saved to: $(pwd)/analysis.md\"\necho \"📄 File size: $(wc -c < \"analysis.md\") bytes\"\n```\n\nThe previous response has been saved to analysis.md."
+
+[[examples]]
+user = "/file:save @report-[date].md"
+assistant = "I'll save the last response to a file with the current date and time.\n\nI've detected the [date] placeholder in your filename. I'll replace it with the current date and time.\n\n```bash\nCURRENT_DATE=$(date +\"%Y-%m-%d_%H-%M-%S\")\nFILENAME=\"report-${CURRENT_DATE}.md\"\necho \"$LAST_RESPONSE\" > \"$FILENAME\"\necho \"✅ Saved to: $(pwd)/$FILENAME\"\necho \"📄 File size: $(wc -c < \"$FILENAME\") bytes\"\n```\n\nThe previous response has been successfully saved to report-2023-04-15_14-30-45.md (with the actual current date and time)."

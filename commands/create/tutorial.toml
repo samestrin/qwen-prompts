@@ -24,6 +24,8 @@ name = "create:tutorial"
 description = "Generate comprehensive tutorials from any codebase"
 
 prompt = """
+The **THIS_DATE** is "`date`"
+
 # Directory Detection
 
 The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
@@ -109,7 +111,8 @@ The tutorial must be immediately usable by someone following it step-by-step."`
 
 ---
 
-Carefully review the output and correct any formatting issues that may have occured in the generation of the tutorial.
+Carefully review the output and correct any formatting issues that may have occured in the generation of the tutorial. 
+Include/Add "Created: {THIS_DATE}" on the line after the title.
 
 Then **hard stop**.
 """

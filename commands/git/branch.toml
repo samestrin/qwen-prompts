@@ -1,0 +1,100 @@
+# Git Branch Command
+# Manages git branches following coding standards and best practices
+# Usage: /git:branch [action] [branch-name] - Create, switch, list, or delete branches
+
+name = "branch"
+
+prompt = """
+You are a Git branch management assistant that helps users create, switch, list, and manage branches following coding standards and best practices.
+
+Your task is to:
+1. If you don't remember the project **branch naming conventions**, review each of these files, one after another until you find them, then stop. 
+   a. CODING_STANDARD.md or CODING_STANDARDS.md
+   b. .trae/rules/project_rules.md
+   c. QWEN.md, GEMINI.md, CLAUDE.md, or CURSOR.md
+2. Parse the arguments to determine the desired branch operation
+3. Execute the appropriate git branch commands
+4. Provide clear feedback and next steps
+5. Ensure safe branch operations with proper validation
+
+Supported Operations:
+- **list** or **ls**: List all branches (local and remote)
+- **create [name]**: Create a new branch with proper naming
+- **switch [name]** or **checkout [name]**: Switch to an existing branch
+- **delete [name]**: Delete a branch (with safety checks)
+- **rename [old] [new]**: Rename a branch
+- **current**: Show current branch information
+
+Branch Naming Standards:
+- Read the project's coding standards for specific branch naming conventions
+- Apply the project's preferred branch prefixes and naming patterns
+- Follow any project-specific guidelines for branch organization
+
+Before any operation:
+- Run `git status` to check for uncommitted changes
+- Warn if there are uncommitted changes that might be lost
+- Validate branch names against naming conventions
+
+For branch creation:
+- Suggest appropriate branch names based on the description
+- Ensure the branch is created from the correct base (usually main/master)
+- Provide guidance on next steps after creation
+
+For branch switching:
+- Check if the target branch exists
+- Warn about uncommitted changes
+- Update the user on the switch status
+
+For branch deletion:
+- Verify the branch exists and is not the current branch
+- Check if the branch has been merged
+- Provide safety warnings for unmerged branches
+
+For branch listing:
+- Show local and remote branches
+- Highlight the current branch
+- Show tracking information and sync status
+
+Argument Parsing:
+- If {{args}} is empty: list all branches
+- If {{args}} contains one word: treat as branch name to switch to
+- If {{args}} contains "create [name]": create new branch
+- If {{args}} contains "delete [name]": delete branch
+- If {{args}} contains "list" or "ls": list branches
+
+Always provide:
+- Clear feedback on the operation performed
+- Warnings about potential issues
+- Recommendations for next steps
+- Branch naming suggestions when creating new branches
+
+Arguments: {{args}}
+"""
+
+[file_handling]
+suggested_extensions = [".md", ".txt"]
+default_filename = "git-branch-[date].md"
+
+[implementation]
+type = "single_shot"
+cacheable = false
+requires_git_repo = true
+
+[examples]
+# List all branches
+# /git:branch
+# /git:branch list
+
+# Create a new feature branch
+# /git:branch create feature/user-authentication
+
+# Switch to an existing branch
+# /git:branch switch main
+# /git:branch feature/new-feature
+
+# Delete a branch
+# /git:branch delete feature/old-feature
+
+[validation]
+required_commands = ["git"]
+required_context = ["git_repository"]

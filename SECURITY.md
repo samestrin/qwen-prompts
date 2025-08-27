@@ -1,4 +1,4 @@
-# Security Policy v1.0
+# Security Policy
 
 ## ⚠️ CRITICAL SECURITY WARNING
 
@@ -12,7 +12,7 @@ These prompts have **shell execution capabilities** and can run arbitrary comman
 - Exfiltrate data from your system
 - Install malware or backdoors
 
-## 🔍 Security Review Checklist
+## Security Review Checklist
 
 Before installing any slash prompt, **manually review each `.toml` file** for:
 
@@ -40,7 +40,7 @@ Before installing any slash prompt, **manually review each `.toml` file** for:
 - [ ] Check for data exfiltration attempts
 - [ ] Ensure no unauthorized API calls
 
-## 🛡️ Safe Installation Practices
+## Safe Installation Practices
 
 ### 1. Source Verification
 - Only install prompts from trusted sources
@@ -66,7 +66,7 @@ Before installing any slash prompt, **manually review each `.toml` file** for:
 - Update prompts from trusted sources only
 - Remove unused or suspicious prompts
 
-## 🚨 Red Flags to Watch For
+## Red Flags to Watch For
 
 ### Immediate Rejection Criteria
 - Commands that require `sudo` or root privileges
@@ -87,7 +87,7 @@ Before installing any slash prompt, **manually review each `.toml` file** for:
 `/etc/passwd`                 # System file access
 ```
 
-## 🔒 Gemini CLI Security Considerations
+## Gemini CLI Security Considerations
 
 ### API Key Protection
 - Never share prompts that could expose API keys
@@ -107,7 +107,7 @@ Before installing any slash prompt, **manually review each `.toml` file** for:
 - Be aware of prompt injection techniques
 - Monitor for unexpected model responses
 
-## 📋 Verification Process for This Repository
+## Verification Process for This Repository
 
 All prompts in this repository have been:
 
@@ -128,7 +128,7 @@ This repository's prompts use these shell commands:
 
 **No destructive or system-modifying commands are used.**
 
-## 🆘 Incident Response
+## Incident Response
 
 ### If You Suspect a Malicious Prompt
 1. **Immediately stop** using the prompt
@@ -146,14 +146,14 @@ To report security vulnerabilities:
 - **Include**: Detailed description and proof of concept
 - **Response**: We aim to respond within 24 hours
 
-## 🔄 Security Updates
+## Security Updates
 
 - Security patches will be released immediately
 - Critical vulnerabilities will be disclosed responsibly
 - Users will be notified through GitHub releases
 - Affected prompts will be clearly marked
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [OWASP Command Injection Prevention](https://owasp.org/www-community/attacks/Command_Injection)
 - [Shell Script Security Best Practices](https://github.com/anordal/shellharden/blob/master/how_to_do_things_safely_in_bash.md)

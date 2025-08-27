@@ -10,7 +10,7 @@
 #      /find:patterns Find all instances of React hooks usage in the @src/ directory
 #
 #   2. Find a pattern in a specific directory:
-#      /find:patterns Find all instances of async/await error handling in the @./api/v1/ directory
+#      /find:patterns Find all instances of async/await error handling in the @api/v1/ directory
 # ---------------------------------------------------------------------------
 
 name = "find:patterns"

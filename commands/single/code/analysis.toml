@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Single-Shot Test Command: /single:code:analysis comparison
+# Single-Shot Command: /single:code:analysis comparison
 #
 # Description:
 #   Single-shot code analysis using only qwen (no Gemini CLI integration)

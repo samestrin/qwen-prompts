@@ -65,7 +65,7 @@ Create or Update a file named `CODING_STANDARD.md` with the following comprehens
 
 - **Project**: [Project Name]
 - **Technology Stack**: [Languages, Frameworks, Tools]
-- **Last Updated**: {{THIS_DATE}}
+- **Last Updated**: {THIS_DATE}
 - **Version**: [Version]
 
 ## 1. General Principles

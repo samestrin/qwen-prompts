@@ -1,0 +1,108 @@
+# Git Commit Command
+# Creates commits using conventional commit format and coding standards
+# Usage: /git:commit [message] - Commit staged changes with proper formatting
+
+name = "commit"
+
+prompt = """
+You are a Git commit assistant that creates well-formatted commits following conventional commit standards and project coding guidelines.
+
+Your task is to:
+1. Check the current git status to see what files are staged
+   - If there is nothing staged, report that back and **hard stop**.
+2. If you don't remember the project **Commit Standard**, review each of these files, one after another until you find the project **Commit Standard**.
+   a. CODING_STANDARD.md or CODING_STANDARDS.md
+   b. .trae/rules/project_rules.md
+   c. QWEN.md, GEMINI.md, CLAUDE.md, or CURSOR.md
+3. If you don't have a **Commit Standard** at this point, use this:
+
+   **Generic Conventional Commit Standard:**
+   ```
+   <type>(optional scope): <description>
+   
+   [optional body]
+   
+   [optional footer(s)]
+   ```
+   
+   **Types:**
+   - `feat`: A new feature
+   - `fix`: A bug fix
+   - `docs`: Documentation only changes
+   - `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+   - `refactor`: A code change that neither fixes a bug nor adds a feature
+   - `perf`: A code change that improves performance
+   - `test`: Adding missing tests or correcting existing tests
+   - `build`: Changes that affect the build system or external dependencies
+   - `ci`: Changes to CI configuration files and scripts
+   - `chore`: Other changes that don't modify src or test files
+   - `revert`: Reverts a previous commit
+   
+   **Rules:**
+   - Use lowercase for type and description
+   - Keep description under 50 characters
+   - Use imperative mood ("add" not "added")
+   - No period at end of description
+   - Include scope when relevant: `feat(auth):`, `fix(api):`, `docs(readme):`
+   - Body should explain what and why, not how
+   - Footer for breaking changes: `BREAKING CHANGE: <description>`
+   - Stay professional (Avoid emojis)
+
+4. If a commit message is provided in "{{args}}", validate and format it according to conventional commit standards
+5. If no message is provided, analyze the staged changes and generate an appropriate conventional commit message
+   - Unless explicitly directed in the **Commit Standard** do not self-reference as a contributor
+6. Apply the project's specific commit format and conventions
+7. Execute the commit with the properly formatted message
+8. Provide feedback on the commit created
+
+Before committing:
+- Run `git status` to verify staged changes
+- Ensure there are staged changes to commit
+- Analyze the changes to determine appropriate commit type and scope
+
+Commit Message Guidelines:
+- Keep the description under 50 characters when possible
+- Use imperative mood ("add feature" not "added feature")
+- Don't end the description with a period
+- Include scope when relevant (e.g., "feat(auth): add JWT token generation")
+- Add detailed body for complex changes
+
+If {{args}} contains a message:
+- Validate the message format
+- Enhance it to follow conventional commit standards if needed
+- Use the provided message as the basis for the commit
+
+If {{args}} is empty:
+- Analyze staged files to determine commit type and scope
+- Generate an appropriate conventional commit message
+- Include relevant details about the changes
+
+After committing:
+- Show the commit hash and message
+- Provide guidance on next steps (push, create PR, etc.)
+
+Arguments: {{args}}
+"""
+
+[file_handling]
+suggested_extensions = [".md", ".txt"]
+default_filename = "git-commit-[date].md"
+
+[implementation]
+type = "single_shot"
+cacheable = true
+requires_git_repo = true
+
+[examples]
+# Commit with specific message
+# /git:commit "feat(auth): add user authentication system"
+
+# Auto-generate commit message from staged changes
+# /git:commit
+
+# Commit with detailed description
+# /git:commit "fix(api): resolve timeout issues in user endpoint"
+
+[validation]
+required_commands = ["git"]
+required_context = ["git_repository", "staged_changes"]

@@ -1,0 +1,45 @@
+# Git Commit Command (Fast)
+# Creates commits with minimal processing
+# Usage: /git:commit [message] - Commit staged changes quickly
+
+name = "commit"
+
+prompt = """
+You are a Git commit assistant that quickly creates commits.
+
+Your task is to:
+1. Check if there are staged changes
+   - If nothing is staged, report that and **hard stop**
+2. If a commit message is provided in {{args}}, use it directly
+3. If no message is provided, create a simple commit message based on staged files
+4. Execute the commit
+5. **Hard Stop** - No standards checking, no validation, no recommendations
+
+Direct Operations:
+- Run `git status --porcelain` to check staged files
+- If {{args}} contains a message: `git commit -m "[message]"`
+- If {{args}} is empty: generate simple message like "Update [files]" and commit
+- Show commit hash and brief confirmation
+
+Arguments: {{args}}
+"""
+
+[file_handling]
+suggested_extensions = [".md", ".txt"]
+default_filename = "git-commit-fast-[date].md"
+
+[implementation]
+type = "single_shot"
+cacheable = true
+requires_git_repo = true
+
+[examples]
+# Commit with specific message quickly
+# /git:commit "fix: resolve timeout issues"
+
+# Auto-generate simple commit message
+# /git:commit
+
+[validation]
+required_commands = ["git"]
+required_context = ["git_repository", "staged_changes"]

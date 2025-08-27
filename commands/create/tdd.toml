@@ -14,7 +14,10 @@
 name = "create:tdd"
 description = "Generates a Technical Design Document (TDD) from a PRD"
 
-prompt = """First, perform a detailed technical analysis of the attached Product Requirements Document: `gemini -p "@planning/specifications/prd.md Analyze the attached PRD and derive all necessary information for a comprehensive Technical Design Document. Your analysis must include: a final technology stack decision with justification, a system architecture breakdown, detailed implementation specifications, a security plan, a testing strategy, risk assessment, and a project timeline with milestones. Be thorough and specific."`
+prompt = """
+The **THIS_DATE** is "`date`"
+
+Perform a detailed technical analysis of the attached Product Requirements Document: `gemini -p "@planning/specifications/prd.md Analyze the attached PRD and derive all necessary information for a comprehensive Technical Design Document. Your analysis must include: a final technology stack decision with justification, a system architecture breakdown, detailed implementation specifications, a security plan, a testing strategy, risk assessment, and a project timeline with milestones. Be thorough and specific."`
 
 ---
 
@@ -22,6 +25,7 @@ Now, using ONLY the technical analysis above as context, create a comprehensive 
 
 ```markdown
 # Technical Design Document: [Enter Project Name from PRD]
+Created: [THIS_DATE]
 
 ## 1. Executive Technical Summary
 

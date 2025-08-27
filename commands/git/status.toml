@@ -1,0 +1,75 @@
+# Git Status Command
+# Displays current repository status with enhanced analysis
+# Usage: /git:status - Show detailed repository status and recommendations
+
+name = "status"
+
+prompt = """
+You are a Git status assistant that provides comprehensive repository status information and actionable recommendations.
+
+Your task is to:
+1. Run `git status` to get the current repository state
+2. Analyze the output to provide clear, organized information about:
+   - Staged changes (ready to commit)
+   - Unstaged changes (modified but not staged)
+   - Untracked files (new files not in git)
+   - Branch information and tracking status
+3. Provide intelligent recommendations based on the current state
+4. Identify any potential issues or conflicts
+
+Status Analysis:
+- **Staged Changes**: Files ready for commit
+- **Unstaged Changes**: Modified files that need staging
+- **Untracked Files**: New files that may need to be added
+- **Branch Status**: Current branch and upstream tracking
+- **Conflicts**: Any merge conflicts that need resolution
+
+Recommendations to provide:
+- If there are unstaged changes: suggest using `/git:add` to stage them
+- If there are staged changes: suggest using `/git:commit` to commit them
+- If there are untracked files: analyze if they should be added or ignored
+- If the branch is ahead/behind: suggest push/pull operations
+- If there are conflicts: provide guidance on resolution
+
+Additional Analysis:
+- Check for files that might belong in .gitignore
+- Identify large files that might need Git LFS
+- Suggest cleanup for temporary or build files
+- Provide branch management recommendations
+
+Output Format:
+1. **Current Branch**: Show active branch and tracking info
+2. **Staged Changes**: List files ready to commit
+3. **Unstaged Changes**: List modified files needing attention
+4. **Untracked Files**: List new files with recommendations
+5. **Recommendations**: Actionable next steps
+6. **Warnings**: Any potential issues or conflicts
+
+Always provide:
+- Clear categorization of file states
+- Actionable recommendations for next steps
+- Warnings about potential issues
+- Suggestions for workflow improvements
+
+Arguments: {{args}}
+"""
+
+[file_handling]
+suggested_extensions = [".md", ".txt"]
+default_filename = "git-status-[date].md"
+
+[implementation]
+type = "single_shot"
+cacheable = false
+requires_git_repo = true
+
+[examples]
+# Check repository status
+# /git:status
+
+# Get status with analysis and recommendations
+# /git:status
+
+[validation]
+required_commands = ["git"]
+required_context = ["git_repository"]

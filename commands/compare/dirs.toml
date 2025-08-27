@@ -8,10 +8,10 @@
 # Usage Examples:
 #
 #   1. Compare two project structures:
-#      /compare:dirs Compare these project structures: @./frontend/ @./backend/
+#      /compare:dirs Compare these project structures: @frontend/ @backend/
 #
 #   2. Compare version directories:
-#      /compare:dirs Compare @./v1/ @./v2/, focusing on architectural changes and file organization
+#      /compare:dirs Compare @v1/ @v2/, focusing on architectural changes and file organization
 # ---------------------------------------------------------------------------
 
 name = "compare:dirs"

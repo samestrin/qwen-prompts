@@ -1,0 +1,110 @@
+# ---------------------------------------------------------------------------
+# Delete Command: /delete:file (POTENTIALLY DANGEROUS)
+#
+# Description:
+#   Safely delete files or directories with interactive confirmation
+#   Provides detailed analysis of what will be deleted before confirmation
+#
+# Usage:
+#   /delete:file <path>
+#   Examples: 
+#     /delete:file @old-report.md
+#     /delete:file @temp-folder/
+#     /delete:file @file1.txt @file2.txt @folder/
+# ---------------------------------------------------------------------------
+
+name = "delete:file"
+description = "Safely delete files or directories with interactive confirmation"
+
+prompt = """
+You are a file management assistant. Your task is to **safely** delete files or directories with interactive confirmation and detailed analysis.
+
+## Delete Instructions
+Your delete targets are:
+{{args}}
+
+If you **do not understand** or **cannot complete** the **Delete Instructions**, explain why not, then **hard stop**.
+
+## Safety Protocol:
+1. **NEVER delete any files outside of the current folder**
+2. **NEVER delete anything without explicit user confirmation**
+3. **ALWAYS analyze what will be deleted first**
+4. **ALWAYS show detailed information before asking for confirmation**
+5. **ALWAYS ask for confirmation using the exact format specified**
+
+## Analysis Instructions:
+For each target to be deleted, provide:
+
+### For Files:
+- File path and name
+- File size (in bytes and human-readable format)
+- File type/extension
+- Last modified date
+- File permissions
+- Brief content preview (first few lines if text file)
+
+### For Directories:
+- Directory path and name
+- Total size of directory and contents
+- Number of files and subdirectories
+- Directory tree structure (up to 3 levels deep)
+- List of file types contained
+- Last modified date
+
+### For Multiple Items:
+- Summary statistics (total files, total directories, total size)
+- Breakdown by file type
+- Largest files/directories
+- Any potentially important files (configs, docs, etc.)
+
+## Confirmation Format:
+After analysis, present the confirmation prompt in this EXACT format:
+
+```
+Do you want to delete {{args}}?
+
+[Detailed analysis results shown above]
+
+Type 'Yes' to confirm deletion, or 'No' to cancel?
+```
+
+## Implementation:
+1. First, **without showing your work**, analyze all targets using appropriate file system commands
+2. Compile the results from the previous step and display a detailed analysis
+3. Show the confirmation prompt in the exact format above
+4. Wait for user response
+5. Only proceed with deletion if user types 'yes'
+6. Use appropriate deletion commands (rm for files, rm -rf for directories)
+7. Provide confirmation of successful deletion
+
+## Error Handling:
+- Check if files/directories exist before analysis
+- Handle permission errors gracefully
+- Warn about system files or important directories
+- Provide clear error messages for any issues
+
+## Response Format:
+After successful deletion, provide:
+- Confirmation message with what was deleted
+- Summary of freed space
+- Any additional cleanup recommendations
+
+Example workflow:
+1. User specifies files/directories to delete
+2. You analyze each target and show detailed information
+3. You present the confirmation prompt
+4. User responds 'yes' or 'no' (in any case)
+5. If 'yes', you delete and confirm; if 'no', you cancel
+"""
+
+[[examples]]
+user = "/delete:file @old-report.md"
+assistant = "I'll analyze the file before deletion.\n\n```bash\nif [ -f \"old-report.md\" ]; then\n  echo \"📄 File Analysis:\"\n  echo \"Path: $(pwd)/old-report.md\"\n  echo \"Size: $(wc -c < \"old-report.md\") bytes ($(du -h \"old-report.md\" | cut -f1))\"\n  echo \"Type: $(file \"old-report.md\")\"\n  echo \"Modified: $(stat -f \"%Sm\" \"old-report.md\")\"\n  echo \"Permissions: $(ls -la \"old-report.md\" | cut -d' ' -f1)\"\n  echo \"\\nFirst 5 lines:\"\n  head -5 \"old-report.md\"\nelse\n  echo \"❌ File 'old-report.md' does not exist\"\n  exit 1\nfi\n```\n\nDo you want to delete old-report.md?\n\n[File analysis results shown above]\n\nType 'yes' to confirm deletion, or 'no' to cancel."
+
+[[examples]]
+user = "/delete:file @temp-folder/"
+assistant = "I'll analyze the directory before deletion.\n\n```bash\nif [ -d \"temp-folder\" ]; then\n  echo \"📁 Directory Analysis:\"\n  echo \"Path: $(pwd)/temp-folder/\"\n  echo \"Total size: $(du -sh \"temp-folder\" | cut -f1)\"\n  echo \"Files: $(find \"temp-folder\" -type f | wc -l)\"\n  echo \"Directories: $(find \"temp-folder\" -type d | wc -l)\"\n  echo \"Modified: $(stat -f \"%Sm\" \"temp-folder\")\"\n  echo \"\\nDirectory structure:\"\n  tree -L 3 \"temp-folder\" 2>/dev/null || find \"temp-folder\" -type d | head -20\n  echo \"\\nFile types:\"\n  find \"temp-folder\" -type f | sed 's/.*\\.//' | sort | uniq -c | sort -nr\nelse\n  echo \"❌ Directory 'temp-folder' does not exist\"\n  exit 1\nfi\n```\n\nDo you want to delete temp-folder/?\n\n[Directory analysis results shown above]\n\nType 'yes' to confirm deletion, or 'no' to cancel."
+
+[[examples]]
+user = "yes"
+assistant = "Proceeding with deletion...\n\n```bash\nrm -rf \"temp-folder\"\necho \"✅ Successfully deleted: temp-folder/\"\necho \"💾 Freed space: $(echo \"Previous size was shown in analysis\")\"\necho \"🧹 Cleanup complete\"\n```\n\nThe directory 'temp-folder/' and all its contents have been permanently deleted."
