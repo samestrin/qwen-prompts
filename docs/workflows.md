@@ -24,7 +24,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /docs:create-standard For a public-facing react typescript project
 
 # 6. Save setup documentation
-> /file:save /planning/specifications/documentation.md
+> /file:save @planning/specifications/documentation.md
 ```
 
 **Expected Outcome**: Complete project structure with standards, rules, and .gitignore configured for your stack.
