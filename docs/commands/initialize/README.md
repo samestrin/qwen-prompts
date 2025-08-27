@@ -13,7 +13,7 @@ Generates platform-specific coding rules files based on project specifications a
 - Establishing consistent coding practices across teams
 - Onboarding new developers with clear guidelines
 
-### 📐 [coding-standard](coding-standard.md) - Base Coding Standard Creation
+### [coding-standard](coding-standard.md) - Base Coding Standard Creation
 Creates comprehensive base coding standards that serve as the foundation for platform-specific rules and development practices.
 
 **Common Use Cases:**
@@ -22,7 +22,7 @@ Creates comprehensive base coding standards that serve as the foundation for pla
 - Defining code quality and style guidelines
 - Setting up project architecture principles
 
-### 🔄 [update-coding-rules](update-coding-rules.md) - Coding Rules Updates
+### [update-coding-rules](update-coding-rules.md) - Coding Rules Updates
 Updates existing coding rules based on project evolution, lessons learned, and changing requirements.
 
 **Common Use Cases:**
@@ -31,7 +31,7 @@ Updates existing coding rules based on project evolution, lessons learned, and c
 - Adapting rules for technology stack changes
 - Maintaining relevance and effectiveness of standards
 
-### 🗂️ [gitignore](gitignore.md) - Git Ignore Configuration
+### [gitignore](gitignore.md) - Git Ignore Configuration
 Generates comprehensive .gitignore files tailored to specific technology stacks and development environments.
 
 **Common Use Cases:**

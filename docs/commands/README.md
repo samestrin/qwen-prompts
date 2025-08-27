@@ -34,6 +34,11 @@ Pattern detection and code discovery tools for identifying specific coding patte
 
 **Commands (1)**: [patterns](find/patterns.md)
 
+### [Git Commands](git/)
+Version control workflow automation and Git operation enhancement tools that integrate project coding standards with Git operations.
+
+**Commands (10)**: [add](git/add.md) • [add:fast](git/add/fast.md) • [branch](git/branch.md) • [commit](git/commit.md) • [commit:fast](git/commit/fast.md) • [merge](git/merge.md) • [pull](git/pull.md) • [push](git/push.md) • [status](git/status.md) • [status:fast](git/status/fast.md)
+
 ### [Project Initialization Commands](initialize/)
 Project setup and configuration automation for consistent development environments and standards.
 
@@ -42,7 +47,7 @@ Project setup and configuration automation for consistent development environmen
 ### [File Management Commands](file/)
 Essential utilities for preserving and managing analysis results and generated content.
 
-**Commands (2)**: [file](file/file.md) • [merge](file/merge.md)
+**Commands (3)**: [delete](file/delete.md) • [merge](file/merge.md) • [save](file/save.md)
 
 ### [Benchmarking Commands](single/)
 Single-shot variants of analysis commands designed for performance testing and comparison studies.
@@ -84,6 +89,12 @@ Test analysis and quality assurance tools for comprehensive testing strategy dev
 2. [docs:generate-from-standard](docs/generate-from-standard.md) - Generate documentation
 3. [docs:update-standard](docs/update-standard.md) - Maintain documentation consistency
 
+### Git Workflow
+1. [git:status](git/status.md) - Check repository status and changes
+2. [git:add](git/add.md) - Stage files following project standards
+3. [git:commit](git/commit.md) - Create conventional commits
+4. [git:push](git/push.md) - Push changes to remote repository
+
 ## Usage Tips
 
 - **Arguments**: Most commands accept optional arguments to focus analysis on specific areas
@@ -99,4 +110,4 @@ Test analysis and quality assurance tools for comprehensive testing strategy dev
 
 ---
 
-**Total Commands**: 33 • **Categories**: 11 • **Last Updated**: Sprint 2.1
+**Total Commands**: 45 • **Categories**: 12 • **Last Updated**: Sprint 2.1

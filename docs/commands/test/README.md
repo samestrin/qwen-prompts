@@ -4,7 +4,7 @@ Comprehensive testing analysis and quality assurance tools for evaluating test c
 
 ## Commands Overview
 
-### 📊 [coverage](coverage.md) - Test Coverage Analysis
+### [coverage](coverage.md) - Test Coverage Analysis
 Analyzes test coverage and quality across the codebase, identifying missing test areas, evaluating test effectiveness, and providing recommendations for improving test coverage.
 
 **Common Use Cases:**

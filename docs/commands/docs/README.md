@@ -13,7 +13,7 @@ Creates comprehensive documentation standards and templates based on best practi
 - Standardizing documentation across multiple projects
 - Onboarding documentation guidelines
 
-### 📄 [generate-from-standard](generate-from-standard.md) - Standard-Based Documentation Generation
+### [generate-from-standard](generate-from-standard.md) - Standard-Based Documentation Generation
 Generates documentation files following established standards and templates for consistent project documentation.
 
 **Common Use Cases:**
@@ -22,7 +22,7 @@ Generates documentation files following established standards and templates for 
 - Producing consistent README files and guides
 - Automating documentation creation workflows
 
-### 🔄 [update-standard](update-standard.md) - Documentation Standard Updates
+### [update-standard](update-standard.md) - Documentation Standard Updates
 Updates and refines existing documentation standards based on project evolution and best practice improvements.
 
 **Common Use Cases:**

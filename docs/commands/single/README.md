@@ -7,7 +7,7 @@ Benchmarking and comparison tools that provide single-shot analysis capabilities
 ### Single Analysis Commands
 Single-shot versions of analysis commands for benchmarking against multi-shot hybrid versions, enabling performance and quality comparisons.
 
-### 🔐 [analyze/security](analyze/security.md) - Single-Shot Security Analysis
+### [analyze/security](analyze/security.md) - Single-Shot Security Analysis
 Performs comprehensive security analysis using only direct qwen analysis, without Gemini CLI integration, for benchmarking against the hybrid multi-shot version.
 
 **Common Use Cases:**
@@ -16,7 +16,7 @@ Performs comprehensive security analysis using only direct qwen analysis, withou
 - Baseline security analysis for comparison studies
 - Simplified security review workflows
 
-### 📊 [code/analysis](code/analysis.md) - Single-Shot Code Analysis
+### [code/analysis](code/analysis.md) - Single-Shot Code Analysis
 Performs comprehensive codebase analysis using only qwen capabilities, providing baseline analysis for comparison with multi-tool hybrid approaches.
 
 **Common Use Cases:**
