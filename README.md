@@ -111,7 +111,7 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 
 Comprehensive documentation is available for all commands:
 
-- **[Complete Command Documentation](docs/commands/)** - Detailed documentation for all 33 commands organized by category
+- **[Complete Command Documentation](docs/commands/)** - Detailed documentation for all 45 commands organized by category
 - **[Quick Reference Guide](docs/quick-reference.md)** - Command cheat sheet and common patterns
 - **[Common Workflows](docs/workflows.md)** - Step-by-step workflow examples for real-world scenarios  
 - **[Troubleshooting Guide](docs/troubleshooting.md)** - Solutions for common issues and problems
