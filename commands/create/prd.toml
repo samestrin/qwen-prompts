@@ -20,7 +20,7 @@ name = "create:prd"
 description = "Generates a Product Requirements Document (PRD) from a feature description"
 
 prompt = """
-The **THIS_DATE** is "`date`"
+The **THIS_DATE** is "`date`". The {THIS_DATE} value should include the date and the timestamp, do not reformat.
 
 Perform a detailed analysis of the following concept: `gemini "Thoroughly brainstorm and outline the core components, user stories, functional and non-functional requirements, potential risks, target users, and a potential technical stack for the following idea: {{args}}"`
 

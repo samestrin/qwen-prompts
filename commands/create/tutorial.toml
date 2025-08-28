@@ -24,7 +24,7 @@ name = "create:tutorial"
 description = "Generate comprehensive tutorials from any codebase"
 
 prompt = """
-The **THIS_DATE** is "`date`"
+The **THIS_DATE** is "`date`". The {THIS_DATE} value should include the date and the timestamp, do not reformat.
 
 # Directory Detection
 

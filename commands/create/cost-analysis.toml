@@ -20,7 +20,7 @@ name = "create:cost-analysis"
 description = "Generates a high-level operational cost estimate for a project"
 
 prompt = """
-The **THIS_DATE** is "`date`"
+The **THIS_DATE** is "`date`". The {THIS_DATE} value should include the date and the timestamp, do not reformat.
 
 ### Contextual Analysis
 `gemini -p "@planning/specifications/tdd.md Analyze the attached TDD to create a comprehensive cost projection. Your analysis must cover these areas:
