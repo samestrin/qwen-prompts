@@ -15,7 +15,7 @@ name = "create:sprint"
 description = "Generates a detailed sprint plan from a feature request"
 
 prompt = """
-The **THIS_DATE** is "`date`". 
+The **THIS_DATE** is "`date`". The {THIS_DATE} value should include the date and the timestamp, do not reformat.
 The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
 1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
@@ -84,6 +84,8 @@ Preserve the markdown structure, including instructional text and checkboxes `[ 
 
 # Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
 Created: {THIS_DATE}
+
+**Directions:** Your task is to work through _Sprint {SPRINT_NUMBER}: {FEATURE_NAME}_ step-by-step, starting at _Phase 1. {PHASE_1_NAME}_. You must complete each action item in the phase, and upon successful completion, you **must immediately check-off your work**; this must be done to maintain state. **After completing and checking off all items in a phase, immediately proceed to the next phase without waiting for further instructions.**
 
 **Sprint Goal:** {DETAILED_SPRINT_GOAL_WITH_SUCCESS_CRITERIA}
 
@@ -328,7 +330,7 @@ Based on this number:
 - For new major sprints: increment the base number (e.g., if highest is 2.3, next major is 3)
 - For sprint updates: increment the decimal (e.g., if highest is 2.3, next update is 2.4)
 
-**DETERMINED_FILENAME** is "@planning/sprints/active/{CURRENT_HIGHEST_SPRINT+1}.0_<feature_name>.md".
+**DETERMINED_FILENAME** is "@planning/sprints/active/{CURRENT_HIGHEST_SPRINT+1}.0_<feature_name>.md". _Sprint filenames must always use the .0 format (e.g., 7.0_feature.md, not 6.1_feature.md) - increment the major number only, never use decimal increments._
 
 Output the sprint plan content in **Markdown** into {DETERMINED_FILENAME}. Double-check exists {DETERMINED_FILENAME}; if it doesn't attempt a second write.
 """

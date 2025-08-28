@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Default Report Format**: Professional reports are now the default for `/analyze:security` and `/code:analysis` commands
 - **Enhanced Documentation**: Updated all documentation to reflect new default behaviors and comprehensive flag usage
 - **Improved Performance**: Fast git commands provide streamlined workflows for experienced developers
+- **Command Consistency**: Improved date formatting consistency across `/create:tdd` and `/create:tutorial` commands
+- **Sprint Filename Clarification**: Enhanced `/create:sprint` documentation to prevent decimal increment misfires - sprint filenames must always use major number increments with `.0` format (e.g., 7.0_feature.md, not 6.1_feature.md)
 
 ## [1.4.0] - 2025-08-27
 
