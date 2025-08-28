@@ -3,7 +3,7 @@
 
 ![Version 1.4.1](https://img.shields.io/badge/Version-1.4.1-blue) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Built with TOML](https://img.shields.io/badge/Built%20with-TOML-orange)](https://nodejs.org/)
 
-A powerful collection of "[hybrid prompt chaining](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c)" slash prompts for [`qwen-code`](https://github.com/QwenLM/qwen-code) CLI tool. These prompts combine multi-shot analysis with single-shot efficiency, leveraging [`gemini-cli`](https://github.com/google-gemini/gemini-cli) integration to deliver **72% faster execution** and **91.7% success rate** across development workflows (tested across 6 repositories).
+A powerful collection of "[hybrid prompt chaining](https://dev.to/samestrin/maximizing-ai-efficiency-building-hybrid-workflows-with-qwen-code-and-gemini-cli-l4c)" slash prompts for [`qwen-code`](https://github.com/QwenLM/qwen-code) CLI tool. These prompts combine multi-shot analysis with single-shot efficiency, leveraging [`gemini-cli`](https://github.com/google-gemini/gemini-cli) integration to deliver **72% faster execution** and **91.7% success rate** across development workflows (tested across 5 repositories).
 
 ## Overview
 
