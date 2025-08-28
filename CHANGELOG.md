@@ -13,12 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `/code:analysis --comprehensive` - Enables comprehensive code analysis with detailed technical insights
 - **Fast Git Commands**: New streamlined git command variants for quick operations
   - `/git:add/fast` - Quick file staging without detailed analysis
-  - `/git:commit/fast` - Rapid commits with minimal validation
-  - `/git:status/fast` - Quick status check without comprehensive analysis
-  - `/git:branch/fast` - Fast branch operations
-  - `/git:merge/fast` - Quick merge operations
-  - `/git:push/fast` - Rapid push without extensive validation
-  - `/git:pull/fast` - Quick pull operations
+  - `/git:commit:fast` - Rapid commits with minimal validation
+  - `/git:status:fast` - Quick status check without comprehensive analysis
 
 ### Changed
 - **Default Report Format**: Professional reports are now the default for `/analyze:security` and `/code:analysis` commands
