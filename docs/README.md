@@ -33,7 +33,7 @@ Comprehensive documentation for all 45 qwen-code custom slash commands organized
 - **[create:tutorial](commands/create/tutorial.md)** - Codebase tutorial generator with real examples
 
 #### Documentation Commands
-- **[docs:create-standard](commands/docs/create-standard.md)** - Documentation standard and template creator
+- **[create:doc-standard](commands/create/doc-standard.md)** - Documentation standard and template creator
 - **[docs:generate-from-standard](commands/docs/generate-from-standard.md)** - Documentation generator using established standards
 - **[docs:update-standard](commands/docs/update-standard.md)** - Documentation standard updater and formatter
 
@@ -70,7 +70,7 @@ Comprehensive documentation for all 45 qwen-code custom slash commands organized
 
 #### Strategic Planning Commands
 - **[strategy:extract-business-logic](commands/strategy/extract-business-logic.md)** - Business logic extraction and documentation
-- **[strategy:plan](commands/strategy/plan.md)** - Strategic planning and implementation guidance
+- **[create:plan](commands/create/plan.md)** - Strategic planning and implementation guidance
 
 #### Testing Commands
 - **[test:coverage](commands/test/coverage.md)** - Test coverage analysis and improvement recommendations

@@ -45,6 +45,6 @@ The extraction process examines:
 
 ## Related Resources
 
-- [/strategy:plan](plan.md) - Strategic implementation planning
+- [/create:plan](../create/plan.md) - Strategic implementation planning
 - [/analyze:implementation](../analyze/implementation.md) - Implementation pattern analysis
 - [/code:analysis](../code/analysis.md) - General code analysis

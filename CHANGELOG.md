@@ -90,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New `/initialize:` namespace**: Complete project initialization and setup automation
 - **5 New Initialize Commands**:
   - `/initialize:planning` - Sets up project planning directory structure with automatic .gitignore management
-  - `/initialize:coding-standard` - Generates comprehensive base coding standard template (CODING_STANDARD.md)
+  - `/initialize:coding-standard` - Generates comprehensive base coding standard template (CODING_STANDARDS.md)
   - `/initialize:coding-rules` - Creates platform-specific coding rules for Trae, Qwen, Claude, Gemini, and Cursor
   - `/initialize:gitignore` - Generates comprehensive, language-specific .gitignore files
   - `/initialize:update-coding-rules` - Updates and maintains existing platform-specific coding rules

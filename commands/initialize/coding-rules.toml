@@ -33,7 +33,7 @@ Generate platform-specific coding rules based on project specifications and the 
 1. **Specification Analysis**: Read and analyze available specification files:
    - @planning/specifications/tdd.md (if exists)
    - @planning/specifications/prd.md (if exists)
-   - @CODING_STANDARD.md (if exists)
+   - @CODING_STANDARDS.md (if exists)
    - Any other specification files in planning/specifications/
 
 2. **Technology Stack Detection**: Examine project configuration:
@@ -61,7 +61,7 @@ Provide a comprehensive analysis summary that will inform the coding rules gener
 
 Based on the analysis, generate coding rules for the specified platforms. Parse {{args}} to determine which platforms to target:
 
-- **trae**: Generate `./trae/rules/project_rules.md`
+- **trae**: Generate `./.trae/rules/project_rules.md`
 - **qwen**: Generate `./QWEN.md`
 - **claude**: Generate `./CLAUDE.md`
 - **gemini**: Generate `./GEMINI.md`
@@ -70,7 +70,7 @@ Based on the analysis, generate coding rules for the specified platforms. Parse 
 
 ### Platform-Specific Rule Templates:
 
-#### For Trae AI (./trae/rules/project_rules.md):
+#### For Trae AI (./.trae/rules/project_rules.md):
 ```markdown
 # Project Rules - [Project Name]
 
@@ -277,7 +277,7 @@ Based on the analysis, generate coding rules for the specified platforms. Parse 
 **IMPORTANT**: Parse {{args}} to determine which platforms to generate. Only create files for explicitly requested platforms.
 
 **Platform Mapping**:
-- If {{args}} contains 'trae' → Create ./trae/rules/project_rules.md
+- If {{args}} contains 'trae' → Create ./.trae/rules/project_rules.md
 - If {{args}} contains 'qwen' → Create ./QWEN.md  
 - If {{args}} contains 'claude' → Create ./CLAUDE.md
 - If {{args}} contains 'gemini' → Create ./GEMINI.md
@@ -305,7 +305,7 @@ Based on the analysis, generate coding rules for the specified platforms. Parse 
 5. **Git Configuration**: Add .gitignore entries only for the generated files
 
 **Example**: If {{args}} = 'trae,qwen,gemini', create ONLY:
-- ./trae/rules/project_rules.md
+- ./.trae/rules/project_rules.md
 - ./QWEN.md
 - ./GEMINI.md
 
@@ -319,7 +319,7 @@ Generate the coding rules files now based on the parsed platform requirements."`
 - Each file contains project-specific information derived from specifications
 - Rules are consistent with the base coding standard
 - Files are properly formatted for their target platform
-- Directory structure is created as needed (e.g., ./trae/rules/)
+- Directory structure is created as needed (e.g., ./.trae/rules/)
 - Generated rules integrate with existing project workflow
 
 ### Platform Support:

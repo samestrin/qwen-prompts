@@ -22,6 +22,27 @@ Generates comprehensive Product Requirements Documents from feature descriptions
 - Development planning
 - Requirements documentation
 
+### [doc-standard](doc-standard.md) - Documentation Standard Creator
+Create comprehensive documentation standards and templates based on project requirements or existing documentation patterns.
+
+**Common Use Cases:**
+- Establishing consistent documentation practices
+- Creating reusable documentation templates
+- Standardizing documentation across teams
+- Analyzing existing docs to infer style patterns
+- Setting up documentation guidelines for projects
+
+### [plan](plan.md) - Strategic Implementation Planning
+Create comprehensive strategic plans for implementing features, refactoring code, or solving complex technical challenges without writing any code. Enhanced with architectural principles from Eskil Steenberg's systems programming methodology.
+
+**Common Use Cases:**
+- Feature implementation strategy development
+- System architecture planning and design
+- Refactoring and modernization strategies
+- Technology migration planning
+- Integration strategy development
+- Performance optimization planning
+
 ### [sprint](sprint.md) - Sprint Plan Generator
 Analyzes feature requests and project context to generate detailed and actionable sprint plans with automated project analysis and task breakdown.
 

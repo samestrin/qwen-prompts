@@ -43,6 +43,6 @@ The documentation generation process includes:
 
 ## Related Resources
 
-- [/docs:create-standard](create-standard.md) - Create documentation standards and templates
+- [/create:doc-standard](../create/doc-standard.md) - Create documentation standards and templates
 - [/docs:update-standard](update-standard.md) - Update existing documentation standards
 - [/create:tutorial](../create/tutorial.md) - Generate tutorials from codebase analysis

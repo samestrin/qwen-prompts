@@ -49,7 +49,7 @@ A comprehensive cheat sheet for all qwen-prompts commands, organized by most com
 
 ### Documentation Commands
 ```qwen
-> /docs:create-standard for X     # Create documentation standards and template
+> /create:doc-standard for X     # Create documentation standards and template
 > /docs:generate-from-standard for X using @planning/specifications/documentation.md  # Generate docs following specific standards
 > /docs:update-standard @existing-docs.md using @planning/specifications/documentation.md  # Update existing docs to conform to standards
 ```
@@ -82,7 +82,7 @@ A comprehensive cheat sheet for all qwen-prompts commands, organized by most com
 | **Git** | `add` `branch` `commit` `merge` `pull` `push` `status` | Git repository management |
 | **Initialize** | `coding-rules` `coding-standard` `gitignore` `planning` `update-coding-rules` | Project setup |
 | **Single** | `analyze:security` `code:analysis` | Benchmarking |
-| **Strategy** | `extract-business-logic` `plan` | Strategic planning |
+| **Create** | `cost-analysis` `extract-business-logic` `plan` `prd` `sprint` `tdd` `tutorial` | Documentation generation and strategic planning |
 | **Test** | `coverage` `review-and-correct` | Testing analysis |
 
 ## Common Command Patterns
@@ -259,14 +259,14 @@ Sophisticated usage patterns for complex operations:
 ### Project Improvement Flow
 ```qwen
 > /analyze:repo                                    # 1. Project overview
-> /strategy:plan Based on the previous response, create a plan to resolve the Immediate Improvements # 2. Create sprint plan from the repo analysis
+> /create:plan Based on the previous response, create a plan to resolve the Immediate Improvements # 2. Create sprint plan from the repo analysis
 > /file:save @planning/plans/immediate_improvements.md  # 3. Save the improvement plan from previous command
 ```
 
 ### Sprint Creation Flow
 ```qwen
 > /analyze:repo                                    # 1. Project overview
-> /strategy:plan Based on the previous response, create a plan to resolve the Immediate Improvements  # 2. Create sprint plan from the repo analysis
+> /create:plan Based on the previous response, create a plan to resolve the Immediate Improvements  # 2. Create sprint plan from the repo analysis
 > /create:sprint Based on the previous response    # 3. Create sprint plan from the improvement strategy, creates a new file in /planning/sprints/active/
 ```
 

@@ -43,7 +43,7 @@ Always follow these principles:
 - Prepare for clean, meaningful commits following project standards
 
 Before staging, if you don't remember the project **staging and commit standards**, review each of these files, one after another until you find them, then stop:
-   - `CODING_STANDARD.md`
+   - `CODING_STANDARDS.md`
    - `.trae/rules/project_rules.md`
    - `QWEN.md`
    - `GEMINI.md` 

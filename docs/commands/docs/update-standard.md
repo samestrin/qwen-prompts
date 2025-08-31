@@ -43,6 +43,6 @@ The update process supports:
 
 ## Related Resources
 
-- [/docs:create-standard](create-standard.md) - Create new documentation standards
+- [/create:doc-standard](../create/doc-standard.md) - Create new documentation standards
 - [/docs:generate-from-standard](generate-from-standard.md) - Generate new documentation from standards
 - [/create:tutorial](../create/tutorial.md) - Create tutorials from codebase analysis

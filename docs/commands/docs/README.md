@@ -40,7 +40,7 @@ qwen
 
 ```qwen
 # 1. Create documentation standard for the project type
-> /docs:create-standard for a Python REST API with authentication and database integration
+> /create:doc-standard for a Python REST API with authentication and database integration
 > /file:save @python-api-documentation-standard.md
 
 # 2. Generate initial documentation following the standard
@@ -55,7 +55,7 @@ qwen
 
 ```qwen
 # 1. Analyze existing API documentation for style reference
-> /docs:create-standard for REST API documentation, using these files as reference @docs/api-v1.md @docs/auth.md
+> /create:doc-standard for REST API documentation, using these files as reference @docs/api-v1.md @docs/auth.md
 > /file:save @api-documentation-standard.md
 
 # 2. Generate comprehensive API documentation
@@ -70,7 +70,7 @@ qwen
 
 ```qwen
 # 1. Create standard based on existing documentation
-> /docs:create-standard analyzing @docs/*.md files to create a consistent documentation template
+> /create:doc-standard analyzing @docs/*.md files to create a consistent documentation template
 > /file:save @documentation-template-standard.md
 
 # 2. Update existing documentation to match standard

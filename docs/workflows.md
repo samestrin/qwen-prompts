@@ -21,7 +21,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /initialize:gitignore react, typescript, node, vscode
 
 # 5. Create documentation
-> /docs:create-standard For a public-facing react typescript project
+> /create:doc-standard For a public-facing react typescript project
 
 # 6. Save setup documentation
 > /file:save @planning/specifications/documentation.md
@@ -228,7 +228,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 
 ```qwen
 # 1. Create documentation standard
-> /docs:create-standard for enterprise software documentation
+> /create:doc-standard for enterprise software documentation
 > /file:save @documentation-standard.md
 
 # 2. Generate documentation from standard
@@ -258,7 +258,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /file:save @api-analysis.md
 
 # 2. Create API documentation standard
-> /docs:create-standard for REST API documentation with examples, referencing @api-analysis.md
+> /create:doc-standard for REST API documentation with examples, referencing @api-analysis.md
 > /file:save @api-standard.md
 
 # 3. Generate API documentation
@@ -294,7 +294,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /file:save @migration-challenges.md
 
 # 4. Create migration strategy
-> /strategy:plan to migrate from React to Vue while maintaining functionality, referencing @current-implementation.md @framework-comparison.md @migration-challenges.md
+> /create:plan to migrate from React to Vue while maintaining functionality, referencing @current-implementation.md @framework-comparison.md @migration-challenges.md
 > /file:save @migration-strategy.md
 
 # 5. Plan migration sprints
@@ -324,7 +324,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /file:save @problematic-patterns.md
 
 # 4. Create refactoring strategy
-> /strategy:plan to refactor identified technical debt areas, referencing @tech-debt-analysis.md @code-review-refactoring.md @problematic-patterns.md
+> /create:plan to refactor identified technical debt areas, referencing @tech-debt-analysis.md @code-review-refactoring.md @problematic-patterns.md
 > /file:save @refactoring-strategy.md
 
 # 5. Plan refactoring sprints

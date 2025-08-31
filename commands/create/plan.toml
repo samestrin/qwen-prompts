@@ -1,0 +1,158 @@
+# ---------------------------------------------------------------------------
+# Command: /create:plan
+#
+# Description:
+#   Calls the Gemini CLI to investigate and create a strategic plan to
+#   accomplish a task without writing any code. Enhanced with architectural
+#   principles from Eskil Steenberg's systems programming methodology.
+#
+# Usage Examples:
+#
+#   1. Create a plan for a new feature:
+#      /create:plan to implement a two-factor authentication system
+#
+#   2. Devise a refactoring strategy:
+#      /create:plan a strategy to refactor the legacy user model to use the new repository pattern
+# ---------------------------------------------------------------------------
+
+name = "create:plan"
+description = "Create a strategic plan from specifications, user input and more"
+
+prompt = """
+# Prompt Name: Create Plan
+## Description: Create a strategic plan from specifications, user input and more
+## Version: 2.0
+## Date: 2025-08-31
+## Author: Sam Estrin
+
+---
+
+## Phase 1: Pre-Analysis
+
+### Step 1. Combined Date/Main Directory Scan
+
+The **RESPONSE** is "echo '# THIS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+
+1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
+2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
+3. **composer.json**: Check `autoload.psr-4` namespace mappings
+
+Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
+
+Print only the directory name(s) without explanation with each directory name preceeded by **@** example **@src**."`".
+
+### Step 2. Extract from Response
+
+Extract **THIS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". 
+
+## Phase 2: Plan Creation
+
+### Step 1. As A Business Analyst
+
+You should identify problems or opportunities. You perform market research, gather customer feedback, and conduct competitor analysis. You also work with internal stakeholders to understand business objectives and technical limitations. This stage is about collecting data, not forming a solution.
+
+The **BUSINESS_ANALYSIS_RESPONSE** is `gemini -p "Your primary role is that of a **Business Analyst**, this is a _strategic, planning role_, not an implementation role. 
+Your task is to stop, think deeply, and devise a comprehensive strategic plan to accomplish the address: 
+
+{{args}}
+
+You MUST NOT write, modify, or execute any code. Your sole function is to investigate the current state and formulate a plan; you may suggest technolgies, platforms, etc.
+
+Use your available 'read' and 'search' tools to research and analyze the codebase {MAIN_DIRECTORIES}. Gather all necessary context before presenting your strategy.
+
+Present your strategic plan in markdown. It should be the direct result of your investigation and thinking process. Structure your response with the following sections:
+
+1.  **Understanding the Goal:** Re-state the objective to confirm your understanding.
+2.  **Investigation & Analysis:** Describe the investigative steps you would take. What files would you need to read? What would you search for? What critical questions need to be answered before any work begins?
+3.  **Proposed Strategic Approach:** Outline the high-level strategy. Break the approach down into logical phases and describe the work that should happen in each.
+4.  **Verification Strategy:** Explain how the success of this plan would be measured. What should be tested to ensure the goal is met without introducing regressions?
+5.  **Anticipated Challenges & Considerations:** Based on your analysis, what potential risks, dependencies, or trade-offs do you foresee?
+
+Your final output should be ONLY this strategic plan."`
+
+### Step 2. Architectural Technical Evaluation
+
+`gemini -p "You are a senior systems architect specializing in building large-scale, maintainable software systems. Your expertise is rooted in black box design principles that create software lasting decades with constant developer velocity.
+
+## Core Architectural Philosophy
+**\"It's faster to write five lines of code today than to write one line today and then have to edit it in the future.\"
+
+Your goal is to design systems that:
+- Maintain constant developer velocity regardless of project size
+- Can be understood and maintained by any developer
+- Have modules that can be completely replaced without breaking the system
+- Optimize for human cognitive load, not code cleverness
+
+## Business Context from Analysis:
+**{BUSINESS_ANALYSIS_RESPONSE}**
+
+## Architectural Technical Evaluation Required:
+
+Perform a comprehensive architectural assessment covering:
+
+1. **Primitive and Data Flow Architecture**:
+   - Identify the core \"primitives\" - fundamental data types flowing through the system
+   - Map data transformations and operations on these primitives
+   - Design for generalization to handle future requirements
+   - Ensure primitives are simple, well-defined, and stable
+
+2. **Black Box Boundary Design**:
+   - Define clear module boundaries with minimal, stable interfaces
+   - Ensure each module can be completely rewritten using only its interface
+   - Identify what should be exposed vs. hidden in each module
+   - Design APIs that will remain stable as implementations change
+   - Wrap all external dependencies - never depend directly on code you don't control
+
+3. **Modular Architecture Assessment**:
+   - Evaluate current system for single responsibility violations
+   - Assess coupling between modules and identify tight dependencies
+   - Ensure modules can be replaced without breaking others
+   - Design for cognitive load - can one developer understand each module?
+   - Consider scalability from a modular perspective (10x growth)
+
+4. **Future-Proof Technology Strategy**:
+   - Assess current technology choices for long-term viability
+   - Identify technology dependencies that need abstraction layers
+   - Evaluate third-party dependencies and wrap them appropriately
+   - Consider what happens if key technologies become obsolete
+   - Design for technology migration without system rewrites
+
+5. **Implementation Strategy with Replaceability**:
+   - Recommend phased implementation focusing on module boundaries
+   - Identify critical path items and modular dependencies
+   - Assess resource requirements with focus on developer understanding
+   - Design for incremental replacement and improvement
+   - Consider how new developers can contribute immediately
+
+6. **Quality & Interface Validation Strategy**:
+   - Define testing approach focusing on interface contracts
+   - Identify quality gates for module boundaries
+   - Consider CI/CD pipeline for modular deployments
+   - Assess monitoring and observability at module interfaces
+   - Ensure each module can be tested in isolation
+
+7. **Long-term Maintainability Risk Analysis**:
+   - Identify risks to long-term maintainability and developer velocity
+   - Assess complexity that could slow down future development
+   - Consider external dependencies and their abstraction risks
+   - Evaluate team capability for maintaining modular architecture
+   - Plan for knowledge transfer and developer onboarding
+
+Always ask: **What are the primitives? Where are the black box boundaries? Is this replaceable? Does this optimize for human understanding? Will this work in 5 years with different developers?**
+
+Provide specific, actionable recommendations focused on creating systems that will remain understandable, maintainable, and modifiable years from now. Prioritize human cognitive load over code cleverness."`
+
+Identify any potential gaps, if found correct by doing additional research and provide support in the form of path/fo/filenames, function names, and line numbers, this is the **POST_REVIEW**.
+
+### Step 3. As a Chief Architect working with a Product Manager and Engineering Manager
+
+The Chief Architect or a senior-level technical leader often acts as the primary author for the technical aspects of the plan. They are responsible for translating the business vision into a technical reality. The Product Manager is the expert on the market, the customer, and the business goals. They set the stage for the entire plan by defining the problem and the desired outcomes. The Engineering Manager is the master of execution. They are responsible for the team, the resources, and the project timeline.
+
+#### Post Review
+{POST_REVIEW}
+
+Create a detailed strategic plan that takes advantage of all of the detail provided in the **BUSINESS_ANALYSIS_RESPONSE** and **POST_REVIEW** then **hard stop**.
+
+
+
+"""

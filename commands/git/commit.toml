@@ -11,7 +11,7 @@ Your task is to:
 1. Check the current git status to see what files are staged
    - If there is nothing staged, report that back and **hard stop**.
 2. If you don't remember the project **Commit Standard**, review each of these files, one after another until you find the project **Commit Standard**.
-   a. CODING_STANDARD.md or CODING_STANDARDS.md
+   a. CODING_STANDARDS.md or CODING_STANDARDS.md
    b. .trae/rules/project_rules.md
    c. QWEN.md, GEMINI.md, CLAUDE.md, or CURSOR.md
 3. If you don't have a **Commit Standard** at this point, use this:

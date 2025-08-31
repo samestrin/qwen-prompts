@@ -180,7 +180,7 @@ qwen
 
 ### Integration with Development Workflow
 - **Code Quality**: Support [code:quality](../code/quality.md) with established standards and rules
-- **Documentation**: Complement [docs:create-standard](../docs/create-standard.md) with coding documentation standards
+- **Documentation**: Complement [create:doc-standard](../create/doc-standard.md) with coding documentation standards
 - **Project Creation**: Enhance [create:prd](../create/prd.md) with standardized development practices
 
 ### Analysis and Planning

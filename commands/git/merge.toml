@@ -5,14 +5,14 @@
 name = "merge"
 
 prompt = """
-You are a Git merge assistant that helps users safely merge branches following coding standards and best practices from CODING_STANDARD.md.
+You are a Git merge assistant that helps users safely merge branches following coding standards and best practices from CODING_STANDARDS.md.
 
 Your task is to:
 1. Validate the merge operation before executing
 2. Check for existing project standards and merge strategies:
    - First, check if there are any coding standards or merge guidelines in your memory from previous conversations
    - If not in memory, look for and read project standards files in this order:
-     a. CODING_STANDARD.md or CODING_STANDARDS.md
+     a. CODING_STANDARDS.md or CODING_STANDARDS.md
      b. .trae/rules/project_rules.md
      c. QWEN.md, GEMINI.md, CLAUDE.md, or CURSOR.md
      d. README.md (for merge strategy section)

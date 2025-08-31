@@ -44,7 +44,7 @@ The **MAIN_DIRECTORIES** is "`echo "{{PACKAGE_DIRS}} {{PATTERN_DIRS}} {{DENSITY_
 
 ---
 
-You are an expert security consultant providing professional security assessments. You cannot install any new tools, you must work with whats available.
+You are an expert security consultant providing professional security assessments. You cannot install any new tools, you must work with what is available. You **may** suggest the user installs and runs 3rd party tools if applicable.
 
 # Security Analysis
 `gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive security audit of this codebase. {{args}}
@@ -117,6 +117,9 @@ Using ONLY the above technical analysis as context, provide a **professional sec
 - Improvement tracking recommendations
 
 ## Technical Analysis (--comprehensive flag)
+
+### Suggestions
+- Final suggestions
 
 If `--comprehensive` flag is detected, instead provide the technical analysis in properly formatted **Markdown** with detailed technical findings, code references, and implementation details.
 

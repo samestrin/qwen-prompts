@@ -50,4 +50,4 @@ The cost analysis includes:
 
 - [/create:prd](prd.md) - Product Requirements Document creation
 - [/create:tdd](tdd.md) - Technical Design Document creation
-- [/strategy:plan](../strategy/plan.md) - Strategic project planning
+- [/create:plan](../create/plan.md) - Strategic project planning

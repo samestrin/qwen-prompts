@@ -43,7 +43,7 @@ The template covers:
 - Performance and optimization guidelines
 - Version control and collaboration workflows
 
-**Generated File:** `CODING_STANDARD.md`
+**Generated File:** `CODING_STANDARDS.md`
 
 ## Related Resources
 

@@ -4,16 +4,7 @@ High-level strategic planning and architectural guidance tools for developing co
 
 ## Commands Overview
 
-### [plan](plan.md) - Strategic Implementation Planning
-Investigates and creates comprehensive strategic plans to accomplish complex tasks, focusing on analysis, planning, and strategic guidance rather than immediate implementation.
 
-**Common Use Cases:**
-- Feature implementation strategy development
-- System architecture planning and design
-- Refactoring and modernization strategies
-- Technology migration planning
-- Integration strategy development
-- Performance optimization planning
 
 ### [extract-business-logic](extract-business-logic.md) - Business Logic Extraction Strategy
 Develops strategic approaches for extracting and organizing business logic from complex codebases, focusing on separation of concerns and architectural improvements.

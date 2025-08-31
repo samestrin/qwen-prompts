@@ -44,7 +44,7 @@ The generation process includes:
 - Integration with existing development workflow
 
 **Generated Files:**
-- `./trae/rules/project_rules.md` (for trae)
+- `./.trae/rules/project_rules.md` (for trae)
 - `./QWEN.md` (for qwen)
 - `./CLAUDE.md` (for claude)
 - `./GEMINI.md` (for gemini)

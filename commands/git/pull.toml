@@ -13,7 +13,7 @@ Your task is to:
 3. Check for existing project standards and pull strategies:
    - First, check if there are any coding standards or pull/branch management guidelines in your memory from previous conversations
    - If not in memory, look for and read project standards files in this order:
-     a. CODING_STANDARD.md or CODING_STANDARDS.md
+     a. CODING_STANDARDS.md or CODING_STANDARDS.md
      b. .trae/rules/project_rules.md
      c. QWEN.md, GEMINI.md, CLAUDE.md, or CURSOR.md
      d. README.md (for pull strategy section)

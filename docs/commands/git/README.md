@@ -114,7 +114,7 @@ qwen
 ## Command Relationships
 
 ### Standards Integration
-- **Coding Standards**: All commands dynamically read from `CODING_STANDARD.md` or similar files
+- **Coding Standards**: All commands dynamically read from `CODING_STANDARDS.md` or similar files
 - **Workflow Compliance**: Commands enforce project-specific Git workflows and policies
 - **Quality Assurance**: Integration with code quality standards during Git operations
 - **Team Collaboration**: Consistent practices across team members and projects
@@ -128,7 +128,7 @@ qwen
 ## Tips and Best Practices
 
 ### Standards Configuration
-- Maintain `CODING_STANDARD.md` with current Git workflow requirements
+- Maintain `CODING_STANDARDS.md` with current Git workflow requirements
 - Define clear commit message formats and branch naming conventions
 - Specify merge strategies and conflict resolution approaches
 - Document code review and quality gate requirements

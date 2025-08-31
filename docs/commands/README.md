@@ -85,7 +85,7 @@ Test analysis and quality assurance tools for comprehensive testing strategy dev
 4. [file:file](file/file.md) - Save security reports
 
 ### Documentation Creation
-1. [docs:create-standard](docs/create-standard.md) - Establish documentation standards
+1. [create:doc-standard](create/doc-standard.md) - Establish documentation standards
 2. [docs:generate-from-standard](docs/generate-from-standard.md) - Generate documentation
 3. [docs:update-standard](docs/update-standard.md) - Maintain documentation consistency
 

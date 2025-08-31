@@ -54,7 +54,7 @@ Provide a summary of the technology stack and current conventions to inform the 
 
 ### Base Coding Standard Template
 
-Create or Update a file named `CODING_STANDARD.md` with the following comprehensive template:
+Create or Update a file named `CODING_STANDARDS.md` with the following comprehensive template:
 
 ```markdown
 # Coding Standard Template
@@ -243,13 +243,13 @@ This template should be customized using:
 
 ### Implementation Steps:
 
-1. **Create the base template file**: Generate `CODING_STANDARD.md` with the template above
+1. **Create the base template file**: Generate `CODING_STANDARDS.md` with the template above
 2. **Analyze current project**: Use the Gemini analysis to identify current conventions
 3. **Customize sections**: Fill in project-specific details where indicated
 4. **Validate completeness**: Ensure all sections are relevant and complete
 5. **Git Configuration**: Update .gitignore to exclude the coding standard file:
-   - Add 'CODING_STANDARD.md' to .gitignore if it exists
-   - Create .gitignore with 'CODING_STANDARD.md' entry if it doesn't exist
+   - Add 'CODING_STANDARDS.md' to .gitignore if it exists
+   - Create .gitignore with 'CODING_STANDARDS.md' entry if it doesn't exist
    - Ensure coding standard file is not tracked in version control
 
 ### Success Criteria:

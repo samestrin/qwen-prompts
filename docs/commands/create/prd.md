@@ -46,4 +46,4 @@ The PRD generation process includes:
 
 - [/create:tdd](tdd.md) - Technical Design Document creation
 - [/create:cost-analysis](cost-analysis.md) - Cost analysis for projects
-- [/strategy:plan](../strategy/plan.md) - Strategic project planning
+- [/create:plan](plan.md) - Strategic project planning

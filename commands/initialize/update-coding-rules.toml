@@ -31,12 +31,12 @@ Update existing platform-specific coding rules to reflect current project state 
 `gemini -p "Analyze the current state of the project and existing coding rules to determine what needs updating:
 
 1. **Existing Rules Inventory**: Identify all current coding rules files:
-   - ./trae/rules/project_rules.md
+   - ./.trae/rules/project_rules.md
    - ./QWEN.md
    - ./CLAUDE.md
    - ./GEMINI.md
    - ./CURSOR.md
-   - ./CODING_STANDARD.md
+   - ./CODING_STANDARDS.md
 
 2. **Specification Changes**: Compare current specifications with rules:
    - @planning/specifications/tdd.md (check for updates)
@@ -105,7 +105,7 @@ Provide a detailed update strategy and implementation plan."`
 
 **Update Process**:
 
-1. **Base Standard Update**: If CODING_STANDARD.md exists, update it with:
+1. **Base Standard Update**: If CODING_STANDARDS.md exists, update it with:
    - New project requirements
    - Technology stack changes
    - Updated best practices
@@ -113,7 +113,7 @@ Provide a detailed update strategy and implementation plan."`
 
 2. **Platform-Specific Updates**: For each target platform:
 
-   **Trae Rules (./trae/rules/project_rules.md)**:
+   **Trae Rules (./.trae/rules/project_rules.md)**:
    - Update project overview with current state
    - Revise technology stack information
    - Update code quality standards based on project evolution

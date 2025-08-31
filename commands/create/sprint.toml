@@ -12,11 +12,22 @@
 # ---------------------------------------------------------------------------
 
 name = "create:sprint"
-description = "Generates a detailed sprint plan from a feature request"
+description = "Create detailed sprint plans based from plans, specifications, user input and more"
 
 prompt = """
-The **THIS_DATE** is "`date`". The {THIS_DATE} value should include the date and the timestamp, do not reformat.
-The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+# Prompt Name: Create Sprint
+## Description: Create detailed sprint plans based from plans, specifications, user input and more
+## Version: 1.2
+## Date: 2025-08-31
+## Author: Sam Estrin
+
+---
+
+## Phase 1: Pre-Analysis
+
+### Step 1. Combined Sprint Number/Coding Strategy/Branch Strategy/Date/Main Directory Scan
+
+The **RESPONSE** is "echo '# CURRENT_HIGHEST_SPRINT'; find ./planning/sprints/{active,completed} -name "*.md" -exec basename {} \\; 2>/dev/null | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1; echo '# THIS_CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards strategy found';# THIS_BRANCH_STRAT'; cat ./planning/specifications/sprint-branch-strategy.md 2>/dev/null || echo 'No branch strategy found'; echo '# THIS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
 
 1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
 2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
@@ -24,106 +35,12 @@ The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, 
 
 Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
 
-Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
+Print only the directory name(s) without explanation with each directory name preceeded by **@** example **@src**."`".
 
-You are an expert software architect and project manager creating a sprint plan for **{{args}}**. You are ONLY in planning mode - do NOT write code, create files, create directories, or start implementation. You are ONLY authoring a sprint plan document. After generating the plan content, you will stop and wait for further instructions.
-
-### Analysis
-`gemini -p "{MAIN_DIRECTORIES} You are an expert software engineer performing ANALYSIS ONLY. Do NOT create files, directories, or make any changes to the codebase. Perform a comprehensive technical analysis of the feature request: **"{{args}}"**.
-
-Your analysis **must** include:
-
-1. **Complexity Assessment**: Identify if this is a simple (1-3 days), moderate (4-7 days), or complex (8+ days) implementation based on:
-   - Number of files/components affected
-   - Integration complexity with existing systems
-   - New dependencies or architectural changes required
-   - Testing complexity and scope
-
-2. **Technical Deep Dive**: 
-   - Examine existing codebase architecture and patterns
-   - Identify all configuration variables, APIs, and integration points
-   - Analyze threading, async, or concurrency requirements
-   - Assess packaging, deployment, or platform-specific needs
-   - Identify potential technical challenges and risks
-
-3. **Dependency Analysis**:
-   - Map internal dependencies (existing modules, classes, functions)
-   - Identify external dependencies (libraries, services, tools)
-   - Assess version compatibility and integration requirements
-
-4. **Implementation Breakdown**:
-   - Break down into logical phases with realistic time estimates
-   - Identify which files need creation vs modification
-   - Specify testing strategy (unit, integration, system tests)
-   - Consider error handling, validation, and edge cases
-
-5. **Architecture Considerations**:
-   - Identify design patterns needed
-   - Assess scalability and maintainability requirements
-   - Consider security implications
-   - Evaluate performance requirements
-
-Be thorough and specific. If the feature involves complex systems (like GUIs, threading, packaging, or multi-component integration), provide detailed technical analysis of each component."`
-
-Now, using the comprehensive analysis above, create a detailed sprint plan. **Important**: 
-
-- For COMPLEX features (8+ days), create detailed phases with specific technical challenges, multiple sub-tasks, and realistic timelines
-- For MODERATE features (4-7 days), provide structured phases with clear implementation steps
-- For SIMPLE features (1-3 days), use the standard template structure
-
-**Key Requirements**:
-1. **Reflect Complexity**: Match the sprint structure to the complexity identified in analysis
-2. **Technical Depth**: Include specific technical challenges, architectural decisions, and implementation patterns
-3. **Realistic Timelines**: Provide time estimates based on complexity assessment
-4. **Comprehensive Scope**: Address all aspects identified in the analysis (threading, configuration, packaging, etc.)
-5. **Risk Mitigation**: Include specific risks and mitigation strategies from the analysis
-
-Preserve the markdown structure, including instructional text and checkboxes `[ ]`. For complex features, expand phases with detailed sub-sections and technical specifications.
-
-### **Sprint Plan Template to Populate**
-
-# Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
-Created: {THIS_DATE}
-
-**Directions:** Your task is to work through _Sprint {SPRINT_NUMBER}: {FEATURE_NAME}_ step-by-step, starting at _Phase 1. {PHASE_1_NAME}_. You must complete each action item in the phase, and upon successful completion, you **must immediately check-off your work**; this must be done to maintain state. **After completing and checking off all items in a phase, immediately proceed to the next phase without waiting for further instructions.**
-
-**Sprint Goal:** {DETAILED_SPRINT_GOAL_WITH_SUCCESS_CRITERIA}
-
-**Estimated Timeline:** {TIMELINE_BASED_ON_COMPLEXITY} ({COMPLEXITY_LEVEL}: {JUSTIFICATION})
-
-**Framework/Technology:** {PRIMARY_TECH_STACK}
-
-**Important**: You **must check off your work** as you complete it in real-time to maintain state. Follow the project and commit rules found in `.trae/rules/project_rules.md`, `QWEN.md`, `GEMINI.md` or `CLAUDE.md` (You only need to read one of them.). After the end of each phase, re-read the selected project rule file to make sure your context is up to date.
-
-## Development Guidelines
-
-**Git Strategy:**
-- **Branch**: `feature/{BRANCH_NAME}`
-- **Commits**: Frequent commits with conventional format
-- **Testing**: All tests must pass before merge
-
-**Test Location:** {SPECIFIC_TEST_DIRECTORY_STRUCTURE}
-
-**Code Standards:**
-- **TDD Approach**: Use TDD for all {IMPLEMENTATION_TYPE} and new implementations
-- **Coding Style**: Follow {LANGUAGE} Standard Style and project naming conventions
-- **Function Length**: 50-100 lines max
-- **File Length**: 500-650 lines max
-- **Cognitive Complexity**: Keep logic simple and clear
-- **DRY & KISS**: Avoid over-engineering and unneeded complexity
-
-## Success Criteria
-{LIST_OF_SPECIFIC_SUCCESS_CRITERIA}
-
-## Technical Challenges & Risks
-{IDENTIFIED_TECHNICAL_CHALLENGES_AND_MITIGATION_STRATEGIES}
-
-**Upon Completion**: Move this completed file to `/planning/sprints/completed`
-
-## Git Branch Strategy
+#### Default Git Branch Strategy
 
 **Branch Management:**
-- Create feature branch: `git checkout -b feature/{BRANCH_NAME}`
+- Create branch: `git checkout -b {BRANCH_TYPE}/{BRANCH_NAME}`
 - Commit frequently with descriptive messages following conventional commit format
 - Each phase should have its own commit(s)
 - Final merge to main after all phases complete and tests pass
@@ -138,21 +55,227 @@ Created: {THIS_DATE}
 - Specific change 2
 ```
 
-## Phase 1: {PHASE_1_NAME}
+#### Default Coding Standards
 
-**Phase Overview:** {PHASE_1_DESCRIPTION_AND_OBJECTIVES}
+**Architectural Principles:**
+- **Black Box Design**: Each module should be completely replaceable using only its interface
+- **Primitive-First**: Identify and work with the fundamental data types that flow through your system
+- **Wrap External Dependencies**: Never depend directly on code you don't control - always wrap it
+- **Optimize for Human Understanding**: Code should be readable by any developer, not just the author
+- **Future-Proof Modularity**: Design for 10x growth in features, users, and developers
 
-**Estimated Duration:** {PHASE_1_TIMELINE}
+**Code Standards:**
+- **TDD Approach**: Use TDD for all {IMPLEMENTATION_TYPE} and new implementations
+- **Coding Style**: Follow {LANGUAGE} Standard Style and project naming conventions
+- **Function Length**: 50-100 lines max (optimize for cognitive load)
+- **File Length**: 500-650 lines max (one developer should understand the entire file)
+- **Cognitive Complexity**: Keep logic simple and clear - avoid clever code
+- **DRY & KISS**: Avoid over-engineering and unneeded complexity
+- **Interface Clarity**: Public APIs should be clean, documented, and stable
+- **State Isolation**: Modules should not share mutable state
 
-### 1.0 [ ] **Create Feature Branch**
-   **Action:** Create and switch to feature branch for {FEATURE_NAME}
+### Step 2. Extract from Response
+
+Extract **CURRENT_HIGHEST_SPRINT**, **THIS_CODING_STANDARDS**, **THIS_BRANCH_STRAT**, **THIS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". If {THIS_BRANCH_STRAT} is "No branch strategy found" then set **THIS_BRANCH_STRAT** to the **Default Git Branch Strategy". If {THIS_CODING_STANDARDS} is "No coding standards strategy found" then set **THIS_CODING_STANDARDS** to the **Default Coding Standards**. 
+
+### Step 3. Parse the {{args}} Variable as a String
+The **THIS_ARGS** is "{{args}}".
+
+1. if {THIS_ARGS} starts with "--include-files" then:
+   - Set **ADDITIONAL_FILE_DETAIL** to "Files Affected:\n   - Path/To/Filename\n   - Function Names\n   - Line Numbers"
+   - Set **CLEANED_ARGS** to {THIS_ARGS} with "--include-files" removed (trim any leading/trailing spaces)
+   else:
+   - Set **ADDITIONAL_FILE_DETAIL** to "Number of files/components affected"
+   - Set **CLEANED_ARGS** to {THIS_ARGS}
+
+## Phase 2: Sprint Creation
+
+### Step 1. Pre-Analysis
+
+You are an expert software architect and project manager creating a sprint plan for:
+ 
+**{CLEANED_ARGS}** 
+ 
+You are ONLY in planning mode - do **NOT** write code, create files, create directories, or start implementation. You are ONLY authoring a sprint plan document. After generating the plan content, you will **hard stop** and wait for further instructions. 
+
+### Step 2. Architectural Analysis
+
+`gemini -p "{MAIN_DIRECTORIES} You are a senior systems architect specializing in modular, maintainable software design. Your expertise comes from black box design principles for building large-scale systems that last decades.
+
+## Core Philosophy
+**\"It's faster to write five lines of code today than to write one line today and then have to edit it in the future.\"**
+
+Your goal is to create software that:
+- Maintains constant developer velocity regardless of project size
+- Can be understood and maintained by any developer
+- Has modules that can be completely replaced without breaking the system
+- Optimizes for human cognitive load, not code cleverness
+
+## Implementation Requested: 
+**\"{CLEANED_ARGS}\"**
+
+Perform ANALYSIS ONLY - do NOT create files, directories, or make changes. Your architectural analysis **must** include:
+
+1. **Primitive Identification**: 
+   - What are the core \"primitives\" - the fundamental data types that flow through this system?
+   - What operations are performed on this data?
+   - How can you generalize to handle future requirements?
+   - Examples: Unix files, graphics polygons, healthcare events, user sessions
+
+2. **Black Box Boundary Design**:
+   - Where should the black box boundaries be drawn?
+   - What should be exposed vs. hidden in module interfaces?
+   - Can each module be completely rewritten using only its interface?
+   - What are the clean, documented APIs between components?
+
+3. **Complexity Assessment**: Identify if this is a simple (1-3 days), moderate (4-7 days), or complex (8+ days) implementation based on:
+   {ADDITIONAL_FILE_DETAIL}   
+   - Integration complexity with existing systems
+   - New dependencies or architectural changes required
+   - Testing complexity and scope
+   - **Cognitive load**: Can one developer understand and maintain each module?
+
+4. **Modular Architecture Analysis**: 
+   - Examine existing codebase for modular boundaries and patterns
+   - Identify single responsibility violations and coupling issues
+   - Assess if modules can be replaced without breaking others
+   - Analyze configuration variables, APIs, and integration points
+   - Consider threading, async, or concurrency from a modular perspective
+
+5. **Dependency Architecture**:
+   - Map internal dependencies (existing modules, classes, functions)
+   - Identify external dependencies that need wrapping/abstraction
+   - Assess version compatibility and integration requirements
+   - **Wrap external dependencies**: Never depend directly on code you don't control
+
+6. **Implementation Strategy with Replaceability**:
+   - Break down into logical phases with realistic time estimates
+   - Design for replaceability: any module should be rewritable from scratch
+   - Identify which files need creation vs modification
+   - Specify testing strategy focusing on interface validation
+   - Consider error handling, validation, and edge cases at module boundaries
+
+7. **Future-Proof Architecture**:
+   - Will this work with 10x more features/users/developers?
+   - Can new developers contribute immediately?
+   - What if key technologies become obsolete?
+   - How will this be maintained in 5 years?
+
+Always ask: **What are the primitives? Where are the black box boundaries? Is this replaceable? Does this optimize for human understanding? Are responsibilities clear?**
+
+Be thorough and specific. Focus on creating systems that will still be understandable and modifiable years from now, by different developers, using potentially different technologies."`
+
+### Step 3. Sprint Plan Creation
+
+Now, using the comprehensive analysis above, create a detailed sprint plan. **CRITICAL**: You MUST generate the appropriate number of phases based on the complexity assessment:
+
+**PHASE GENERATION RULES**:
+
+The following are estimates that show reasonable phase lengths based on project complexity. **Documentation is ALWAYS required** as a final phase.
+
+- **SIMPLE features (1-3 days)**: Generate around 3-4 phases
+  - Focus on: Setup → Implementation → Testing → Documentation
+- **MODERATE features (4-7 days)**: Generate around 4-5 phases  
+  - Focus on: Setup → Core Implementation → Integration/Testing → Documentation → (Final Review if needed)
+- **COMPLEX features (8+ days)**: Generate around 6-8 phases
+  - Focus on: Architecture → Core Components → Integration → Advanced Features → Testing → Performance Optimization → Documentation → Final Integration
+
+**DO NOT default to 4 phases**. The number of phases must match the complexity level you identified.
+
+**Key Requirements**:
+1. **Dynamic Phase Count**: Generate the exact number of phases appropriate for the complexity level
+2. **Reflect Complexity**: Match the sprint structure to the complexity identified in analysis
+3. **Technical Depth**: Include specific technical challenges, architectural decisions, and implementation patterns
+4. **Realistic Timelines**: Provide time estimates based on complexity assessment
+5. **Comprehensive Scope**: Address all aspects identified in the analysis (threading, configuration, packaging, etc.)
+6. **Risk Mitigation**: Include specific risks and mitigation strategies from the analysis
+
+Preserve the markdown structure, including instructional text and checkboxes `[ ]`. Use the phase structure template provided below to generate the appropriate number of phases.
+
+### **Sprint Plan Template to Populate**
+
+# Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
+Created: {THIS_TIMESTAMP}
+
+**Directions:** Your task is to work through _Sprint {SPRINT_NUMBER}: {FEATURE_NAME}_ step-by-step, starting at _Phase 1. {PHASE_1_NAME}_. You must complete each action item in the phase, and upon successful completion, you **must immediately check-off your work**; this must be done to maintain state. **After completing and checking off all items in a phase, immediately proceed to the next phase without waiting for further instructions.**
+
+**Sprint Goal:** {DETAILED_SPRINT_GOAL_WITH_SUCCESS_CRITERIA}
+
+**Estimated Timeline:** {TIMELINE_BASED_ON_COMPLEXITY} ({COMPLEXITY_LEVEL}: {JUSTIFICATION})
+
+**Framework/Technology:** {PRIMARY_TECH_STACK}
+
+**Important**: You **must check off your work** as you complete it in real-time to maintain state. Follow the project and commit rules found in `.trae/rules/project_rules.md`, `QWEN.md`, `GEMINI.md` or `CLAUDE.md` (You only need to read one of them.). After the end of each phase, re-read the selected project rule file to make sure your context is up to date.
+
+## Development Guidelines
+
+**Git Strategy:**
+- **Branch**: `{BRANCH_TYPE}/{BRANCH_NAME}`
+- **Commits**: Frequent commits with conventional format
+- **Testing**: All tests must pass before merge
+
+**Test Location:** {SPECIFIC_TEST_DIRECTORY_STRUCTURE}
+
+{THIS_CODING_STANDARDS}
+
+## Success Criteria
+{LIST_OF_SPECIFIC_SUCCESS_CRITERIA}
+
+## Technical Challenges & Risks
+{IDENTIFIED_TECHNICAL_CHALLENGES_AND_MITIGATION_STRATEGIES}
+
+**Upon Completion**: Move this completed file to `/planning/sprints/completed`
+
+{THIS_BRANCH_STRAT}
+
+## Sprint Phases
+
+**CRITICAL INSTRUCTION**: Generate the appropriate number of phases based on the complexity assessment above:
+
+- **SIMPLE features (1-3 days)**: Create 2-3 phases
+  - Examples: "Setup & Foundation" → "Core Implementation" → "Testing & Integration" (optional)
+
+- **MODERATE features (4-7 days)**: Create 3-4 phases
+  - Examples: "Setup & Foundation" → "Core Implementation" → "Integration & Testing" → "Documentation & Finalization" (optional)
+
+- **COMPLEX features (8+ days)**: Create 5-7 phases
+  - Examples: "Setup & Architecture" → "Core Components" → "Integration Layer" → "Advanced Features" → "Testing & Validation" → "Performance & Documentation" (optional) → "Final Integration & Deployment" (optional)
+
+**ADAPTIVE PHASE NAMING**: Choose phase names that reflect the specific feature type:
+
+**For UI/Frontend Features:**
+- "Component Setup", "UI Implementation", "Styling & Responsiveness", "User Interaction", "Testing & Polish"
+
+**For API/Backend Features:**
+- "Database & Models", "Core Endpoints", "Business Logic", "Authentication & Security", "Testing & Documentation"
+
+**For CLI/Tool Features:**
+- "Command Structure", "Core Functionality", "Input/Output Handling", "Error Handling", "Testing & Packaging"
+
+**For Integration Features:**
+- "Service Setup", "Data Mapping", "Connection Logic", "Error Handling", "Testing & Monitoring"
+
+**For Performance/Optimization Features:**
+- "Profiling & Analysis", "Core Optimizations", "Caching Strategy", "Load Testing", "Monitoring & Validation"
+
+**Phase Structure Template**: For each phase you generate, use this structure:
+
+```markdown
+## Phase {N}: {PHASE_NAME}
+
+**Phase Overview:** {PHASE_DESCRIPTION_AND_OBJECTIVES}
+
+**Estimated Duration:** {PHASE_TIMELINE}
+
+### {N}.0 [ ] **Create Branch** (Only for Phase 1)
+   **Action:** Create and switch to branch for {FEATURE_NAME}
    **Implementation:**
-   - Create feature branch: `git checkout -b feature/{BRANCH_NAME}`
+   - Create branch: `git checkout -b {BRANCH_TYPE}/{BRANCH_NAME}`
    - Ensure working directory is clean before starting
-   - Push initial branch to remote: `git push -u origin feature/{BRANCH_NAME}`
+   - Push initial branch to remote: `git push -u origin {BRANCH_TYPE}/{BRANCH_NAME}`
    **Goal:** Isolated development environment for {FEATURE_NAME} work
 
-### 1.1 [ ] **{FOUNDATION_TASK_1}**
+### {N}.1 [ ] **{PRIMARY_TASK_NAME}**
    **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
    **Files to Create:** `{NEW_FILES_LIST}`
    **Files to Modify:** `{EXISTING_FILES_LIST}`
@@ -170,120 +293,33 @@ Created: {THIS_DATE}
    **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
    **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
 
-{ADDITIONAL_PHASE_1_TASKS_IF_COMPLEX}
+{ADDITIONAL_TASKS_FOR_THIS_PHASE_IF_COMPLEX}
 
-### 1.2 [ ] **Commit Phase 1 Progress**
-   **Action:** Commit foundation setup
+### {N}.{LAST} [ ] **Commit Phase {N} Progress**
+   **Action:** Commit {PHASE_NAME} work
    **Implementation:**
    - Stage all changes: `git add .`
    - Commit with descriptive message: `git commit -m "{COMMIT_TYPE}({SCOPE}): {COMMIT_MESSAGE}"`
-   - Push to feature branch: `git push origin feature/{BRANCH_NAME}`
+   - Push to branch: `git push origin {BRANCH_TYPE}/{BRANCH_NAME}`
    **Goal:** Track incremental progress and create checkpoint
+```
 
-## Phase 2: {PHASE_2_NAME}
+**Final Phase Requirements**: The last phase must include:
 
-**Phase Overview:** {PHASE_2_DESCRIPTION_AND_OBJECTIVES}
-
-**Estimated Duration:** {PHASE_2_TIMELINE}
-
-### 2.1 [ ] **{CORE_TASK_1}**
-   **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
-   **Files to Create:** `{NEW_FILES_LIST}`
-   **Files to Modify:** `{EXISTING_FILES_LIST}`
-   **Action:** {DETAILED_TASK_DESCRIPTION}
-   **Technical Specifications:**
-   - {TECHNICAL_SPEC_1}
-   - {TECHNICAL_SPEC_2}
-   - {TECHNICAL_SPEC_3}
-   **Implementation Steps:**
-   - {SPECIFIC_IMPLEMENTATION_STEP_1}
-   - {SPECIFIC_IMPLEMENTATION_STEP_2}
-   - {SPECIFIC_IMPLEMENTATION_STEP_3}
-   **Dependencies:** {INTERNAL_AND_EXTERNAL_DEPENDENCIES}
-   **Tests Required:** {DETAILED_TEST_REQUIREMENTS}
-   **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
-   **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
-
-{ADDITIONAL_PHASE_2_TASKS_IF_COMPLEX}
-
-### 2.2 [ ] **Commit Phase 2 Progress**
-   **Action:** Commit core implementation
-   **Implementation:**
-   - Stage all changes: `git add .`
-   - Commit with descriptive message: `git commit -m "{COMMIT_TYPE}({SCOPE}): {COMMIT_MESSAGE}"`
-   - Push to feature branch: `git push origin feature/{BRANCH_NAME}`
-   **Goal:** Track incremental progress and create checkpoint
-
-## Phase 3: {PHASE_3_NAME}
-
-**Phase Overview:** {PHASE_3_DESCRIPTION_AND_OBJECTIVES}
-
-**Estimated Duration:** {PHASE_3_TIMELINE}
-
-### 3.1 [ ] **{INTEGRATION_TASK_1}**
-   **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
-   **Files to Create:** `{NEW_FILES_LIST}`
-   **Files to Modify:** `{EXISTING_FILES_LIST}`
-   **Action:** {DETAILED_TASK_DESCRIPTION}
-   **Technical Specifications:**
-   - {TECHNICAL_SPEC_1}
-   - {TECHNICAL_SPEC_2}
-   **Implementation Steps:**
-   - {SPECIFIC_IMPLEMENTATION_STEP_1}
-   - {SPECIFIC_IMPLEMENTATION_STEP_2}
-   **Dependencies:** {INTERNAL_AND_EXTERNAL_DEPENDENCIES}
-   **Tests Required:** {DETAILED_TEST_REQUIREMENTS}
-   **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
-   **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
-
-{ADDITIONAL_PHASE_3_TASKS_IF_COMPLEX}
-
-### 3.2 [ ] **Commit Phase 3 Progress**
-   **Action:** Commit integration and testing
-   **Implementation:**
-   - Stage all changes: `git add .`
-   - Commit with descriptive message: `git commit -m "{COMMIT_TYPE}({SCOPE}): {COMMIT_MESSAGE}"`
-   - Push to feature branch: `git push origin feature/{BRANCH_NAME}`
-   **Goal:** Track incremental progress and create checkpoint
-
-## Phase 4: {PHASE_4_NAME}
-
-**Phase Overview:** {PHASE_4_DESCRIPTION_AND_OBJECTIVES}
-
-**Estimated Duration:** {PHASE_4_TIMELINE}
-
-### 4.1 [ ] **{DOCUMENTATION_OR_VALIDATION_TASK}**
-   **Challenge Category:** {TECHNICAL_CHALLENGE_CATEGORY}
-   **Files to Create:** `{NEW_FILES_LIST}`
-   **Files to Modify:** `{EXISTING_FILES_LIST}`
-   **Action:** {DETAILED_TASK_DESCRIPTION}
-   **Technical Specifications:**
-   - {TECHNICAL_SPEC_1}
-   - {TECHNICAL_SPEC_2}
-   **Implementation Steps:**
-   - {SPECIFIC_IMPLEMENTATION_STEP_1}
-   - {SPECIFIC_IMPLEMENTATION_STEP_2}
-   **Dependencies:** {INTERNAL_AND_EXTERNAL_DEPENDENCIES}
-   **Tests Required:** {DETAILED_TEST_REQUIREMENTS}
-   **Success Criteria:** {SPECIFIC_SUCCESS_METRICS}
-   **Potential Issues:** {KNOWN_RISKS_AND_MITIGATION}
-
-{ADDITIONAL_PHASE_4_TASKS_IF_COMPLEX}
-
-{ADDITIONAL_PHASES_FOR_COMPLEX_FEATURES}
-
-### 4.2 [ ] **Merge Feature Branch and Cleanup**
+### {FINAL_N}.{FINAL_LAST} [ ] **Merge Branch and Cleanup**
    **Action:** Merge completed {FEATURE_NAME} back to main branch
    **Implementation:**
    - Ensure all tests pass: `{TEST_COMMAND}`
    - Commit final changes: `git add . && git commit -m "{FINAL_COMMIT_MESSAGE}"`
    - Switch to main branch: `git checkout main`
    - Pull latest changes: `git pull origin main`
-   - Merge feature branch: `git merge feature/{BRANCH_NAME}`
+   - Merge branch: `git merge {BRANCH_TYPE}/{BRANCH_NAME}`
    - Push merged changes: `git push origin main`
-   - Delete feature branch: `git branch -d feature/{BRANCH_NAME}`
-   - Delete remote feature branch: `git push origin --delete feature/{BRANCH_NAME}`
+   - Delete local branch: `git branch -d {BRANCH_TYPE}/{BRANCH_NAME}`
+   - Delete remote branch: `git push origin --delete {BRANCH_TYPE}/{BRANCH_NAME}`
    **Goal:** Clean integration of {FEATURE_NAME} into main codebase
+
+
 
 ## Success Criteria
 
@@ -321,16 +357,20 @@ This sprint is considered successful when:
 
 ---
 
+### Step 4. Determined the Correct Sprint Number and Filename
+
+**Determine the Filename Based on the Current Highest Sprint**
+
 Before creating the sprint plan, determine the next sprint number by checking existing files:
 
-The **CURRENT_HIGHEST_SPRINT** is "`find ./planning/sprints/active ./planning/sprints/completed -name "*.md" 2>/dev/null | sed 's|.*/||' | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1`"
-
 Based on this number:
-- If no sprints exist (empty result): start with sprint 1
-- For new major sprints: increment the base number (e.g., if highest is 2.3, next major is 3)
+- If no sprints exist (empty result): start with sprint 1.0
+- For new major sprints: increment the base number (e.g., if highest is 2.3, next major is 3.0)
 - For sprint updates: increment the decimal (e.g., if highest is 2.3, next update is 2.4)
 
 **DETERMINED_FILENAME** is "@planning/sprints/active/{CURRENT_HIGHEST_SPRINT+1}.0_<feature_name>.md". _Sprint filenames must always use the .0 format (e.g., 7.0_feature.md, not 6.1_feature.md) - increment the major number only, never use decimal increments._
 
-Output the sprint plan content in **Markdown** into {DETERMINED_FILENAME}. Double-check exists {DETERMINED_FILENAME}; if it doesn't attempt a second write.
+### Step 5. Save the Sprint
+
+Output the sprint plan content in **Markdown** into {DETERMINED_FILENAME}. Double-check exists {DETERMINED_FILENAME}; if it doesn't attempt a second write. Then **hard stop**.
 """

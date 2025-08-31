@@ -50,4 +50,4 @@ The sprint generation process includes:
 
 - [/create:tdd](tdd.md) - Technical Design Document creation
 - [/create:prd](prd.md) - Product Requirements Document creation
-- [/strategy:plan](../strategy/plan.md) - Strategic planning utilities
+- [/create:plan](plan.md) - Strategic planning utilities

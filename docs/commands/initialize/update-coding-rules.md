@@ -47,12 +47,12 @@ The update process includes:
 - Change documentation and team communication
 
 **Updated Files (as applicable):**
-- `./trae/rules/project_rules.md`
+- `./.trae/rules/project_rules.md`
 - `./QWEN.md`
 - `./CLAUDE.md`
 - `./GEMINI.md`
 - `./CURSOR.md`
-- `./CODING_STANDARD.md`
+- `./CODING_STANDARDS.md`
 
 ## Related Resources
 

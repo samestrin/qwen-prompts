@@ -53,4 +53,4 @@ The repository analysis includes:
 ### Project Planning Integration
 - [/create:prd](../create/prd.md) - Create requirements based on repository analysis
 - [/create:sprint](../create/sprint.md) - Plan development work based on findings
-- [/strategy:plan](../strategy/plan.md) - Develop strategic improvement plans
+- [/create:plan](../create/plan.md) - Develop strategic improvement plans
