@@ -17,7 +17,7 @@ description = "Create detailed sprint plans based from plans, specifications, us
 prompt = """
 # Prompt Name: Create Sprint
 ## Description: Create detailed sprint plans based from plans, specifications, user input and more
-## Version: 1.2
+## Version: 1.3
 ## Date: 2025-08-31
 ## Author: Sam Estrin
 
@@ -27,15 +27,26 @@ prompt = """
 
 ### Step 1. Combined Sprint Number/Coding Strategy/Branch Strategy/Date/Main Directory Scan
 
-The **RESPONSE** is "echo '# CURRENT_HIGHEST_SPRINT'; find ./planning/sprints/{active,completed} -name "*.md" -exec basename {} \\; 2>/dev/null | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1; echo '# THIS_CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards strategy found';# THIS_BRANCH_STRAT'; cat ./planning/specifications/sprint-branch-strategy.md 2>/dev/null || echo 'No branch strategy found'; echo '# THIS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
+The **RESPONSE** is "echo '# CURRENT_HIGHEST_SPRINT'; find ./planning/sprints/{active,completed} -name "*.md" -exec basename {} \\; 2>/dev/null | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1; echo '# THIS_CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards strategy found';# THIS_BRANCH_STRAT'; cat ./planning/specifications/sprint-branching-strategy.md 2>/dev/null || echo 'No branch strategy found'; echo '# THIS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
 
-1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
-2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
-3. **composer.json**: Check `autoload.psr-4` namespace mappings
+**Priority Order (stop at first match):**
+1. **package.json** (Node.js/TypeScript): Check `main`, `module`, `exports`, `workspaces` for monorepo
+2. **pyproject.toml** (Python): Check `[tool.setuptools.packages.find]`, `[project.scripts]`, `[tool.setuptools.package-data]`
+3. **composer.json** (PHP): Check `autoload.psr-4` namespace mappings
+4. **Bash projects**: Look for `bin/`, `scripts/`, `lib/` directories
 
-Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
+**Language-Specific Patterns:**
+- **Node.js/TypeScript**: Common dirs: `src/`, `lib/`, `packages/` (monorepo), `apps/` (monorepo)
+- **Python**: Common dirs: `src/`, package name dirs, `lib/`
+- **PHP**: Common dirs: `src/`, `app/`, `lib/`
+- **Bash**: Common dirs: `bin/`, `scripts/`, `lib/`
 
-Print only the directory name(s) without explanation with each directory name preceeded by **@** example **@src**."`".
+**Monorepo Detection:**
+- Check for `workspaces` in package.json
+- Look for multiple package.json files in subdirectories
+- Identify `packages/`, `apps/`, `libs/` structure
+
+Return _actual directory names_ containing application logic. If no standard directories found, return \".\". Format: each directory preceded by **@** (example: **@src** **@packages/app1**).\"`".
 
 #### Default Git Branch Strategy
 
@@ -55,7 +66,7 @@ Print only the directory name(s) without explanation with each directory name pr
 - Specific change 2
 ```
 
-#### Default Coding Standards
+#### Default Coding Standards (Eskil Steenberg's Black Box Architecture)
 
 **Architectural Principles:**
 - **Black Box Design**: Each module should be completely replaceable using only its interface

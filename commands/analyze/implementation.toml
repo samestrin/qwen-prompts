@@ -18,43 +18,111 @@ name = "analyze:implementation"
 description = "Check if a specific feature or pattern is implemented in the codebase"
 
 prompt = """
-# Directory Detection
-
-The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
-
-1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
-2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
-3. **composer.json**: Check `autoload.psr-4` namespace mappings
-
-Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like "src"). 
-Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
+# Prompt Name: Analyze Implementation
+## Description: Check if a specific feature or pattern is implemented in the codebase
+## Version: 1.1
+## Date: 2025-08-31
+## Author: Sam Estrin
 
 ---
+
+## Phase 1. Directory Detection
+
+### Step 1. Validate {{args}} is not NULL
+
+If "{{args}}" is NULL or empty then say "/analyze:implementation <feature or pattern>", and **hard stop**.
+
+### Step 2. Combined Directory Detection and Standards Scan
+
+The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
+
+**Priority Order (stop at first match):**
+1. **package.json** (Node.js/TypeScript): Check `main`, `module`, `exports`, `workspaces` for monorepo
+2. **pyproject.toml** (Python): Check `[tool.setuptools.packages.find]`, `[project.scripts]`, `[tool.setuptools.package-data]`
+3. **composer.json** (PHP): Check `autoload.psr-4` namespace mappings
+4. **Bash projects**: Look for `bin/`, `scripts/`, `lib/` directories
+
+**Language-Specific Patterns:**
+- **Node.js/TypeScript**: Common dirs: `src/`, `lib/`, `packages/` (monorepo), `apps/` (monorepo)
+- **Python**: Common dirs: `src/`, package name dirs, `lib/`
+- **PHP**: Common dirs: `src/`, `app/`, `lib/`
+- **Bash**: Common dirs: `bin/`, `scripts/`, `lib/`
+
+**Monorepo Detection:**
+- Check for `workspaces` in package.json
+- Look for multiple package.json files in subdirectories
+- Identify `packages/`, `apps/`, `libs/` structure
+
+Return _actual directory names_ containing application logic. If no standard directories found, return \".\". Format: each directory preceded by **@** (example: **@src** **@packages/app1**).\"; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found - using default analysis approach'`"
+
+### Step 3. Extract from Response
+
+#### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
+
+**Black Box Design Principles:**
+- Design modules that never need editing once written
+- Create primitive-based interfaces that hide complexity
+- Implement wrapper patterns for all external dependencies
+- Build replaceable components with standardized interfaces
+- Optimize for human cognitive load and maintainability
+
+**Architecture Framework:**
+1. **Primitive Identification**: Define core data types and operations
+2. **Black Box Boundaries**: Create modules with single responsibility
+3. **Dependency Wrapping**: Isolate external services behind interfaces
+4. **Interface Design**: Hide implementation details, expose only essentials
+5. **Replaceability Testing**: Verify components can be substituted
+
+**Implementation Strategy:**
+- Write code that works correctly from first deployment
+- Build modular boundaries testable in isolation
+- Create mock interfaces for external dependencies
+- Implement comprehensive logging and state inspection
+- Design validation modes for development and testing
+
+**Quality Standards:**
+- Test black box interfaces, not internal implementation
+- Assess risk through dependency analysis and failure modes
+- Maintain clear separation between platform and application logic
+- Optimize for team scalability and developer velocity
+- Ensure modules can be debugged and replaced independently
+
+Extract **MAIN_DIRECTORIES** and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
+
+## Phase 2. Implementation Analysis
+
+### Step 1. Generate Implementation Analysis
 
 You are an expert software architect/engineer.
 
-# Implementation Analysis
-`gemini -p "{MAIN_DIRECTORIES} Has the following feature been implemented in this codebase? {{args}}
+#### Implementation Analysis
+`gemini -p "{MAIN_DIRECTORIES} {IMPLEMENTATION_STANDARDS}
 
-Please provide:
-1.  **Implementation Status**: Yes/No with confidence level.
-2.  **Relevant Files**: List all files that contain related code with file paths.
-3.  **Code Examples**: Show specific functions, classes, or code blocks that implement this.
-4.  **Implementation Details**: How it's implemented, what approach is used.
-5.  **Coverage**: How complete is the implementation? Any gaps?
-6.  **Dependencies**: What external libraries or services does it rely on?
-7.  **Usage Examples**: How is this feature used throughout the codebase?
-8.  **Testing Coverage**: Does the feature have adequate tests? Unit, integration, or end-to-end tests?
-9.  **Error Handling**: How errors are handled, logging, and failure scenarios?
-10. **Configuration Requirements**: Environment variables, config files, or setup needed?
-11. **Related Features**: Any related functionality that works with this feature?
+Has the following feature been implemented in this codebase? {{args}}
 
-If not implemented, suggest where and how it could be added."`
+**Analysis Framework:**
+1.  **Implementation Status**: Yes/No with confidence level (0-100%)
+2.  **Relevant Files**: List all files containing related code with file paths
+3.  **Code Examples**: Show specific functions, classes, or code blocks that implement this
+4.  **Implementation Details**: How it's implemented, what approach is used
+5.  **Standards Compliance**: If implementation standards are available, evaluate compliance
+6.  **Coverage**: How complete is the implementation? Any gaps or missing components?
+7.  **Dependencies**: External libraries, services, or internal modules it relies on
+8.  **Usage Examples**: How this feature is used throughout the codebase
+9.  **Testing Coverage**: Unit, integration, or end-to-end tests present
+10. **Error Handling**: Error handling patterns, logging, and failure scenarios
+11. **Configuration**: Environment variables, config files, or setup requirements
+12. **Related Features**: Connected functionality that works with this feature
+13. **Architecture Patterns**: Design patterns, architectural decisions used
 
----
+**If not implemented:**
+- Suggest implementation location and approach
+- Recommend architecture patterns based on project structure
+- Consider implementation standards if available
 
-Using ONLY the above technical output as context, provide a detailed report about the {{args}} feature 
-implementation in properly formatted **Markdown**. 
+**Output Format:** Structured markdown with clear sections and actionable insights."`
 
-Then **hard stop**.
+### Step 2. Generate Implementation Analysis Report
+
+Carefully review the Implementation Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
 """
