@@ -17,24 +17,29 @@ name = "analyze:dependency"
 description = "Analyze project dependencies, their usage, and potential issues"
 
 prompt = """
-# Prompt Name: Create Documentation Standard
-## Description: Create a strategic plan from specifications, user input and more
-## Version: 1.0
+# Prompt Name: Analyze Dependency
+## Description: Calls the Gemini CLI to analyze project dependencies.
+## Version: 1.1
 ## Date: 2025-08-31
 ## Author: Sam Estrin
 
 ---
 
-## File Detection
+## Phase 1: Dependency File Identification
 
-The **DEPENDENCY_FILES** is "`files=(package.json requirements.txt composer.json Gemfile go.mod Cargo.toml pom.xml build.gradle package-lock.json yarn.lock Pipfile.lock Gemfile.lock go.sum Cargo.lock); existing_files=""; for file 
-in "${files[@]}"; do if [ -f "$file" ]; then existing_files="$existing_files @$file"; fi; done; echo "$existing_files"`"
+### Step 1. Attempt to Identify Dependency Files
 
----
+The **DEPENDENCY_FILES** is "`files=(package.json requirements.txt composer.json Gemfile go.mod Cargo.toml pom.xml build.gradle package-lock.json yarn.lock Pipfile.lock Gemfile.lock go.sum Cargo.lock ./lib/ ./src/); existing_files=\"\"; for file in \"${files[@]}\"; do if [ -e \"$file\" ]; then existing_files=\"$existing_files @$file\"; fi; done; if [ -z \"$existing_files\" ]; then existing_files=\"@. (no standard dependency files found - analyzing current directory)\"; fi; echo \"$existing_files\"`"
+
+If {DEPENDENCY_FILES} contains no standard dependency files, the analysis will proceed with the current directory to identify any non-standard dependency management or embedded dependencies.
+
+## Phase 2: Dependency Analysis
+
+### Step 1. Generate Dependency Analysis
 
 You are an expert software architect/engineer.
 
-# Dependency Analysis
+#### Dependency Analysis
 `gemini -p "{DEPENDENCY_FILES} Analyze the dependencies in this project. {{args}}
 
 1.  **Dependency Overview**: Total number of dependencies, main package manager(s) used.
@@ -47,9 +52,7 @@ You are an expert software architect/engineer.
 
 Include specific examples of dependency usage in the codebase with file references."`
 
----
+### Step 2. Generate Dependency Analysis Report
 
-Carefully review the Dependency Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
-
-Then **hard stop**.
+Carefully review the Dependency Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
 """
