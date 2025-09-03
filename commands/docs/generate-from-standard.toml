@@ -19,7 +19,7 @@ name = "docs:generate-from-standard"
 description = "Generate documentation using a provided documentation standard/template"
 
 prompt = """
-The **THIS_DATE** is "`date`"
+The **TODAYS_DATE** is "`date`"
 
 Generate documentation for this project following the EXACT structure, format, and style defined in the provided standard.
 
@@ -41,7 +41,7 @@ Generate documentation for this project following the EXACT structure, format, a
 - Use real file paths, function names, and code snippets.
 - Include working examples that developers can copy-paste.
 
-Include/Add "Created: {THIS_DATE}" on the line after the title. Output the complete documentation in markdown format, ready to save as a file.
+Include/Add "Created: {TODAYS_DATE}" on the line after the title. Output the complete documentation in markdown format, ready to save as a file.
 
 Then **hard stop**.
 """
