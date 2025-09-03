@@ -27,7 +27,7 @@ prompt = """
 
 ### Step 1. Combined Sprint Number/Coding Strategy/Branch Strategy/Date/Main Directory Scan
 
-The **RESPONSE** is "echo '# CURRENT_HIGHEST_SPRINT'; find ./planning/sprints/{active,completed} -name "*.md" -exec basename {} \\; 2>/dev/null | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1; echo '# THIS_CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards strategy found';# THIS_BRANCH_STRAT'; cat ./planning/specifications/sprint-branching-strategy.md 2>/dev/null || echo 'No branch strategy found'; echo '# THIS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
+The **RESPONSE** is "echo '# CURRENT_HIGHEST_SPRINT'; find ./planning/sprints/{active,completed} -name "*.md" -exec basename {} \\; 2>/dev/null | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards strategy found';# BRANCH_STRAT'; cat ./planning/specifications/sprint-branching-strategy.md 2>/dev/null || echo 'No branch strategy found'; echo '# TODAYS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
 
 **Priority Order (stop at first match):**
 1. **package.json** (Node.js/TypeScript): Check `main`, `module`, `exports`, `workspaces` for monorepo
@@ -87,7 +87,7 @@ Return _actual directory names_ containing application logic. If no standard dir
 
 ### Step 2. Extract from Response
 
-Extract **CURRENT_HIGHEST_SPRINT**, **THIS_CODING_STANDARDS**, **THIS_BRANCH_STRAT**, **THIS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". If {THIS_BRANCH_STRAT} is "No branch strategy found" then set **THIS_BRANCH_STRAT** to the **Default Git Branch Strategy". If {THIS_CODING_STANDARDS} is "No coding standards strategy found" then set **THIS_CODING_STANDARDS** to the **Default Coding Standards**. 
+Extract **CURRENT_HIGHEST_SPRINT**, **CODING_STANDARDS**, **BRANCH_STRAT**, **TODAYS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". If {BRANCH_STRAT} is "No branch strategy found" then set **BRANCH_STRAT** to the **Default Git Branch Strategy". If {CODING_STANDARDS} is "No coding standards strategy found" then set **CODING_STANDARDS** to the **Default Coding Standards**. 
 
 ### Step 3. Parse the {{args}} Variable as a String
 The **THIS_ARGS** is "{{args}}".
@@ -227,7 +227,7 @@ Created: {THIS_TIMESTAMP}
 
 **Test Location:** {SPECIFIC_TEST_DIRECTORY_STRUCTURE}
 
-{THIS_CODING_STANDARDS}
+{CODING_STANDARDS}
 
 ## Success Criteria
 {LIST_OF_SPECIFIC_SUCCESS_CRITERIA}
@@ -237,7 +237,7 @@ Created: {THIS_TIMESTAMP}
 
 **Upon Completion**: Move this completed file to `/planning/sprints/completed`
 
-{THIS_BRANCH_STRAT}
+{BRANCH_STRAT}
 
 ## Sprint Phases
 
