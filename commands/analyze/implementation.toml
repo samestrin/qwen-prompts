@@ -113,5 +113,5 @@ Has the following feature been implemented in this codebase? {{args}}
 
 ### Step 2. Generate Implementation Analysis Report
 
-Carefully review the Implementation Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
+Carefully review the Implementation Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, and display in properly formatted **Markdown** report. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
