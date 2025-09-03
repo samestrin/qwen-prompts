@@ -81,5 +81,5 @@ For each debt item identified:
 
 ### Step 4. Generate Technical Debt Analysis Report
 
-Carefully review the Technical Debt Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
+Carefully review the Technical Debt Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
 """
