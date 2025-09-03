@@ -29,7 +29,7 @@ prompt = """
 
 ## Phase 1: Pre-Analysis
 
-The **THIS_DATE** is "`date '+%B %d, %Y %I:%M:%S%p'`"
+The **TODAYS_DATE** is "`date '+%B %d, %Y %I:%M:%S%p'`"
 
 ## Phase 2: Create Documentation Standard
 
@@ -75,7 +75,7 @@ Create a template that includes:
     - Common mistakes to avoid
     - Quality indicators to look for
 
-Include/Add "Created: {THIS_DATE}" on the line after the title. Output as a complete markdown template that can be used as a standard for future documentation. 
+Include/Add "Created: {TODAYS_DATE}" on the line after the title. Output as a complete markdown template that can be used as a standard for future documentation. 
 
 Then **hard stop**.
 """
