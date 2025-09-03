@@ -40,7 +40,7 @@ Say "Generating the {REPORT_TITLE} ..."
 
 The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found - using default analysis approach'`"
 
-### Step 2. Set Defaults
+### Step 3. Set Defaults
 
 #### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
 
@@ -72,7 +72,7 @@ The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories co
 - Optimize for team scalability and developer velocity
 - Ensure modules can be debugged and replaced independently
 
-### Step 3. Extract from Response
+### Step 4. Extract from Response
 
 Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
 
