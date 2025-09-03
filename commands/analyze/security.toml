@@ -28,9 +28,17 @@ prompt = """
 
 ---
 
-## Phase 1. Comprehensive Directory Detection
+## Phase 1. Setup
 
-### Step 1. Directory Detection
+### Step 1. Set Operational Mode
+
+**Check for --comprehensive flag in arguments:**
+- If `--comprehensive` is present in {{args}}, **REPORT_TITLE** is "Comprehensive Security Analysis Report" and **INCLUDE_TECHNICAL** is "true"
+- Otherwise **REPORT_TITLE** is "Security Analysis Report" and **INCLUDE_TECHNICAL** is "false"
+
+Say "Generating the {REPORT_TITLE} ..."
+
+### Step 2. Directory Detection
 
 The **MAIN_DIRECTORIES** is "`gemini -p \"Find ALL directories with code, including tests - for a security review, return only the directory basenames preceded by @ in a single line, separated by spaces\"`"
 
@@ -63,17 +71,9 @@ You are an expert security consultant providing professional security assessment
 - 📁 Specific files and line references.
 - 💡 Recommendations for improvements (prioritized by risk level)."`
 
-### Step 2. Check Format Selection
+### Step 2. Set Template
 
-**Check for --comprehensive flag in arguments:**
-- If `--comprehensive` is present in {{args}}, provide **Technical Security Assessment** report
-- Otherwise, provide **Professional Security Assessment** report
-
-### Step 3. Set Template
-
-#### Professional Security Assessment 
-
-Using ONLY the above technical analysis as context, provide a **professional security assessment report** formatted for security teams and stakeholders:
+#### Professional Security Assessment Template 
 
 ##### Executive Summary
 - Overall security posture assessment
@@ -111,11 +111,20 @@ Using ONLY the above technical analysis as context, provide a **professional sec
 - Improvement tracking recommendations
 
 ##### Technical Analysis _(only included with --comprehensive flag)_
+- Detailed Technical Findings 
+- Code References (path/to/filenames, function names, line numbers)
+- Implementation Details 
 
 ##### Suggestions
 - Final suggestions
 
-### Step 4. Generate Security Analysis Report
+### Step 3. Generate {REPORT_TITLE}
 
-Carefully review the Security Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. If `--comprehensive` flag is detected, include the technical analysis in properly formatted **Markdown** with detailed technical findings, code references (path/to/filename, function names, line numbers), and implementation details, otherwise remove the header. Then **hard stop**.
+Carefully review the Security Analysis, and display a single, properly formatted **Markdown** report using the **Professional Security Assessment Template**. 
+
+**Important formatting rules:**
+- If {INCLUDE_TECHNICAL} is "true", include the "##### Technical Analysis" section with detailed technical findings, code references, and implementation details
+- If {INCLUDE_TECHNICAL} is "false", completely omit the "##### Technical Analysis" section and its content
+- Use the {REPORT_TITLE} as the main heading
+- Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
