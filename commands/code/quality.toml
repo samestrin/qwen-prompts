@@ -17,19 +17,57 @@ name = "code:quality"
 description = "Comprehensive code quality analysis including maintainability, readability, and best practices"
 
 prompt = """
-# Directory Detection
-
-The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, or @pyproject.toml to identify the primary source code directory. Look for:
-
-1. **pyproject.toml**: Check `[tool.setuptools.packages.find]` include patterns, `[project.scripts]` entry points, or `[tool.setuptools.package-data]` keys
-2. **package.json**: Check `main`, `module`, or `exports` fields pointing to source directories
-3. **composer.json**: Check `autoload.psr-4` namespace mappings
-
-Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like \"src\"). 
-
-Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
+# Prompt Name: Code Analysis
+## Description: Analyze entire codebase architecture and structure using Gemini's large context window
+## Version: 1.0
+## Date: 2025-08-31
+## Author: Sam Estrin
 
 ---
+
+## Phase 1. Setup
+
+### Step 1. Combined Directory Detection and Standards Scan
+
+The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found - using default analysis approach'`"
+
+### Step 2. Set Defaults
+
+#### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
+
+**Black Box Design Principles:**
+- Design modules that never need editing once written
+- Create primitive-based interfaces that hide complexity
+- Implement wrapper patterns for all external dependencies
+- Build replaceable components with standardized interfaces
+- Optimize for human cognitive load and maintainability
+
+**Architecture Framework:**
+1. **Primitive Identification**: Define core data types and operations
+2. **Black Box Boundaries**: Create modules with single responsibility
+3. **Dependency Wrapping**: Isolate external services behind interfaces
+4. **Interface Design**: Hide implementation details, expose only essentials
+5. **Replaceability Testing**: Verify components can be substituted
+
+**Implementation Strategy:**
+- Write code that works correctly from first deployment
+- Build modular boundaries testable in isolation
+- Create mock interfaces for external dependencies
+- Implement comprehensive logging and state inspection
+- Design validation modes for development and testing
+
+**Quality Standards:**
+- Test black box interfaces, not internal implementation
+- Assess risk through dependency analysis and failure modes
+- Maintain clear separation between platform and application logic
+- Optimize for team scalability and developer velocity
+- Ensure modules can be debugged and replaced independently
+
+### Step 3. Extract from Response
+
+Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
+
+## Phase 2. Code Analysis
 
 You are an expert software architect/engineer.
 
