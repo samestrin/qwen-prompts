@@ -31,7 +31,7 @@ prompt = """
 
 ### Step 1. Combined Date/Main Directory Scan
 
-The **RESPONSE** is "echo '# THIS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
+The **RESPONSE** is "echo '# TODAYS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
 
 **Priority Order (stop at first match):**
 1. **package.json** (Node.js/TypeScript): Check `main`, `module`, `exports`, `workspaces` for monorepo
@@ -54,7 +54,7 @@ Return _actual directory names_ containing application logic. If no standard dir
 
 ### Step 2. Extract from Response
 
-Extract **THIS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". 
+Extract **TODAYS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". 
 
 ## Phase 2: Plan Creation
 
