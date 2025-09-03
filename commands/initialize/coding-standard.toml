@@ -19,7 +19,7 @@ name = "initialize:coding-standard"
 description = "Creates a base coding standard template for project customization"
 
 prompt = """
-The **THIS_DATE** is "`date`"
+The **TODAYS_DATE** is "`date`"
 
 ---
 
@@ -65,7 +65,7 @@ Create or Update a file named `CODING_STANDARDS.md` with the following comprehen
 
 - **Project**: [Project Name]
 - **Technology Stack**: [Languages, Frameworks, Tools]
-- **Last Updated**: {THIS_DATE}
+- **Last Updated**: {TODAYS_DATE}
 - **Version**: [Version]
 
 ## 1. General Principles
