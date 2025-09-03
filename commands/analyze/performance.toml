@@ -17,23 +17,75 @@ name = "analyze:performance"
 description = "Identify performance issues, bottlenecks, and optimization opportunities"
 
 prompt = """
-# Directory Detection
-
-The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml to identify the primary source code directory by examining:
-
-1. **package.json**: main, module, exports fields, or scripts pointing to source dirs
-2. **composer.json**: autoload.psr-4 namespace mappings  
-3. **pyproject.toml**: [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
-
-Return the _actual package/module directory name(s)_ that contains the _application logic_ (do not _assume_ generic names like "src"). 
-Print only the {MAIN_DIRECTORIES} directory name(s) without explanation with each directory name preceeded by **@** example **@src**.`"
+# Prompt Name: Analyze Performance
+## Description: Identify performance issues, bottlenecks, and optimization opportunities
+## Version: 1.1
+## Date: 2025-09-02
+## Author: Sam Estrin
 
 ---
 
-You are an expert software architect/engineer.
+## Phase 1. Directory Detection
 
-# Performance Analysis
-`gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive performance audit of this codebase. {{args}}
+### Step 1. Combined Directory Detection
+
+The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found'`"
+
+## Phase 2. Performance Analysis
+
+### Step 1. Set Defaults
+
+#### Default Performance Analysis Strategy
+
+**Performance Analysis Principles:**
+- Focus on measurable bottlenecks with quantifiable impact
+- Prioritize user-facing performance over micro-optimizations
+- Consider scalability implications of current implementation
+- Balance performance gains against code maintainability
+- Identify critical path operations and optimize systematically
+
+**Analysis Framework:**
+1. **Profiling-First Approach**: Measure before optimizing
+2. **User Impact Assessment**: Prioritize user-visible performance issues
+3. **Resource Utilization**: Monitor CPU, memory, I/O, and network usage
+4. **Scalability Analysis**: Evaluate performance under load
+5. **Caching Strategy**: Identify opportunities for effective caching
+
+**Performance Standards:**
+- Database queries should complete under 100ms for simple operations
+- API endpoints should respond within 200ms for standard requests
+- Frontend initial load should be under 3 seconds
+- Memory usage should remain stable over time (no leaks)
+- Algorithm complexity should be optimal for expected data sizes
+- Async operations should not block the main thread
+
+**Quality Metrics:**
+- Measure actual performance impact, not theoretical improvements
+- Consider both average and worst-case scenarios
+- Evaluate performance across different environments and data sizes
+- Monitor performance regression over time
+- Balance optimization effort against business value
+
+### Step 2. Extract Standards and Directories
+
+Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If **IMPLEMENTATION_STANDARDS** is "No implementation standards found" then set **IMPLEMENTATION_STANDARDS** to the **Default Performance Analysis Strategy**.
+
+### Step 3. Generate Performance Analysis
+
+You are an expert software engineer/team lead. 
+
+#### Performance Analysis
+`gemini -p "{MAIN_DIRECTORIES} You are a team working together - a performance engineer, performance tester, and a specialized QA engineer. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive performance analysis that leverages all of your inputs into a single unified report. Perform a comprehensive performance audit of this codebase.
+
+**Coding Standards Reference:**
+{CODING_STANDARDS}
+
+**Implementation Standards Reference:**
+{IMPLEMENTATION_STANDARDS}
+
+**Analysis Focus:** 
+
+{{args}}
 
 1.  **Database Performance**: Inefficient queries (N+1), missing indexes, unnecessary calls.
 2.  **API Performance**: Slow endpoints, missing caching, inefficient serialization.
@@ -51,9 +103,7 @@ You are an expert software architect/engineer.
 **Priority Recommendations:**
 List the top 5 optimizations that would have the biggest impact."`
 
----
+### Step 4. Generate Performance Analysis Report
 
-Carefully review the output and correct any formatting issues that may have occured before display.
-
-Then **hard stop**.
+Carefully review the Performance Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
 """

@@ -21,26 +21,49 @@ name = "analyze:vulnerabilities"
 description = "Analyze project dependencies for potential vulnerabilities and provide scanning guidance"
 
 prompt = """
-## File Detection
-
-The **DEPENDENCY_FILES** is "`files=(package.json requirements.txt composer.json Gemfile go.mod Cargo.toml pom.xml build.gradle package-lock.json yarn.lock Pipfile.lock Gemfile.lock go.sum Cargo.lock); existing_files=""; for file 
-in "${files[@]}"; do if [ -f "$file" ]; then existing_files="$existing_files @$file"; fi; done; echo "$existing_files"`"
+# Prompt Name: Analyze Vulnerabilities
+## Description: Analyze project dependencies for potential vulnerabilities and provide scanning guidance
+## Version: 1.1
+## Date: 2025-09-03
+## Author: Sam Estrin
 
 ---
 
-You are a security expert and software architect.
+## Phase 1: Vulnerabilities File Identification
 
-# Vulnerability Analysis
+### Step 1. Attempt to Identify Vulnerabilities Files
 
-`gemini -p "{DEPENDENCY_FILES} Analyze the dependencies in this project for potential security vulnerabilities. {{args}}
+The **DEPENDENCY_FILES** is "`files=(package.json requirements.txt composer.json Gemfile go.mod Cargo.toml pom.xml build.gradle package-lock.json yarn.lock Pipfile.lock Gemfile.lock go.sum Cargo.lock ./lib/ ./src/); existing_files=\"\"; for file in \"${files[@]}\"; do if [ -e \"$file\" ]; then existing_files=\"$existing_files @$file\"; fi; done; if [ -z \"$existing_files\" ]; then existing_files=\"@. (no standard dependency files found - analyzing current directory)\"; fi; echo \"$existing_files\"`"
+
+If {DEPENDENCY_FILES} contains no standard dependency files, the analysis will proceed with the current directory to identify any non-standard dependency management or embedded dependencies.
+
+## Phase 2: Vulnerabilities Analysis
+
+### Step 1. Generate Vulnerabilities Analysis
+
+You are an expert security consultant providing professional security assessments. You **cannot** install any new tools, you must work with what is available. You **can** suggest the user installs and runs 3rd party tools if applicable.
+**Each team member must provide individual analysis before collaboration.**
+
+#### Vulnerability Analysis
+
+`gemini -p "{DEPENDENCY_FILES} You are a team working together to analyze project dependencies for security vulnerabilities. The team consists of:
+
+1. **Security Engineer**: Expert in vulnerability assessment, CVSS scoring, threat modeling, compliance frameworks (SOC2, ISO27001), and security policy implementation
+2. **DevOps Engineer**: Specialist in dependency management, CI/CD security, supply chain security, container scanning, and operational security monitoring
+3. **Software Architect**: Expert in system design, dependency relationships, architectural security patterns, risk assessment, and business impact analysis
+
+Each team member must provide their individual analysis first, focusing on their area of expertise, then collaborate to produce a unified vulnerability assessment report with integrated risk scoring and prioritized remediation strategies. Each team member (Security Engineer, DevOps Engineer, Software Architect) must provide individual analysis first, then collaborate on a unified report. {{args}}
 
 1. **Dependency Overview**: Identify package managers and dependency files present.
-2. **Risk Assessment**: Analyze dependency versions, age, and maintenance status.
+2. **Risk Assessment**: Analyze dependency versions, age, and maintenance status with CVSS scoring.
 3. **Known Vulnerability Patterns**: Look for commonly vulnerable packages or outdated versions.
-4. **Security Configuration**: Review lock files and version constraints for security implications.
-5. **Vulnerability Scanning Strategy**: Recommend appropriate scanning tools and approaches.
-6. **Remediation Guidance**: Suggest update strategies and security best practices.
-7. **Scanning Commands**: Provide specific commands to run vulnerability scans.
+4. **Threat Modeling**: Analyze attack vectors, data flow through dependencies, and potential impact.
+5. **Security Policy Integration**: Align findings with organizational security policies and compliance requirements.
+6. **Risk Scoring Matrix**: Provide quantitative risk scores (Critical/High/Medium/Low) with business impact assessment.
+7. **Security Configuration**: Review lock files and version constraints for security implications.
+8. **Vulnerability Scanning Strategy**: Recommend appropriate scanning tools and approaches.
+9. **Remediation Guidance**: Suggest update strategies and security best practices with timeline priorities.
+10. **Scanning Commands**: Provide specific commands to run vulnerability scans.
 
 **For each package manager found, provide:**
 - 📦 **Dependency Analysis**: Version patterns, lock file status, constraint analysis
@@ -48,6 +71,29 @@ You are a security expert and software architect.
 - 🔍 **Recommended Scanners**: Appropriate tools for the technology stack
 - 📋 **Scanning Commands**: Ready-to-run commands for vulnerability detection
 - 🛡️ **Security Recommendations**: Best practices for dependency management
+- 🔗 **Supply Chain Security**: Dependency pinning strategies and supply chain considerations
+
+#### Advanced Threat Modeling Framework
+
+**Attack Vector Analysis:**
+- Direct dependency vulnerabilities (known CVEs)
+- Transitive dependency risks (deep dependency tree analysis)
+- Supply chain attacks (typosquatting, dependency confusion)
+- License compliance and legal risks
+- Maintenance and abandonment risks
+
+**Risk Scoring Methodology:**
+- **Critical (9-10)**: Actively exploited vulnerabilities with high business impact
+- **High (7-8)**: Known vulnerabilities with available exploits
+- **Medium (4-6)**: Vulnerabilities requiring specific conditions to exploit
+- **Low (1-3)**: Theoretical vulnerabilities or low-impact issues
+
+**Business Impact Assessment:**
+- Data confidentiality risks
+- System availability threats
+- Compliance and regulatory implications
+- Reputation and customer trust impact
+- Financial and operational costs
 
 **Include scanning guidance for detected technologies:**
 - **Node.js**: `npm audit`, `yarn audit`, `pnpm audit`, Snyk CLI
@@ -59,9 +105,7 @@ You are a security expert and software architect.
 - **Rust**: `cargo audit`
 - **Multi-language**: OWASP dep-scan, Trivy, Snyk"`
 
----
+### Step 2. Generate Dependency Vulnerability Report
 
-Carefully review the Vulnerability Analysis, correct any formatting issues, and display in properly formatted **Markdown**.
-
-Then **hard stop**.
+Carefully review the Vulnerability Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
 """

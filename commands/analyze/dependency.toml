@@ -40,15 +40,22 @@ If {DEPENDENCY_FILES} contains no standard dependency files, the analysis will p
 You are an expert software architect/engineer.
 
 #### Dependency Analysis
-`gemini -p "{DEPENDENCY_FILES} Analyze the dependencies in this project. {{args}}
+`gemini -p "{DEPENDENCY_FILES} You are a team of dependency experts working together - a dependency management specialist, software architect, and DevOps engineer. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive dependency analysis that leverages all of your inputs into a single unified report.
+
+**Team Roles:**
+- **Dependency Management Specialist**: Expert in package managers, version management, dependency optimization, bundle analysis, and usage patterns
+- **Software Architect**: Expert in system design, dependency relationships, architectural patterns, and technical debt assessment
+- **DevOps Engineer**: Expert in build processes, deployment dependencies, environment management, and CI/CD integration
+
+**Each team member must provide individual analysis first, then collaborate on a unified report.** {{args}}
 
 1.  **Dependency Overview**: Total number of dependencies, main package manager(s) used.
 2.  **Direct Dependencies**: List major dependencies with their versions and purpose.
 3.  **Dependency Usage Analysis**: Which dependencies are actively used vs. unused?
-4.  **Version & Security Analysis**: Are there outdated dependencies or known security vulnerabilities?
+4.  **Version & Update Analysis**: Are there outdated dependencies or available updates?
 5.  **Bundle Size & Performance**: Identify large dependencies affecting bundle size.
 6.  **Dependency Issues**: Look for conflicting versions, missing dependencies, or circular dependencies.
-7.  **Recommendations**: Suggest dependencies to update or remove, security patches, and optimizations.
+7.  **Recommendations**: Suggest dependencies to update or remove, version upgrades, and optimizations.
 
 Include specific examples of dependency usage in the codebase with file references."`
 

@@ -12,11 +12,23 @@ name = "analyze:repo"
 description = "Repository analysis with comprehensive statistics and insights"
 
 prompt = """
-You are an expert software architect and repository analyst with extensive experience in codebase assessment and project evaluation.
+# Prompt Name: Analyze Repo
+## Description: Repository analysis with comprehensive statistics and insights
+## Version: 1.1
+## Date: 2025-09-02
+## Author: Sam Estrin
+
+---
+
+## Phase 1. Repository Analysis
+
+### Step 1. Collect Repository Statics 
+
+You are an expert software architect with extensive experience in codebase assessment and project evaluation.
 
 Perform a comprehensive analysis of this repository. Start by gathering repository statistics using shell commands, then provide detailed insights.
 
-## 1. Repository Statistics Collection
+#### Repo Analysis
 
 The **REPOSITORY_STATS** is "`# Basic Repository Stats
 echo "=== Repository Analysis ==="
@@ -108,49 +120,49 @@ echo "Dependency files:"
 find . -maxdepth 2 -type f \\( -name 'package.json' -o -name 'requirements.txt' -o -name 'Gemfile' -o -name 'pom.xml' -o -name 'build.gradle' -o -name 'Cargo.toml' -o -name 'go.mod' -o -name 'composer.json' \\) 2>/dev/null
 echo ""`"
 
-## 2. Repository Report Formatting
+### Step 2. Repository Report Formatting
 
 You are an expert in **Markdown**. Your job is to carefully review this text based report, and convert it into a summary report using Markdown tables; strip out table entries with 0 as their value and minimize new lines between the headers and tables. this summary report is the **SUMMARY_REPORT**: 
+
 {REPOSITORY_STATS}
 
-## 3. Repository Analysis
+### Step 3. Repository Analysis
 
 **CRITICAL REQUIREMENT**: Begin your response displaying the {SUMMARY_REPORT}
 
-
 After presenting the formatted report, provide a comprehensive analysis of {REPOSITORY_STATS} covering:
 
-### 2.1 Project Classification & Technology Stack
+#### 1. Project Classification & Technology Stack
 - **Primary Language**: Identify the dominant programming language
 - **Technology Stack**: Analyze the technology choices and frameworks
 - **Project Type**: Classify as library, application, tool, framework, etc.
 - **Architecture Pattern**: Identify architectural patterns and design approaches
 
-### 2.2 Code Quality Assessment
+#### 2. Code Quality Assessment
 - **Code Organization**: Evaluate directory structure and file organization
 - **Complexity Analysis**: Assess codebase complexity based on file sizes and structure
 - **Documentation Coverage**: Review documentation quality and completeness
 - **Testing Strategy**: Analyze test coverage and testing approaches
 
-### 2.3 Development Practices
+#### 3. Development Practices
 - **Version Control**: Evaluate Git usage patterns and commit history
 - **Dependency Management**: Review dependency files and package management
 - **Configuration Management**: Assess configuration file organization
 - **Build and Deployment**: Identify build tools and deployment strategies
 
-### 2.4 Maintainability & Scalability
+#### 4. Maintainability & Scalability
 - **Code Maintainability**: Assess factors affecting long-term maintenance
 - **Scalability Considerations**: Identify potential scaling challenges
 - **Technical Debt Indicators**: Highlight areas of concern
 - **Refactoring Opportunities**: Suggest improvement areas
 
-### 2.5 Security & Best Practices
+#### 5. Security & Best Practices
 - **Security Considerations**: Identify potential security concerns
 - **Best Practice Adherence**: Evaluate adherence to industry standards
 - **Performance Implications**: Assess performance-related factors
 - **Compliance**: Check for license files and compliance indicators
 
-## 3. Recommendations & Action Items
+### Step 4. Recommendations & Action Items
 
 Provide specific, actionable recommendations for:
 - **Immediate Improvements**: Quick wins and low-effort enhancements
@@ -158,7 +170,7 @@ Provide specific, actionable recommendations for:
 - **Long-term Vision**: Major architectural or structural changes
 - **Risk Mitigation**: Address identified risks and vulnerabilities
 
-Format your response as a professional repository assessment report suitable for technical stakeholders, project managers, and development teams.
+### Step 5. Final Repository Report Formatting
 
-Then **hard stop**.
+Format a comprehensive response as a professional repository assessment report suitable for technical stakeholders, project managers, and development teams. Then **hard stop**.
 """

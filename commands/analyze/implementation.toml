@@ -34,28 +34,9 @@ If "{{args}}" is NULL or empty then say "/analyze:implementation <feature or pat
 
 ### Step 2. Combined Directory Detection and Standards Scan
 
-The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
+The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found - using default analysis approach'`"
 
-**Priority Order (stop at first match):**
-1. **package.json** (Node.js/TypeScript): Check `main`, `module`, `exports`, `workspaces` for monorepo
-2. **pyproject.toml** (Python): Check `[tool.setuptools.packages.find]`, `[project.scripts]`, `[tool.setuptools.package-data]`
-3. **composer.json** (PHP): Check `autoload.psr-4` namespace mappings
-4. **Bash projects**: Look for `bin/`, `scripts/`, `lib/` directories
-
-**Language-Specific Patterns:**
-- **Node.js/TypeScript**: Common dirs: `src/`, `lib/`, `packages/` (monorepo), `apps/` (monorepo)
-- **Python**: Common dirs: `src/`, package name dirs, `lib/`
-- **PHP**: Common dirs: `src/`, `app/`, `lib/`
-- **Bash**: Common dirs: `bin/`, `scripts/`, `lib/`
-
-**Monorepo Detection:**
-- Check for `workspaces` in package.json
-- Look for multiple package.json files in subdirectories
-- Identify `packages/`, `apps/`, `libs/` structure
-
-Return _actual directory names_ containing application logic. If no standard directories found, return \".\". Format: each directory preceded by **@** (example: **@src** **@packages/app1**).\"; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found - using default analysis approach'`"
-
-### Step 3. Extract from Response
+### Step 3. Set Defaults
 
 #### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
 
@@ -87,7 +68,9 @@ Return _actual directory names_ containing application logic. If no standard dir
 - Optimize for team scalability and developer velocity
 - Ensure modules can be debugged and replaced independently
 
-Extract **MAIN_DIRECTORIES** and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
+### Step 4. Extract from Response
+
+Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
 
 ## Phase 2. Implementation Analysis
 
@@ -96,7 +79,13 @@ Extract **MAIN_DIRECTORIES** and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. I
 You are an expert software architect/engineer.
 
 #### Implementation Analysis
-`gemini -p "{MAIN_DIRECTORIES} {IMPLEMENTATION_STANDARDS}
+`gemini -p "{MAIN_DIRECTORIES} You are a team working together - a software architect, software engineer, and a business analyst. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive implementation analysis that leverages all of your inputs into a single unified report.
+
+**Coding Standards Reference:**
+{CODING_STANDARDS}
+
+**Implementation Standards Reference:**
+{IMPLEMENTATION_STANDARDS}
 
 Has the following feature been implemented in this codebase? {{args}}
 
