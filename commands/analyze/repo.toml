@@ -35,7 +35,7 @@ echo "=== Repository Analysis ==="
 echo -n "Repository: "
 pwd | xargs basename
 echo -n "Date: "
-date
+date '+%B %d, %Y %I:%M:%S%p'
 echo ""
 
 # Repository size and file counts
@@ -43,50 +43,79 @@ echo "--- Basic Repository Stats ---"
 echo -n "Total size: "
 du -sh . 2>/dev/null | cut -f1
 echo -n "Total files: "
-find . -type f | wc -l | tr -d ' '
+if [ -d ".git" ]; then
+    git ls-files | wc -l | tr -d ' '
+else
+    find . -type f \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" \\) | wc -l | tr -d ' '
+fi
 echo -n "Total directories: "
-find . -type d | wc -l | tr -d ' '
+find . -type d \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" \\) | wc -l | tr -d ' '
 echo ""
 
 # Code statistics by language
 echo "--- Code Statistics ---"
 echo "Lines of code by file type:"
-echo -n "  JavaScript/TypeScript: "
-find . -name '*.js' -o -name '*.ts' -o -name '*.jsx' -o -name '*.tsx' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  Python: "
-find . -name '*.py' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  Java: "
-find . -name '*.java' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  C/C++: "
-find . -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  Go: "
-find . -name '*.go' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  Rust: "
-find . -name '*.rs' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  PHP: "
-find . -name '*.php' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  Ruby: "
-find . -name '*.rb' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
-echo -n "  Shell: "
-find . -name '*.sh' -o -name '*.bash' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+if [ -d ".git" ]; then
+    echo -n "  JavaScript/TypeScript: "
+    git ls-files | grep -E '\\.(js|ts|jsx|tsx)$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Python: "
+    git ls-files | grep -E '\\.py$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Java: "
+    git ls-files | grep -E '\\.java$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  C/C++: "
+    git ls-files | grep -E '\\.(c|cpp|h|hpp)$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Go: "
+    git ls-files | grep -E '\\.go$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Rust: "
+    git ls-files | grep -E '\\.rs$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  PHP: "
+    git ls-files | grep -E '\\.php$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Ruby: "
+    git ls-files | grep -E '\\.rb$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Shell: "
+    git ls-files | grep -E '\\.(sh|bash)$' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+else
+    echo -n "  JavaScript/TypeScript: "
+    find . -name '*.js' -o -name '*.ts' -o -name '*.jsx' -o -name '*.tsx' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Python: "
+    find . -name '*.py' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Java: "
+    find . -name '*.java' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  C/C++: "
+    find . -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Go: "
+    find . -name '*.go' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Rust: "
+    find . -name '*.rs' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  PHP: "
+    find . -name '*.php' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Ruby: "
+    find . -name '*.rb' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+    echo -n "  Shell: "
+    find . -name '*.sh' -o -name '*.bash' | grep -v -E '(venv|node_modules|\\.git|build|dist|target|__pycache__|vendor)/' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' || echo '0'
+fi
 echo ""
 
 # Project structure analysis
 echo "--- Project Structure ---"
 echo -n "Directory depth: "
-find . -type d | awk -F/ '{print NF-1}' | sort -n | tail -1
+find . -type d \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" \\) | awk -F/ '{print NF-1}' | sort -n | tail -1
 echo -n "Source directories: "
-find . -type d \\( -name src -o -name source -o -name lib -o -name app \\) | wc -l | tr -d ' '
+find . -type d \\( -name src -o -name source -o -name lib -o -name app \\) \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" \\) | wc -l | tr -d ' '
 echo -n "Test directories: "
-find . -type d \\( -name test -o -name tests -o -name __tests__ -o -name spec \\) | wc -l | tr -d ' '
+find . -type d \\( -name test -o -name tests -o -name __tests__ -o -name spec \\) \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" \\) | wc -l | tr -d ' '
 echo -n "Documentation directories: "
-find . -type d \\( -name docs -o -name doc -o -name documentation \\) | wc -l | tr -d ' '
+find . -type d \\( -name docs -o -name doc -o -name documentation \\) \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" \\) | wc -l | tr -d ' '
 echo ""
 
 # File type distribution
 echo "--- File Type Distribution ---"
 echo "Top 10 file extensions:"
-find . -type f -name '*.*' | sed 's/.*\\.//' | sort | uniq -c | sort -nr | head -10 | awk '{printf "  .%s: %s files\\n", $2, $1}'
+if [ -d ".git" ]; then
+    git ls-files | grep '\\.' | sed 's/.*\\.//' | sort | uniq -c | sort -nr | head -10 | awk '{printf "  .%s: %s files\\n", $2, $1}'
+else
+    find . -type f -name '*.*' \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" \\) | sed 's/.*\\.//' | sort | uniq -c | sort -nr | head -10 | awk '{printf "  .%s: %s files\\n", $2, $1}'
+fi
 echo ""
 
 # Git repository metrics
@@ -111,7 +140,11 @@ echo ""
 # Complexity indicators
 echo "--- Complexity Indicators ---"
 echo "Largest files (by lines):"
-find . -type f -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.java' -o -name '*.go' -o -name '*.rs' -o -name '*.php' -o -name '*.rb' -o -name '*.c' -o -name '*.cpp' | xargs wc -l 2>/dev/null | sort -nr | head -5 | awk '{printf "  %s: %s lines\\n", $2, $1}'
+if [ -d ".git" ]; then
+    git ls-files | grep -E '\\.(js|ts|py|java|go|rs|php|rb|c|cpp)$' | grep -v -E '(test|tests|__tests__|spec|specs)/' | xargs wc -l 2>/dev/null | sort -nr | head -5 | awk '{printf "  %s: %s lines\\n", $2, $1}'
+else
+    find . -type f \\( -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.java' -o -name '*.go' -o -name '*.rs' -o -name '*.php' -o -name '*.rb' -o -name '*.c' -o -name '*.cpp' \\) \\( ! -path "./venv/*" ! -path "./node_modules/*" ! -path "./.git/*" ! -path "./build/*" ! -path "./dist/*" ! -path "./target/*" ! -path "./__pycache__/*" ! -path "./vendor/*" ! -path "./test/*" ! -path "./tests/*" ! -path "./__tests__/*" ! -path "./spec/*" ! -path "./specs/*" \\) | xargs wc -l 2>/dev/null | sort -nr | head -5 | awk '{printf "  %s: %s lines\\n", $2, $1}'
+fi
 echo ""
 echo "Configuration files:"
 find . -maxdepth 2 -type f \\( -name '*.json' -o -name '*.yaml' -o -name '*.yml' -o -name '*.toml' -o -name '*.ini' -o -name '*.conf' -o -name '*.config' \\) | head -10
@@ -122,7 +155,7 @@ echo ""`"
 
 ### Step 2. Repository Report Formatting
 
-You are an expert in **Markdown**. Your job is to carefully review this text based report, and convert it into a summary report using Markdown tables; strip out table entries with 0 as their value and minimize new lines between the headers and tables. this summary report is the **SUMMARY_REPORT**: 
+You are an expert in **Markdown**. Your job is to carefully review this text based report, and convert it into a summary report using Markdown tables; strip out table entries with 0 as their value and **minimize whitespace before and after tables**. this summary report is the **SUMMARY_REPORT**: 
 
 {REPOSITORY_STATS}
 
@@ -172,5 +205,5 @@ Provide specific, actionable recommendations for:
 
 ### Step 5. Final Repository Report Formatting
 
-Format a comprehensive response as a professional repository assessment report suitable for technical stakeholders, project managers, and development teams. Then **hard stop**.
+Format a comprehensive response as a professional repository assessment report suitable for technical stakeholders, project managers, and development teams. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
