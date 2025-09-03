@@ -105,5 +105,5 @@ List the top 5 optimizations that would have the biggest impact."`
 
 ### Step 4. Generate Performance Analysis Report
 
-Carefully review the Performance Analysis, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
+Carefully review the Performance Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, remove the Main Directories (MAIN_DIRECTORIES), Coding Standards (CODING_STANDARDS), and Implementation Standards (IMPLEMENTATION_STANDARDS), and display in properly formatted **Markdown** report. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
