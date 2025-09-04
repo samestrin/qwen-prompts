@@ -17,7 +17,25 @@ name = "compare:files"
 description = "Compare multiple files with detailed code-level analysis and line-by-line differences"
 
 prompt = """
-`gemini -p "Perform a detailed file-level comparison of the provided files. {{args}}
+# Prompt Name: Compare Files
+## Description: Compare multiple files for structural, architectural, and organizational differences
+## Version: 1.1
+## Date: 2025-09-03
+## Author: Sam Estrin
+
+---
+
+## Phase 1. File Comparison
+
+### Step 1. Perform File Comparison
+
+You are a data analyst. Your job is to peform a detailed analysis of multiple files.
+
+#### File Analysis
+`gemini -p "Perform a detailed file-level comparison of the provided files. 
+
+### Files to Compare
+{{args}}
 
 ### File Comparison Analysis
 
@@ -58,7 +76,7 @@ prompt = """
 
 Provide specific line references, code snippets, and concrete examples for each analysis point."`
 
----
-Carefully review the output and correct any formatting issues that may have occured in the generation of the comparison. Then **hard stop**.
+### Step 2. Generate File Comparison Report
 
+Carefully review the File Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, and display in properly formatted **Markdown** report. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """

@@ -18,7 +18,25 @@ name = "compare:dirs"
 description = "Compare multiple directories for structural, architectural, and organizational differences"
 
 prompt = """
-`gemini -p "Perform a comprehensive directory-level comparison of the provided directories. {{args}}
+# Prompt Name: Compare Directories
+## Description: Compare multiple directories for structural, architectural, and organizational differences
+## Version: 1.1
+## Date: 2025-09-03
+## Author: Sam Estrin
+
+---
+
+## Phase 1. Directory Comparison
+
+### Step 1. Perform Directory Comparison
+
+You are a data analyst. Your job is to peform a detailed analysis of multiple directories.
+
+#### Directoy Analysis
+`gemini -p "Perform a comprehensive directory-level comparison of the provided directories. 
+
+### Directories To Compare
+{{args}}
 
 ### Directory Structure Analysis
 
@@ -66,7 +84,7 @@ prompt = """
 
 Provide specific directory paths, file examples, and architectural insights for each analysis point."`
 
----
-Carefully review the output and correct any formatting issues that may have occured in the generation of the comparison. Then **hard stop**.
+### Step 2. Generate Directory Comparison Report
 
+Carefully review the Directory Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, and display in properly formatted **Markdown** report. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
