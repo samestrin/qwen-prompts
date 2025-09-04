@@ -30,17 +30,20 @@ prompt = """
 
 ## Phase 1. Setup
 
-### Step 1. Set Operational Mode
+### Step 1. Quick Setup
 
-**Check for --comprehensive flag in arguments:**
-- If `--comprehensive` is present in {{args}}, **REPORT_TITLE** is "Comprehensive Security Analysis Report" and **INCLUDE_TECHNICAL** is "true"
-- Otherwise **REPORT_TITLE** is "Security Analysis Report" and **INCLUDE_TECHNICAL** is "false"
+**Set mode based on "{{args}}":**
+1. CLEAN_ARGS (string) is "{{args}}"
+2. If "{CLEAN_ARGS}" contains `@`, **TARGETS** is the path/to/filename(s) including `@`, otherwise **TARGETS** is "false". Remove {TARGETS} from {CLEAN_ARGS}.
+3. If "{CLEAN_ARGS}" contains "--comprehensive", **COMPREHENSIVE** is "true" and **REPORT_TITLE** is "Comprehensive Security Analysis", otherwise "false" and **REPORT_TITLE** is "Security Analysis". Remove "--comprehensive" from {CLEAN_ARGS}.
 
-Say "Generating the {REPORT_TITLE} ..."
+Say "Generating {REPORT_TITLE} report ... [Mode: Comprehensive:{COMPREHENSIVE}, Target(s):{TARGETS}]"
 
-### Step 2. Directory Detection
+### Step 2. Conditional Directory Detection
 
-The **MAIN_DIRECTORIES** is "`gemini -p \"Find ALL directories with code, including tests - for a security review, return only the directory basenames preceded by @ in a single line, separated by spaces\"`"
+**If {TARGETS} is not "false" the **MAIN_DIRECTORIES** is "{TARGETS}"
+
+**If {TARGETS} is "false"** the **MAIN_DIRECTORIES** is "`gemini -p \"Find ALL directories with code, including tests - for a security review, return only the directory basenames preceded by @ in a single line, separated by spaces\"`"
 
 ## Phase 2. Security Analysis
 
@@ -49,7 +52,13 @@ The **MAIN_DIRECTORIES** is "`gemini -p \"Find ALL directories with code, includ
 You are an expert security consultant providing professional security assessments. You **cannot** install any new tools, you must work with what is available. You **can** suggest the user installs and runs 3rd party tools if applicable.
 
 #### Security Analysis
-`gemini -p "{MAIN_DIRECTORIES} You are a team of security experts working together - a security engineer, penetration tester, and compliance specialist. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive security audit that leverages all of your inputs into a single unified report. {{args}}
+`gemini -p "{MAIN_DIRECTORIES} 
+
+**ANALYSIS SCOPE**: Focus your security analysis ONLY on the files/directories specified in the above MAIN_DIRECTORIES.
+
+**IMPORTANT**: If MAIN_DIRECTORIES contains specific files or a targeted directory (not general project directories), limit your security analysis exclusively to that scope.
+
+You are a team of security experts working together - a security engineer, penetration tester, and compliance specialist. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive security audit that leverages all of your inputs into a single unified report. {{args}}
 
 1.  **Authentication & Authorization**: JWT/session handling, password hashing, access controls, multi-factor authentication.
 2.  **Input Validation & Sanitization**: Protections against SQL injection, XSS, CSRF, command injection, path traversal.
@@ -123,8 +132,8 @@ You are an expert security consultant providing professional security assessment
 Carefully review the Security Analysis, and display a single, properly formatted **Markdown** report using the **Professional Security Assessment Template**. 
 
 **Important formatting rules:**
-- If {INCLUDE_TECHNICAL} is "true", include the "##### Technical Analysis" section with detailed technical findings, code references, and implementation details
-- If {INCLUDE_TECHNICAL} is "false", completely omit the "##### Technical Analysis" section and its content
+- If {COMPREHENSIVE} is "true", include the "##### Technical Analysis" section with detailed technical findings, code references, and implementation details
+- If {COMPREHENSIVE} is "false", completely omit the "##### Technical Analysis" section and its content
 - Use the {REPORT_TITLE} as the main heading
 - Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
