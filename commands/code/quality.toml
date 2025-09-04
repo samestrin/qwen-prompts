@@ -20,7 +20,7 @@ prompt = """
 # Prompt Name: Code Analysis
 ## Description: Analyze entire codebase architecture and structure using Gemini's large context window
 ## Version: 1.0
-## Date: 2025-08-31
+## Date: 2025-09-03
 ## Author: Sam Estrin
 
 ---
@@ -29,50 +29,55 @@ prompt = """
 
 ### Step 1. Combined Directory Detection and Standards Scan
 
-The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found - using default analysis approach'`"
+The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p "Find directories containing code - for a code quality assessment, return only the directory basenames preceded by @ in a single line, separated by spaces"; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found - using default analysis approach'`"
 
 ### Step 2. Set Defaults
 
-#### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
+#### Default Code Quality Strategy
 
-**Black Box Design Principles:**
-- Design modules that never need editing once written
-- Create primitive-based interfaces that hide complexity
-- Implement wrapper patterns for all external dependencies
-- Build replaceable components with standardized interfaces
-- Optimize for human cognitive load and maintainability
+**Code Quality Principles:**
+- Write clean, readable, and maintainable code
+- Follow established coding standards and best practices
+- Implement proper error handling and logging
+- Ensure adequate test coverage and documentation
+- Optimize for long-term maintainability over short-term convenience
 
-**Architecture Framework:**
-1. **Primitive Identification**: Define core data types and operations
-2. **Black Box Boundaries**: Create modules with single responsibility
-3. **Dependency Wrapping**: Isolate external services behind interfaces
-4. **Interface Design**: Hide implementation details, expose only essentials
-5. **Replaceability Testing**: Verify components can be substituted
+**Quality Assessment Framework:**
+1. **Readability**: Code should be self-documenting and easy to understand
+2. **Maintainability**: Changes should be easy to implement without breaking existing functionality
+3. **Testability**: Code should be designed to facilitate comprehensive testing
+4. **Performance**: Efficient algorithms and resource usage
+5. **Security**: Proper input validation and secure coding practices
+6. **Documentation**: Clear comments and comprehensive documentation
 
-**Implementation Strategy:**
-- Write code that works correctly from first deployment
-- Build modular boundaries testable in isolation
-- Create mock interfaces for external dependencies
-- Implement comprehensive logging and state inspection
-- Design validation modes for development and testing
+**Implementation Standards:**
+- Follow SOLID principles and design patterns
+- Implement consistent naming conventions
+- Maintain appropriate function and class sizes
+- Use proper abstraction and encapsulation
+- Implement comprehensive error handling
+- Ensure adequate logging and monitoring
 
-**Quality Standards:**
-- Test black box interfaces, not internal implementation
-- Assess risk through dependency analysis and failure modes
-- Maintain clear separation between platform and application logic
-- Optimize for team scalability and developer velocity
-- Ensure modules can be debugged and replaced independently
+**Quality Metrics:**
+- Code complexity and cyclomatic complexity
+- Test coverage and quality of tests
+- Documentation coverage and quality
+- Performance benchmarks and bottleneck identification
+- Security vulnerability assessment
+- Technical debt and refactoring opportunities
 
 ### Step 3. Extract from Response
 
-Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
+Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Code Quality Strategy**.
 
-## Phase 2. Code Analysis
+## Phase 2. Code Quality
 
-You are an expert software architect/engineer.
+### Step 1. Evaluate Code Quality
 
-### Code Quality Assessment
-`gemini -p "{MAIN_DIRECTORIES} Perform a comprehensive code quality analysis. {{args}}
+You are an expert code quality consultant providing professional code quality assessments. You **cannot** install any new tools, you must work with what is available. You **can** suggest the user installs and runs 3rd party tools if applicable.
+
+#### Code Quality Assessment
+`gemini -p "{MAIN_DIRECTORIES} You are a team of code quality experts working together - a senior software architect, code quality specialist, and technical lead. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive code quality analysis that leverages all of your inputs into a single unified report. {{args}}
 
 1.  **Code Structure & Organization**: File/folder organization, module separation, architecture.
 2.  **Naming Conventions**: Clarity and consistency of variable, function, and class names.
@@ -103,9 +108,7 @@ You are an expert software architect/engineer.
 - Refactoring priorities
 - Code standards to establish`
 
----
+### Step 2. Generate Code Analysis Report
 
-Using ONLY the above technical output as context, provide a comprehensive code quality assessment in properly formatted **Markdown**. 
-
-Then **hard stop**.
+Carefully review the Code Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, remove the Main Directories (MAIN_DIRECTORIES), Coding Standards (CODING_STANDARDS), and Implementation Standards (IMPLEMENTATION_STANDARDS), and display in properly formatted **Markdown** report. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
