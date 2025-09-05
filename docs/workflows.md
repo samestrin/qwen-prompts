@@ -232,7 +232,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /file:save @documentation-standard.md
 
 # 2. Generate documentation from standard
-> /docs:generate-from-standard using the created standard for API endpoints, referencing @documentation-standard.md
+> /docs:from-standard using the created standard for API endpoints, referencing @documentation-standard.md
 > /file:save @generated-docs.md
 
 # 3. Create educational content
@@ -240,7 +240,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /file:save @documentation-tutorial.md
 
 # 4. Update existing documentation
-> /docs:update-standard for consistency with new standards, referencing @documentation-standard.md
+> /docs:standard for consistency with new standards, referencing @documentation-standard.md
 > /file:save @updated-docs.md
 
 # 5. Merge all documentation components
@@ -262,7 +262,7 @@ Practical workflow examples showing how to use qwen-prompts commands together fo
 > /file:save @api-standard.md
 
 # 3. Generate API documentation
-> /docs:generate-from-standard for API endpoints using the standard, referencing @api-standard.md
+> /docs:from-standard for API endpoints using the standard, referencing @api-standard.md
 > /file:save @api-docs-generated.md
 
 # 4. Create API usage tutorial
