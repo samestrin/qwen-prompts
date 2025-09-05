@@ -57,4 +57,4 @@ The file saving process:
 - [/file:merge](merge.md) - Merge multiple files into one
 - [/create:sprint](../create/sprint.md) - Sprint plans worth saving
 - [/analyze:security](../analyze/security.md) - Security reports worth preserving
-- [/docs:generate-from-standard](../docs/generate-from-standard.md) - Generated documentation for saving
+- [/docs:from-standard](../docs/from-standard.md) - Generated documentation for saving
