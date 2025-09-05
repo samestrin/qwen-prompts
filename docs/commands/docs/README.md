@@ -13,7 +13,7 @@ Creates comprehensive documentation standards and templates based on best practi
 - Standardizing documentation across multiple projects
 - Onboarding documentation guidelines
 
-### [generate-from-standard](generate-from-standard.md) - Standard-Based Documentation Generation
+### [from-standard](from-standard.md) - Standard-Based Documentation Generation
 Generates documentation files following established standards and templates for consistent project documentation.
 
 **Common Use Cases:**
@@ -22,7 +22,7 @@ Generates documentation files following established standards and templates for 
 - Producing consistent README files and guides
 - Automating documentation creation workflows
 
-### [update-standard](update-standard.md) - Documentation Standard Updates
+### [standard](standard.md) - Documentation Standard Updates
 Updates and refines existing documentation standards based on project evolution and best practice improvements.
 
 **Common Use Cases:**
@@ -44,7 +44,7 @@ qwen
 > /file:save @python-api-documentation-standard.md
 
 # 2. Generate initial documentation following the standard
-> /docs:generate-from-standard Create README.md and API documentation following the established standard
+> /docs:from-standard Create README.md and API documentation following the established standard
 > /file:save @generated-project-documentation.md
 ```
 
@@ -59,7 +59,7 @@ qwen
 > /file:save @api-documentation-standard.md
 
 # 2. Generate comprehensive API documentation
-> /docs:generate-from-standard Create complete API documentation including endpoints, authentication, and examples
+> /docs:from-standard Create complete API documentation including endpoints, authentication, and examples
 > /file:save @api-documentation.md
 ```
 
@@ -74,7 +74,7 @@ qwen
 > /file:save @documentation-template-standard.md
 
 # 2. Update existing documentation to match standard
-> /docs:generate-from-standard Update all documentation files to follow the established standard
+> /docs:from-standard Update all documentation files to follow the established standard
 > /file:save @updated-documentation.md
 
 # 3. Merge standard and updates into standardization guide
@@ -88,11 +88,11 @@ qwen
 
 ```qwen
 # 1. Review and update documentation standards
-> /docs:update-standard Review current documentation standard and suggest improvements based on project evolution
+> /docs:standard Review current documentation standard and suggest improvements based on project evolution
 > /file:save @updated-documentation-standard.md
 
 # 2. Generate updated documentation following revised standards
-> /docs:generate-from-standard Regenerate documentation using the updated standard
+> /docs:from-standard Regenerate documentation using the updated standard
 > /file:save @regenerated-documentation.md
 
 # 3. Merge standard updates and regenerated docs into maintenance plan
