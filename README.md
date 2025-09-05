@@ -76,8 +76,8 @@ Slash prompts have **shell execution capabilities** and can run commands on your
 | **Creation** | `/create:tdd` | Test-Driven Development documentation | Multi-shot | Console |
 | **Creation** | `/create:tutorial` | Create step-by-step tutorials | Multi-shot | Console |
 | **Documentation** | `/docs:create-standard` | Establish documentation standards | Multi-shot | Console |
-| **Documentation** | `/docs:generate-from-standard` | Generate documentation following standards | Multi-shot | Console |
-| **Documentation** | `/docs:update-standard` | Update existing documentation | Multi-shot | Console |
+| **Documentation** | `/docs:from-standard` | Generate documentation following standards | Multi-shot | Console |
+| **Documentation** | `/docs:standard` | Update existing documentation | Multi-shot | Console |
 | **File** | `/file:delete` | Delete specified files with confirmation | Single-shot | Console |
 | **File** | `/file:merge` | Merge multiple files into a single output file | Single-shot | File |
 | **File** | `/file:save` | Save the last response to a specified filename | Single-shot | File |
