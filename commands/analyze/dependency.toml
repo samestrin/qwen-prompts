@@ -40,7 +40,7 @@ If {DEPENDENCY_FILES} contains no standard dependency files, the analysis will p
 You are an expert software architect/engineer.
 
 #### Dependency Analysis
-`gemini -p "{DEPENDENCY_FILES} You are a team of dependency experts working together - a dependency management specialist, software architect, and DevOps engineer. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive dependency analysis that leverages all of your inputs into a single unified report.
+`gemini -p "{DEPENDENCY_FILES} You are a team of dependency experts working together - a dependency management specialist, software architect, and DevOps engineer. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive dependency analysis that leverages the teams inputs into a single unified report.
 
 **Team Roles:**
 - **Dependency Management Specialist**: Expert in package managers, version management, dependency optimization, bundle analysis, and usage patterns
