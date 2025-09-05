@@ -44,5 +44,5 @@ The tutorial generation process includes:
 ## Related Resources
 
 - [/code:analysis](../code/analysis.md) - Comprehensive codebase analysis
-- [/docs:generate-from-standard](../docs/generate-from-standard.md) - Documentation generation
+- [/docs:from-standard](../docs/from-standard.md) - Documentation generation
 - [/create:prd](prd.md) - Product Requirements Document creation
