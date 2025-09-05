@@ -50,8 +50,8 @@ A comprehensive cheat sheet for all qwen-prompts commands, organized by most com
 ### Documentation Commands
 ```qwen
 > /create:doc-standard for X     # Create documentation standards and template
-> /docs:generate-from-standard for X using @planning/specifications/documentation.md  # Generate docs following specific standards
-> /docs:update-standard @existing-docs.md using @planning/specifications/documentation.md  # Update existing docs to conform to standards
+> /docs:from-standard for X using @planning/specifications/documentation.md  # Generate docs following specific standards
+> /docs:standard @existing-docs.md using @planning/specifications/documentation.md  # Update existing docs to conform to standards
 ```
 
 ### Git Commands
@@ -76,7 +76,7 @@ A comprehensive cheat sheet for all qwen-prompts commands, organized by most com
 | **Code** | `analysis` `quality` `review` | Code quality assessment |
 | **Compare** | `dirs` `files` | Comparing implementations |
 | **Create** | `cost-analysis` `prd` `sprint` `tdd` `tutorial` | Documentation generation |
-| **Docs** | `create-standard` `generate-from-standard` `update-standard` | Documentation standards |
+| **Docs** | `create-standard` `from-standard` `standard` | Documentation standards |
 | **Find** | `patterns` | Code pattern discovery |
 | **File** | `delete` `merge` `save` | File operations and preserving command outputs |
 | **Git** | `add` `branch` `commit` `merge` `pull` `push` `status` | Git repository management |
