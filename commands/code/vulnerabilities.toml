@@ -1,0 +1,148 @@
+# ---------------------------------------------------------------------------
+# Command: /analyze:vulnerabilities
+#
+# Description:
+#   Calls the Gemini CLI to analyze project code for potential security
+#   vulnerabilities and provide guidance on vulnerability scanning approaches.
+#
+# Usage Examples:
+#
+#   1. Run a general vulnerability analysis:
+#      /code:vulnerabilities
+#
+#   2. Focus on specific package manager:
+#      /code:vulnerabilities focusing on npm dependencies
+#
+#   3. Target specific security concerns:
+#      /code:vulnerabilities focusing on outdated packages with known CVEs
+# ---------------------------------------------------------------------------
+
+name = "analyze:vulnerabilities"
+description = "Analyze code for potential vulnerabilities and provide scanning guidance"
+
+prompt = """
+# Prompt Name: Code Vulnerabilities
+## Description: Analyze code for potential vulnerabilities and provide scanning guidance
+## Version: 1.0
+## Date: 2025-09-03
+## Author: Sam Estrin
+
+---
+
+## Phase 1: Directory Detection
+
+### Step 1. Main Directory Detection
+
+The **MAIN_DIRECTORIES** is "`gemini -p \"Find ALL directories with code (including both runtime and test code) - for a vulnerability review, return only the directory basenames preceded by @ in a single line, separated by spaces\"`"
+
+## Phase 2: Vulnerabilities Analysis
+
+### Step 1. Generate Vulnerabilities Analysis
+
+You are an expert security consultant providing professional security assessments. You **cannot** install any new tools, you must work with what is available. You **can** suggest the user installs and runs 3rd party tools if applicable.
+**Each team member must provide individual analysis before collaboration.**
+
+#### Vulnerability Analysis
+
+`gemini -p "{MAIN_DIRECTORIES} You are a team working together to analyze the entire codebase for security vulnerabilities, including both dependency and code-level vulnerabilities. The team consists of:
+
+1. **Security Engineer**: Expert in vulnerability assessment, CVSS scoring, threat modeling, compliance frameworks (SOC2, ISO27001), and security policy implementation
+2. **DevOps Engineer**: Specialist in dependency management, CI/CD security, supply chain security, container scanning, and operational security monitoring
+3. **Software Architect**: Expert in system design, dependency relationships, architectural security patterns, risk assessment, and business impact analysis
+
+Each team member must provide their individual analysis first, focusing on their area of expertise, then collaborate to produce a unified vulnerability assessment report with integrated risk scoring and prioritized remediation strategies. Each team member (Security Engineer, DevOps Engineer, Software Architect) must provide individual analysis first, then collaborate on a unified report. {{args}}
+
+1. **Codebase Overview**: Analyze source directories, file types, and technology stack for comprehensive vulnerability assessment.
+2. **Dependency Analysis**: Identify package managers, dependency files, and third-party library vulnerabilities.
+3. **Code-Level Vulnerability Patterns**: Scan for common security issues like SQL injection, XSS, CSRF, authentication flaws, and insecure configurations.
+4. **Static Analysis Opportunities**: Identify patterns for input validation, output encoding, authentication, authorization, and cryptographic implementations.
+5. **Risk Assessment**: Analyze dependency versions, code patterns, and security configurations with CVSS scoring.
+6. **Threat Modeling**: Analyze attack vectors, data flow through both dependencies and application code, and potential impact.
+7. **Security Policy Integration**: Align findings with organizational security policies and compliance requirements.
+8. **Risk Scoring Matrix**: Provide quantitative risk scores (Critical/High/Medium/Low) with business impact assessment.
+9. **Vulnerability Scanning Strategy**: Recommend appropriate scanning tools for both dependencies and static code analysis.
+10. **Remediation Timeline Planning**: Categorize fixes by urgency with specific timelines:
+    - **Immediate (0-7 days)**: Critical vulnerabilities with active exploits or high business impact
+    - **30-day timeline**: High-priority vulnerabilities requiring coordinated updates or testing
+    - **90-day timeline**: Medium-priority issues requiring architectural changes or extensive testing
+11. **Compliance Mapping**: Map findings to specific compliance requirements:
+    - **SOC2 Type II**: CC6.1 (Logical Access), CC6.2 (System Boundaries), CC6.3 (Data Protection)
+    - **ISO27001**: A.12.6.1 (Vulnerability Management), A.14.2.1 (Secure Development), A.18.2.3 (Technical Compliance)
+12. **Remediation Guidance**: Suggest update strategies, code fixes, and security best practices with timeline priorities.
+13. **Scanning Commands**: Provide specific commands to run both dependency and static analysis vulnerability scans.
+
+**For each package manager found, provide:**
+- 📦 **Dependency Analysis**: Version patterns, lock file status, constraint analysis
+- ⚠️ **Risk Indicators**: Outdated packages, deprecated dependencies, loose version constraints
+- 🔍 **Recommended Scanners**: Appropriate tools for the technology stack
+- 📋 **Scanning Commands**: Ready-to-run commands for vulnerability detection
+- 🛡️ **Security Recommendations**: Best practices for dependency management
+- 🔗 **Supply Chain Security**: Dependency pinning strategies and supply chain considerations
+
+#### Advanced Threat Modeling Framework
+
+**Attack Vector Analysis:**
+- Direct dependency vulnerabilities (known CVEs)
+- Transitive dependency risks (deep dependency tree analysis)
+- Supply chain attacks (typosquatting, dependency confusion)
+- License compliance and legal risks
+- Maintenance and abandonment risks
+
+**Risk Scoring Methodology:**
+- **Critical (9-10)**: Actively exploited vulnerabilities with high business impact (Immediate remediation required)
+- **High (7-8)**: Known vulnerabilities with available exploits (30-day remediation timeline)
+- **Medium (4-6)**: Vulnerabilities requiring specific conditions to exploit (90-day remediation timeline)
+- **Low (1-3)**: Theoretical vulnerabilities or low-impact issues (Next maintenance cycle)
+
+**Remediation Timeline Framework:**
+- **Immediate (0-7 days)**: Emergency patches, hotfixes, temporary mitigations
+- **30-day timeline**: Coordinated updates, dependency upgrades, configuration changes
+- **90-day timeline**: Code refactoring, architectural improvements, comprehensive testing
+- **Next cycle**: Documentation updates, process improvements, training initiatives
+
+**Compliance Requirements Mapping:**
+- **SOC2 Type II Controls:**
+  - CC6.1 (Logical Access): Authentication, authorization vulnerabilities
+  - CC6.2 (System Boundaries): Network security, API security issues
+  - CC6.3 (Data Protection): Encryption, data handling vulnerabilities
+  - CC6.7 (System Monitoring): Logging, monitoring security gaps
+- **ISO27001 Controls:**
+  - A.12.6.1 (Vulnerability Management): Systematic vulnerability identification and remediation
+  - A.14.2.1 (Secure Development): Secure coding practices, SAST/DAST integration
+  - A.18.2.3 (Technical Compliance): Regulatory compliance, audit trail requirements
+  - A.12.1.2 (Change Management): Security impact assessment for changes
+
+**Business Impact Assessment:**
+- Data confidentiality risks
+- System availability threats
+- Compliance and regulatory implications
+- Reputation and customer trust impact
+- Financial and operational costs
+
+**Include comprehensive scanning guidance for detected technologies:**
+
+**Dependency Vulnerability Scanners:**
+- **Node.js**: `npm audit`, `yarn audit`, `pnpm audit`, Snyk CLI
+- **Python**: `pip-audit`, `safety check`, `pip-audit --format=json`
+- **Java**: OWASP Dependency-Check, `mvn dependency:check`, `gradle dependencyCheckAnalyze`
+- **Ruby**: `bundle audit`, `bundler-audit`
+- **PHP**: `composer audit`, Symfony Security Checker
+- **Go**: `govulncheck`, `nancy`
+- **Rust**: `cargo audit`
+- **Multi-language**: OWASP dep-scan, Trivy, Snyk
+
+**Static Code Analysis Tools:**
+- **Node.js/JavaScript**: ESLint security plugins, JSHint, SonarJS, semgrep
+- **Python**: `bandit`, `safety`, `semgrep`, `pylint --load-plugins=pylint_django`
+- **Java**: SpotBugs, PMD, SonarJava, `semgrep --config=java`
+- **Ruby**: `brakeman`, RuboCop security cops, `semgrep --config=ruby`
+- **PHP**: PHPCS Security, RIPS, `semgrep --config=php`
+- **Go**: `gosec`, `staticcheck`, `semgrep --config=go`
+- **Rust**: `cargo clippy`, `cargo audit`
+- **C/C++**: Clang Static Analyzer, Cppcheck, `semgrep --config=c`
+- **Multi-language**: SonarQube, CodeQL, Semgrep, Veracode"`
+
+### Step 2. Generate Comprehensive Vulnerability Report
+
+Carefully review the Vulnerability Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, and display in properly formatted **Markdown** report covering both dependency and code-level vulnerabilities. Then **hard stop**.
+"""
