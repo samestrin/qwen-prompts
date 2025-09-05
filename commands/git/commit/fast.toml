@@ -1,6 +1,6 @@
 # Git Commit Command (Fast)
 # Creates commits with minimal processing
-# Usage: /git:commit [message] - Commit staged changes quickly
+# Usage: /git:commit:fast [message] - Commit staged changes quickly
 
 name = "commit"
 
