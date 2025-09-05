@@ -17,6 +17,14 @@ name = "delete:file"
 description = "Safely delete files or directories with interactive confirmation"
 
 prompt = """
+# Prompt Name: File Delete
+## Description: Safely delete files or directories with interactive confirmation
+## Version: 1.1
+## Date: 2025-09-03
+## Author: Sam Estrin
+
+---
+
 You are a file management assistant. Your task is to **safely** delete files or directories with interactive confirmation and detailed analysis.
 
 ## Delete Instructions
@@ -96,15 +104,3 @@ Example workflow:
 4. User responds 'yes' or 'no' (in any case)
 5. If 'yes', you delete and confirm; if 'no', you cancel
 """
-
-[[examples]]
-user = "/delete:file @old-report.md"
-assistant = "I'll analyze the file before deletion.\n\n```bash\nif [ -f \"old-report.md\" ]; then\n  echo \"📄 File Analysis:\"\n  echo \"Path: $(pwd)/old-report.md\"\n  echo \"Size: $(wc -c < \"old-report.md\") bytes ($(du -h \"old-report.md\" | cut -f1))\"\n  echo \"Type: $(file \"old-report.md\")\"\n  echo \"Modified: $(stat -f \"%Sm\" \"old-report.md\")\"\n  echo \"Permissions: $(ls -la \"old-report.md\" | cut -d' ' -f1)\"\n  echo \"\\nFirst 5 lines:\"\n  head -5 \"old-report.md\"\nelse\n  echo \"❌ File 'old-report.md' does not exist\"\n  exit 1\nfi\n```\n\nDo you want to delete old-report.md?\n\n[File analysis results shown above]\n\nType 'yes' to confirm deletion, or 'no' to cancel."
-
-[[examples]]
-user = "/delete:file @temp-folder/"
-assistant = "I'll analyze the directory before deletion.\n\n```bash\nif [ -d \"temp-folder\" ]; then\n  echo \"📁 Directory Analysis:\"\n  echo \"Path: $(pwd)/temp-folder/\"\n  echo \"Total size: $(du -sh \"temp-folder\" | cut -f1)\"\n  echo \"Files: $(find \"temp-folder\" -type f | wc -l)\"\n  echo \"Directories: $(find \"temp-folder\" -type d | wc -l)\"\n  echo \"Modified: $(stat -f \"%Sm\" \"temp-folder\")\"\n  echo \"\\nDirectory structure:\"\n  tree -L 3 \"temp-folder\" 2>/dev/null || find \"temp-folder\" -type d | head -20\n  echo \"\\nFile types:\"\n  find \"temp-folder\" -type f | sed 's/.*\\.//' | sort | uniq -c | sort -nr\nelse\n  echo \"❌ Directory 'temp-folder' does not exist\"\n  exit 1\nfi\n```\n\nDo you want to delete temp-folder/?\n\n[Directory analysis results shown above]\n\nType 'yes' to confirm deletion, or 'no' to cancel."
-
-[[examples]]
-user = "yes"
-assistant = "Proceeding with deletion...\n\n```bash\nrm -rf \"temp-folder\"\necho \"✅ Successfully deleted: temp-folder/\"\necho \"💾 Freed space: $(echo \"Previous size was shown in analysis\")\"\necho \"🧹 Cleanup complete\"\n```\n\nThe directory 'temp-folder/' and all its contents have been permanently deleted."
