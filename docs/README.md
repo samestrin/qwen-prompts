@@ -34,8 +34,8 @@ Comprehensive documentation for all 45 qwen-code custom slash commands organized
 
 #### Documentation Commands
 - **[create:doc-standard](commands/create/doc-standard.md)** - Documentation standard and template creator
-- **[docs:generate-from-standard](commands/docs/generate-from-standard.md)** - Documentation generator using established standards
-- **[docs:update-standard](commands/docs/update-standard.md)** - Documentation standard updater and formatter
+- **[docs:from-standard](commands/docs/from-standard.md)** - Documentation generator using established standards
+- **[docs:standard](commands/docs/standard.md)** - Documentation standard updater and formatter
 
 #### Search & Discovery Commands
 - **[find:patterns](commands/find/patterns.md)** - Code pattern discovery and anti-pattern identification
