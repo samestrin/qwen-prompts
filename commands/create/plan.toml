@@ -12,7 +12,7 @@
 #      /create:plan to implement a two-factor authentication system
 #
 #   2. Devise a refactoring strategy:
-#      /create:plan a strategy to refactor the legacy user model to use the new repository pattern
+#      /create:plan --comprehensive a strategy to refactor the legacy user model to use the new repository pattern
 # ---------------------------------------------------------------------------
 
 name = "create:plan"
@@ -21,149 +21,163 @@ description = "Create a strategic plan from specifications, user input and more"
 prompt = """
 # Prompt Name: Create Plan
 ## Description: Create a strategic plan from specifications, user input and more
-## Version: 2.1
-## Date: 2025-08-31
+## Version: 3.0
+## Date: 2025-09-04
 ## Author: Sam Estrin
 
 ---
 
-## Phase 1: Pre-Analysis
+## Phase 1: Setup 
 
-### Step 1. Combined Date/Main Directory Scan
+### Step 1. Quick Setup
 
-The **RESPONSE** is "echo '# TODAYS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
+**Set mode based on "{{args}}":**
+1. CLEAN_ARGS (string) is "{{args}}"
+2. If "{CLEAN_ARGS}" contains "--comprehensive", **COMPREHENSIVE** is "true" and **PLAN_TITLE** is "Comprehensive Strategic Plan", otherwise "false" and **PLAN_TITLE** is "Strategic Plan". Remove "--comprehensive" from {CLEAN_ARGS}.
 
-**Priority Order (stop at first match):**
-1. **package.json** (Node.js/TypeScript): Check `main`, `module`, `exports`, `workspaces` for monorepo
-2. **pyproject.toml** (Python): Check `[tool.setuptools.packages.find]`, `[project.scripts]`, `[tool.setuptools.package-data]`
-3. **composer.json** (PHP): Check `autoload.psr-4` namespace mappings
-4. **Bash projects**: Look for `bin/`, `scripts/`, `lib/` directories
+Say "Generating {PLAN_TITLE} ... [Mode: Comprehensive:{COMPREHENSIVE}]"
 
-**Language-Specific Patterns:**
-- **Node.js/TypeScript**: Common dirs: `src/`, `lib/`, `packages/` (monorepo), `apps/` (monorepo)
-- **Python**: Common dirs: `src/`, package name dirs, `lib/`
-- **PHP**: Common dirs: `src/`, `app/`, `lib/`
-- **Bash**: Common dirs: `bin/`, `scripts/`, `lib/`
+### Step 2. Combined Directory Detection and Standards Scan
 
-**Monorepo Detection:**
-- Check for `workspaces` in package.json
-- Look for multiple package.json files in subdirectories
-- Identify `packages/`, `apps/`, `libs/` structure
+The **CONTEXT_RESPONSE** is "`echo '# TODAYS_DATE'; date '+Generated: %B %d, %Y at %I:%M:%S%p'; echo; echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found'`"
 
-Return _actual directory names_ containing application logic. If no standard directories found, return \".\". Format: each directory preceded by **@** (example: **@src** **@packages/app1**).\"`".
+### Step 3. Set Defaults
 
-### Step 2. Extract from Response
+#### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
 
-Extract **TODAYS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". 
+**Black Box Design Principles:**
+- Design modules that never need editing once written
+- Create primitive-based interfaces that hide complexity
+- Implement wrapper patterns for all external dependencies
+- Build replaceable components with standardized interfaces
+- Optimize for human cognitive load and maintainability
 
-## Phase 2: Plan Creation
+**Architecture Framework:**
+1. **Primitive Identification**: Define core data types and operations
+2. **Black Box Boundaries**: Create modules with single responsibility
+3. **Dependency Wrapping**: Isolate external services behind interfaces
+4. **Interface Design**: Hide implementation details, expose only essentials
+5. **Replaceability Testing**: Verify components can be substituted
 
-### Step 1. As A Business Analyst
+**Implementation Strategy:**
+- Write code that works correctly from first deployment
+- Build modular boundaries testable in isolation
+- Create mock interfaces for external dependencies
+- Implement comprehensive logging and state inspection
+- Design validation modes for development and testing
 
-You should identify problems or opportunities. You perform market research, gather customer feedback, and conduct competitor analysis. You also work with internal stakeholders to understand business objectives and technical limitations. This stage is about collecting data, not forming a solution.
+**Quality Standards:**
+- Test black box interfaces, not internal implementation
+- Assess risk through dependency analysis and failure modes
+- Maintain clear separation between platform and application logic
+- Optimize for team scalability and developer velocity
+- Ensure modules can be debugged and replaced independently
 
-The **BUSINESS_ANALYSIS_RESPONSE** is `gemini -p "Your primary role is that of a **Business Analyst**, this is a _strategic, planning role_, not an implementation role. 
-Your task is to stop, think deeply, and devise a comprehensive strategic plan to accomplish the address: 
+### Step 4. Extract from Response
 
-{{args}}
+Extract **TODAYS_DATE**, **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {CONTEXT_RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
 
-You MUST NOT write, modify, or execute any code. Your sole function is to investigate the current state and formulate a plan; you may suggest technolgies, platforms, etc.
+## Phase 2. Analysis
 
-Use your available 'read' and 'search' tools to research and analyze the codebase {MAIN_DIRECTORIES}. Gather all necessary context before presenting your strategy.
+### Step 1. Strategic Analysis
+The **STRATEGIC_ANALYSIS** is `gemini -p "You are a team working together - a Strategic Business Analyst, Product Manager, and Technical Lead. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive strategic plan that leverages all of your inputs into a single unified plan.
 
-Present your strategic plan in markdown. It should be the direct result of your investigation and thinking process. Structure your response with the following sections:
+## Planning Objective
+{CLEAN_ARGS}
 
-1.  **Understanding the Goal:** Re-state the objective to confirm your understanding.
-2.  **Investigation & Analysis:** Describe the investigative steps you would take. What files would you need to read? What would you search for? What critical questions need to be answered before any work begins?
-3.  **Proposed Strategic Approach:** Outline the high-level strategy. Break the approach down into logical phases and describe the work that should happen in each.
-4.  **Verification Strategy:** Explain how the success of this plan would be measured. What should be tested to ensure the goal is met without introducing regressions?
-5.  **Anticipated Challenges & Considerations:** Based on your analysis, what potential risks, dependencies, or trade-offs do you foresee?
+## Team Roles & Responsibilities
 
-Your final output should be ONLY this strategic plan."`
+**Strategic Business Analyst**: Focus on market analysis, business objectives, stakeholder requirements, and strategic alignment. Investigate current state and identify opportunities.
 
-### Step 2. Architectural Technical Evaluation
+**Product Manager**: Focus on user needs, feature prioritization, market positioning, and product roadmap. Define success metrics and user experience requirements.
 
-`gemini -p "You are a senior systems architect specializing in building large-scale, maintainable software systems. Your expertise is rooted in black box design principles that create software lasting decades with constant developer velocity.
+**Technical Lead**: Focus on technical feasibility, architecture considerations, implementation complexity, and technical risks. Assess current codebase and technical constraints.
 
-## Core Architectural Philosophy
-**\"It's faster to write five lines of code today than to write one line today and then have to edit it in the future.\"
+## Context Information
 
-Your goal is to design systems that:
-- Maintain constant developer velocity regardless of project size
-- Can be understood and maintained by any developer
-- Have modules that can be completely replaced without breaking the system
-- Optimize for human cognitive load, not code cleverness
+### Project Directories
+{MAIN_DIRECTORIES}
 
-## Business Context from Analysis:
-**{BUSINESS_ANALYSIS_RESPONSE}**
+### Coding Standards
+{CODING_STANDARDS}
 
-## Architectural Technical Evaluation Required:
+### Implementation Standards
+{IMPLEMENTATION_STANDARDS}
 
-Perform a comprehensive architectural assessment covering:
+## Required Team Analysis
+Each team member should use available tools to research and analyze the codebase from their perspective, then collaborate to create a unified strategic plan with these sections:
 
-1. **Primitive and Data Flow Architecture**:
-   - Identify the core \"primitives\" - fundamental data types flowing through the system
-   - Map data transformations and operations on these primitives
-   - Design for generalization to handle future requirements
-   - Ensure primitives are simple, well-defined, and stable
+1. **Objective Understanding**: Team consensus on the goal and scope
+2. **Current State Analysis**: Multi-perspective assessment of existing state and constraints
+3. **Strategic Approach**: Integrated strategy combining business, product, and technical perspectives
+4. **Implementation Roadmap**: Sequenced work plan with dependencies and resource considerations
+5. **Success Metrics**: Measurable outcomes from business, product, and technical viewpoints
+6. **Risk Assessment**: Comprehensive risk analysis with mitigation strategies from all perspectives
 
-2. **Black Box Boundary Design**:
-   - Define clear module boundaries with minimal, stable interfaces
-   - Ensure each module can be completely rewritten using only its interface
-   - Identify what should be exposed vs. hidden in each module
-   - Design APIs that will remain stable as implementations change
-   - Wrap all external dependencies - never depend directly on code you don't control
+Provide a clear, actionable strategic plan as your final unified output."`
 
-3. **Modular Architecture Assessment**:
-   - Evaluate current system for single responsibility violations
-   - Assess coupling between modules and identify tight dependencies
-   - Ensure modules can be replaced without breaking others
-   - Design for cognitive load - can one developer understand each module?
-   - Consider scalability from a modular perspective (10x growth)
+### Step 2: Plan Synthesis
 
-4. **Future-Proof Technology Strategy**:
-   - Assess current technology choices for long-term viability
-   - Identify technology dependencies that need abstraction layers
-   - Evaluate third-party dependencies and wrap them appropriately
-   - Consider what happens if key technologies become obsolete
-   - Design for technology migration without system rewrites
+Acting as a Strategic Planning Manager, carefully review the {STRATEGIC_ANALYSIS}. Synthesize the analysis into a unified, well-formatted **Markdown** strategic plan. Correct any formatting issues and ensure clarity.
 
-5. **Implementation Strategy with Replaceability**:
-   - Recommend phased implementation focusing on module boundaries
-   - Identify critical path items and modular dependencies
-   - Assess resource requirements with focus on developer understanding
-   - Design for incremental replacement and improvement
-   - Consider how new developers can contribute immediately
+If {COMPREHENSIVE} is "false", display the synthesized plan and **stop here**.
 
-6. **Quality & Interface Validation Strategy**:
-   - Define testing approach focusing on interface contracts
-   - Identify quality gates for module boundaries
-   - Consider CI/CD pipeline for modular deployments
-   - Assess monitoring and observability at module interfaces
-   - Ensure each module can be tested in isolation
+If {COMPREHENSIVE} is "true", continue to Phase 3.
 
-7. **Long-term Maintainability Risk Analysis**:
-   - Identify risks to long-term maintainability and developer velocity
-   - Assess complexity that could slow down future development
-   - Consider external dependencies and their abstraction risks
-   - Evaluate team capability for maintaining modular architecture
-   - Plan for knowledge transfer and developer onboarding
+## Phase 3: Comprehensive Architectural Evaluation (--comprehensive mode only)
 
-Always ask: **What are the primitives? Where are the black box boundaries? Is this replaceable? Does this optimize for human understanding? Will this work in 5 years with different developers?**
+### Step 1. Architectural Assessment
 
-Provide specific, actionable recommendations focused on creating systems that will remain understandable, maintainable, and modifiable years from now. Prioritize human cognitive load over code cleverness."`
+The **ARCHITECTURAL_ASSESSMENT** is `gemini -p "You are a technical team working together - a Senior Systems Architect, DevOps Engineer, and Security Specialist. Each team member must provide their individual assessment from their expertise perspective, then work together to create a comprehensive architectural evaluation that leverages all of your inputs into a single unified assessment.
 
-Identify any potential gaps, if found correct by doing additional research and provide support in the form of path/fo/filenames, function names, and line numbers, this is the **POST_REVIEW**.
+## Core Philosophy
+\"Build systems that maintain constant developer velocity regardless of project size.\"
 
-### Step 3. As a Chief Architect working with a Product Manager and Engineering Manager
+## Business Context
+{STRATEGIC_ANALYSIS}
 
-The Chief Architect or a senior-level technical leader often acts as the primary author for the technical aspects of the plan. They are responsible for translating the business vision into a technical reality. The Product Manager is the expert on the market, the customer, and the business goals. They set the stage for the entire plan by defining the problem and the desired outcomes. The Engineering Manager is the master of execution. They are responsible for the team, the resources, and the project timeline.
+## Team Roles & Responsibilities
 
-#### Post Review
-{POST_REVIEW}
+**Senior Systems Architect**: Focus on system design, module boundaries, data flow patterns, and long-term architectural sustainability using black box design principles.
 
-Create a detailed strategic plan that takes advantage of all of the detail provided in the **BUSINESS_ANALYSIS_RESPONSE** and **POST_REVIEW** then **hard stop**.
+**DevOps Engineer**: Focus on deployment strategies, infrastructure requirements, scalability considerations, and operational maintainability.
 
+**Security Specialist**: Focus on security architecture, compliance requirements, threat modeling, and secure development practices.
 
+## Required Team Assessment
+
+Each team member should analyze from their perspective, then collaborate to provide a comprehensive technical evaluation covering:
+
+### 1. System Architecture Design
+- Identify core data primitives and flow patterns
+- Define clear module boundaries with stable interfaces
+- Ensure modules can be completely replaced independently
+- Design for human cognitive load optimization
+
+### 2. Technology & Infrastructure Strategy
+- Assess current technology choices for long-term viability
+- Identify dependencies requiring abstraction layers
+- Plan for technology migration without system rewrites
+- Evaluate infrastructure and deployment requirements
+
+### 3. Implementation & Operations Strategy
+- Recommend phased implementation focusing on module boundaries
+- Identify critical path and dependencies
+- Design for incremental improvement and new developer onboarding
+- Plan for monitoring, logging, and operational excellence
+
+### 4. Security & Quality Assurance
+- Define testing approach focusing on interface contracts
+- Assess long-term maintainability and security risks
+- Plan for knowledge transfer and team scalability
+- Ensure compliance and security best practices
+
+Provide specific, actionable architectural recommendations that prioritize long-term maintainability, security, and developer understanding."`
+
+### Step 2. Final Plan
+
+As a **Chief Technology Officer**, synthesize the {STRATEGIC_ANALYSIS} and {ARCHITECTURAL_ASSESSMENT} into a comprehensive strategic and technical plan. If you find the plan lacking in any area, you may do a final round of research and make corrections/updates before final {PLAN_TITLE} release. Address both business objectives and technical implementation, ensuring alignment between strategy and architecture.
+
+Present the final {PLAN_TITLE} in well-structured markdown format.
 
 """
