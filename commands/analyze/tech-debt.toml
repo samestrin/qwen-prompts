@@ -42,7 +42,7 @@ Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDAR
 You are an expert software architect/engineer.
 
 # Technical Debt Analysis
-`gemini -p "{MAIN_DIRECTORIES} You are a team of technical debt experts working together - a software architect, technical debt specialist, and engineering manager. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive technical debt analysis that leverages all of your inputs into a single unified report. 
+`gemini -p "{MAIN_DIRECTORIES} You are a team of technical debt experts working together - a software architect, technical debt specialist, and engineering manager. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive technical debt analysis that leverages the teams inputs into a single unified report. 
 
 {{args}}
 
