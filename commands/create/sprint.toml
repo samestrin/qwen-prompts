@@ -18,35 +18,36 @@ prompt = """
 # Prompt Name: Create Sprint
 ## Description: Create detailed sprint plans based from plans, specifications, user input and more
 ## Version: 1.3
-## Date: 2025-08-31
+## Date: 2025-09-04
 ## Author: Sam Estrin
 
 ---
 
 ## Phase 1: Pre-Analysis
 
-### Step 1. Combined Sprint Number/Coding Strategy/Branch Strategy/Date/Main Directory Scan
+### Step 1. Quick Setup
 
-The **RESPONSE** is "echo '# CURRENT_HIGHEST_SPRINT'; find ./planning/sprints/{active,completed} -name "*.md" -exec basename {} \\; 2>/dev/null | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards strategy found';# BRANCH_STRAT'; cat ./planning/specifications/sprint-branching-strategy.md 2>/dev/null || echo 'No branch strategy found'; echo '# TODAYS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Analyze configuration files to identify primary source code directories using first-match priority:
+**Set mode based on "{{args}}":**
 
-**Priority Order (stop at first match):**
-1. **package.json** (Node.js/TypeScript): Check `main`, `module`, `exports`, `workspaces` for monorepo
-2. **pyproject.toml** (Python): Check `[tool.setuptools.packages.find]`, `[project.scripts]`, `[tool.setuptools.package-data]`
-3. **composer.json** (PHP): Check `autoload.psr-4` namespace mappings
-4. **Bash projects**: Look for `bin/`, `scripts/`, `lib/` directories
+1. CLEAN_ARGS (string) is "{{args}}"
+2. if "{CLEAN_ARGS}" contains "--comprehensive":
+   - Set **ADDITIONAL_FILE_DETAIL** to "Files Affected:\n   - Path/To/Filename\n   - Function Names\n   - Line Numbers"
+   - Set **COMPREHENSIVE** is "true"
+   - Set **SPRINT_TITLE_PREFIX** is "Comprehensive Sprint Plan"
+   - Set **EXCLUDE_TESTS** is ""
+   - Remove "--comprehensive" from {CLEAN_ARGS}
+   else:
+   - Set **ADDITIONAL_FILE_DETAIL** to "Number of files/components affected"
+   - Set **COMPREHENSIVE** is "false"
+   - Set **SPRINT_TITLE_PREFIX** is "Sprint Plan"
+   - Set **EXCLUDE_TESTS** is "- excluding test directories -"
+3. if "{CLEAN_ARGS}" contains "--include-tests":
+   - Set **EXCLUDE_TESTS** is ""
+   - Remove "--include-tests" from {CLEAN_ARGS}
 
-**Language-Specific Patterns:**
-- **Node.js/TypeScript**: Common dirs: `src/`, `lib/`, `packages/` (monorepo), `apps/` (monorepo)
-- **Python**: Common dirs: `src/`, package name dirs, `lib/`
-- **PHP**: Common dirs: `src/`, `app/`, `lib/`
-- **Bash**: Common dirs: `bin/`, `scripts/`, `lib/`
+### Step 2. Combined Sprint Number/Coding Strategy/Branch Strategy/Date/Main Directory Scan
 
-**Monorepo Detection:**
-- Check for `workspaces` in package.json
-- Look for multiple package.json files in subdirectories
-- Identify `packages/`, `apps/`, `libs/` structure
-
-Return _actual directory names_ containing application logic. If no standard directories found, return \".\". Format: each directory preceded by **@** (example: **@src** **@packages/app1**).\"`".
+The **RESPONSE** is "`echo '# CURRENT_HIGHEST_SPRINT'; find ./planning/sprints/{active,completed} -name "*.md" -exec basename {} \\; 2>/dev/null | sed 's/_.*$//' | grep -E '^[0-9]+(\\.[0-9]+)*$' | sort -V | tail -1; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards strategy found';# BRANCH_STRAT'; cat ./planning/specifications/sprint-branching-strategy.md 2>/dev/null || echo 'No branch strategy found'; echo '# TODAYS_DATE'; date '+%B %d, %Y %I:%M:%S%p'; echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code {EXCLUDE_TESTS} return only the directory basenames preceded by @ in a single line, separated by spaces\"`".
 
 #### Default Git Branch Strategy
 
@@ -85,19 +86,9 @@ Return _actual directory names_ containing application logic. If no standard dir
 - **Interface Clarity**: Public APIs should be clean, documented, and stable
 - **State Isolation**: Modules should not share mutable state
 
-### Step 2. Extract from Response
+### Step 3. Extract from Response
 
 Extract **CURRENT_HIGHEST_SPRINT**, **CODING_STANDARDS**, **BRANCH_STRAT**, **TODAYS_DATE** and **MAIN_DIRECTORIES** from {RESPONSE}. If the **MAIN_DIRECTORIES** does can not be extracted, then set **MAIN_DIRECTORIES** to ".". If {BRANCH_STRAT} is "No branch strategy found" then set **BRANCH_STRAT** to the **Default Git Branch Strategy". If {CODING_STANDARDS} is "No coding standards strategy found" then set **CODING_STANDARDS** to the **Default Coding Standards**. 
-
-### Step 3. Parse the {{args}} Variable as a String
-The **THIS_ARGS** is "{{args}}".
-
-1. if {THIS_ARGS} starts with "--include-files" then:
-   - Set **ADDITIONAL_FILE_DETAIL** to "Files Affected:\n   - Path/To/Filename\n   - Function Names\n   - Line Numbers"
-   - Set **CLEANED_ARGS** to {THIS_ARGS} with "--include-files" removed (trim any leading/trailing spaces)
-   else:
-   - Set **ADDITIONAL_FILE_DETAIL** to "Number of files/components affected"
-   - Set **CLEANED_ARGS** to {THIS_ARGS}
 
 ## Phase 2: Sprint Creation
 
@@ -107,11 +98,31 @@ You are an expert software architect and project manager creating a sprint plan 
  
 **{CLEANED_ARGS}** 
  
-You are ONLY in planning mode - do **NOT** write code, create files, create directories, or start implementation. You are ONLY authoring a sprint plan document. After generating the plan content, you will **hard stop** and wait for further instructions. 
+You are ONLY in planning mode - do **NOT** write code, create files, create directories, or start implementation. You are ONLY authoring a sprint plan document. After generating the sprint plan, you will **hard stop** and wait for further instructions. 
 
 ### Step 2. Architectural Analysis
 
-`gemini -p "{MAIN_DIRECTORIES} You are a senior systems architect specializing in modular, maintainable software design. Your expertise comes from black box design principles for building large-scale systems that last decades.
+`gemini -p "{MAIN_DIRECTORIES} You are working as a cross-functional sprint planning team with three expert perspectives collaborating to create comprehensive, actionable sprint plans.
+
+## Team Composition & Roles
+
+**Technical Lead/Senior Developer:**
+- Focus: Implementation feasibility, code architecture, and development best practices
+- Responsibilities: Assess technical complexity, identify implementation patterns, estimate development effort
+- Expertise: Hands-on coding experience, architectural decision-making, team mentoring
+
+**DevOps/Platform Engineer:**
+- Focus: Deployment, infrastructure, CI/CD, and operational concerns  
+- Responsibilities: Evaluate deployment complexity, infrastructure requirements, testing strategies
+- Expertise: Build systems, containerization, monitoring, scalability planning
+
+**Product/Project Manager:**
+- Focus: Sprint planning methodology, timeline management, and deliverable prioritization
+- Responsibilities: Break down features into actionable phases, manage dependencies, risk assessment
+- Expertise: Agile methodologies, stakeholder management, delivery optimization
+
+## Team Collaboration Philosophy
+Your team specializes in creating sprint plans that balance architectural excellence with delivery reality. You combine black box design principles for building large-scale systems that last decades with practical sprint execution knowledge.
 
 ## Core Philosophy
 **\"It's faster to write five lines of code today than to write one line today and then have to edit it in the future.\"**
@@ -125,7 +136,28 @@ Your goal is to create software that:
 ## Implementation Requested: 
 **\"{CLEANED_ARGS}\"**
 
-Perform ANALYSIS ONLY - do NOT create files, directories, or make changes. Your architectural analysis **must** include:
+Perform ANALYSIS ONLY - do NOT create files, directories, or make changes. Each team member contributes their expertise to create a unified comprehensive analysis that **must** include:
+
+## Required Team Analysis
+
+**Technical Lead Analysis:**
+- Implementation complexity assessment and development approach
+- Code architecture patterns and technical feasibility
+- Development effort estimation and team capacity planning
+
+**DevOps Engineer Analysis:**
+- Infrastructure and deployment requirements
+- CI/CD pipeline considerations and testing strategies
+- Scalability and operational monitoring needs
+
+**Product Manager Analysis:**
+- Sprint structure and phase breakdown optimization
+- Timeline management and dependency coordination
+- Risk assessment and mitigation strategies
+
+## Collaborative Assessment Areas
+
+Working together, your team analysis **must** include:
 
 1. **Primitive Identification**: 
    - What are the core \"primitives\" - the fundamental data types that flow through this system?
@@ -206,7 +238,7 @@ Preserve the markdown structure, including instructional text and checkboxes `[ 
 ### **Sprint Plan Template to Populate**
 
 # Sprint {SPRINT_NUMBER}: {FEATURE_NAME}
-Created: {THIS_TIMESTAMP}
+Created: {TODAYS_DATE}
 
 **Directions:** Your task is to work through _Sprint {SPRINT_NUMBER}: {FEATURE_NAME}_ step-by-step, starting at _Phase 1. {PHASE_1_NAME}_. You must complete each action item in the phase, and upon successful completion, you **must immediately check-off your work**; this must be done to maintain state. **After completing and checking off all items in a phase, immediately proceed to the next phase without waiting for further instructions.**
 
@@ -317,18 +349,25 @@ Created: {THIS_TIMESTAMP}
 
 **Final Phase Requirements**: The last phase must include:
 
-### {FINAL_N}.{FINAL_LAST} [ ] **Merge Branch and Cleanup**
-   **Action:** Merge completed {FEATURE_NAME} back to main branch
+### {FINAL_N}.{FINAL_LAST} [ ] **Test Validation and Conditional Merge**
+   **Action:** Validate all tests pass before merging {FEATURE_NAME} back to main branch
    **Implementation:**
-   - Ensure all tests pass: `{TEST_COMMAND}`
-   - Commit final changes: `git add . && git commit -m "{FINAL_COMMIT_MESSAGE}"`
-   - Switch to main branch: `git checkout main`
-   - Pull latest changes: `git pull origin main`
-   - Merge branch: `git merge {BRANCH_TYPE}/{BRANCH_NAME}`
-   - Push merged changes: `git push origin main`
-   - Delete local branch: `git branch -d {BRANCH_TYPE}/{BRANCH_NAME}`
-   - Delete remote branch: `git push origin --delete {BRANCH_TYPE}/{BRANCH_NAME}`
-   **Goal:** Clean integration of {FEATURE_NAME} into main codebase
+   - Run comprehensive test suite: `{TEST_COMMAND}`
+   - **IF TESTS PASS:**
+     - Commit final changes: `git add . && git commit -m "{FINAL_COMMIT_MESSAGE}"`
+     - Switch to main branch: `git checkout main`
+     - Pull latest changes: `git pull origin main`
+     - Merge branch: `git merge {BRANCH_TYPE}/{BRANCH_NAME}`
+     - Push merged changes: `git push origin main`
+     - Delete local branch: `git branch -d {BRANCH_TYPE}/{BRANCH_NAME}`
+     - Delete remote branch: `git push origin --delete {BRANCH_TYPE}/{BRANCH_NAME}`
+   - **IF TESTS FAIL:**
+     - ⚠️ **SPRINT AUTOMATED COMPLETION FAILED**
+     - Do NOT merge to main branch. Do NOT check-off {FINAL_N}.{FINAL_LAST}.
+     - Alert: "## Tests failed - _manual intervention required_"
+     - Provide test failure summary and next steps
+     - Keep feature branch for debugging: `{BRANCH_TYPE}/{BRANCH_NAME}`
+   **Goal:** Only integrate {FEATURE_NAME} into main codebase if all quality gates pass
 
 
 
