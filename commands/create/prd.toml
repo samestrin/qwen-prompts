@@ -20,17 +20,130 @@ name = "create:prd"
 description = "Generates a Product Requirements Document (PRD) from a feature description"
 
 prompt = """
-The **TODAYS_DATE** is "`date`". The {TODAYS_DATE} value should include the date and the timestamp, do not reformat.
-
-Perform a detailed analysis of the following concept: `gemini "Thoroughly brainstorm and outline the core components, user stories, functional and non-functional requirements, potential risks, target users, and a potential technical stack for the following idea: {{args}}"`
+# Prompt Name: Create PRD
+## Description: Generates a Product Requirements Document (PRD) from a feature description
+## Version: 1.1
+## Date: 2025-09-05
+## Author: Sam Estrin
 
 ---
 
-Now, using ONLY the analysis above as context, create a comprehensive Product Requirements Document (PRD). Populate every section of the following markdown template with relevant details derived from the analysis.
+## Phase 1. Setup
 
-```markdown
+### Step 1. Quick Setup
+
+**Set mode based on "{{args}}":**
+1. CLEAN_ARGS (string) is "{{args}}"
+2. If "{CLEAN_ARGS}" contains `@`, **TARGET** is the path/to/filename(s) without `@`, otherwise **TARGET** is "prd.md". 
+    1. Remove {TARGET} from {CLEAN_ARGS}.
+    2. If {TARGET} is just a filename pre-pend "planning/product/"
+3. Create and set **FEATURE_TITLE** basd on the {CLEAN_ARGS}.
+
+Say "Generating PRD for {FEATURE_TITLE} ... [{TARGET}]"
+
+### Step 2. Combined Directory Detection and Standards Scan
+
+The **CONTEXT_RESPONSE** is "`echo '# TODAYS_DATE'; date '+Generated: %B %d, %Y at %I:%M:%S%p'; echo; echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found'`"
+
+### Step 3. Set Defaults
+
+#### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
+
+**Black Box Design Principles:**
+- Design modules that never need editing once written
+- Create primitive-based interfaces that hide complexity
+- Implement wrapper patterns for all external dependencies
+- Build replaceable components with standardized interfaces
+- Optimize for human cognitive load and maintainability
+
+**Architecture Framework:**
+1. **Primitive Identification**: Define core data types and operations
+2. **Black Box Boundaries**: Create modules with single responsibility
+3. **Dependency Wrapping**: Isolate external services behind interfaces
+4. **Interface Design**: Hide implementation details, expose only essentials
+5. **Replaceability Testing**: Verify components can be substituted
+
+**Implementation Strategy:**
+- Write code that works correctly from first deployment
+- Build modular boundaries testable in isolation
+- Create mock interfaces for external dependencies
+- Implement comprehensive logging and state inspection
+- Design validation modes for development and testing
+
+**Quality Standards:**
+- Test black box interfaces, not internal implementation
+- Assess risk through dependency analysis and failure modes
+- Maintain clear separation between platform and application logic
+- Optimize for team scalability and developer velocity
+- Ensure modules can be debugged and replaced independently
+
+### Step 4. Extract from Response
+
+Extract **TODAYS_DATE**, **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {CONTEXT_RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
+
+## Phase 2. PRD Generation
+
+### Step 1. Initial Concept Analysis
+
+You are a Expert Product Manager (PM) tasked with performing a detailed concept analysis and synthesis of your teams findings.
+
+#### Concept Analysis
+`gemini "You are acting as a cross-functional product team with the following expert roles:
+
+**Product Manager (PM)**: Lead analysis, synthesize findings, ensure business alignment
+- Consolidate team insights into structured requirements
+- Make prioritization decisions and scope recommendations
+- Validate alignment with business objectives
+
+**Business Analyst (BA)**: Stakeholder requirements and process compliance
+- Translate business needs into technical specifications
+- Ensure regulatory and process compliance
+- Define acceptance criteria and success metrics
+
+**Technical Architect (TA)**: Implementation strategy and technical decisions
+- Evaluate technology stack options and provide recommendations
+- Identify technical risks and mitigation strategies
+- Ensure architectural alignment with existing systems
+
+**UX/UI Designer (UXD)**: User experience and interface design
+- Conduct user research and define user personas
+- Create user journey maps and interaction flows
+- Ensure accessibility and responsive design requirements
+
+**Quality Assurance Lead (QA)**: Testing strategy and quality standards
+- Define testing approach and acceptance criteria
+- Identify quality risks and validation requirements
+- Establish performance and reliability benchmarks
+
+Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive analysis that leverages the teams inputs into a single unified report.
+
+# Task 
+
+As this expert team, thoroughly analyze and provide comprehensive insights for the following concept: 
+
+## Feature Concept/Idea
+{CLEAN_ARGS}
+
+## Context Information
+
+### Project Directories
+{MAIN_DIRECTORIES}
+
+### Coding Standards
+{CODING_STANDARDS}
+
+### Implementation Standards
+{IMPLEMENTATION_STANDARDS}
+`
+
+### Step 2. PRD Template
+
+**Default PRD Template:**
+---
+
 # Product Requirements Document: [Enter Project Name]
-Created: [TODAYS_DATE]
+Version: 1.0
+Created: {TODAYS_DATE}
 
 ## 1. Overview
 (Provide a high-level summary of the project, its purpose, and the problem it solves.)
@@ -38,33 +151,50 @@ Created: [TODAYS_DATE]
 ## 2. Objectives
 (List the primary goals and desired outcomes of this project in a bulleted list.)
 
-## 3. Target Users and Use Cases
+## 3. Scope
+- **In Scope:** (List features and requirements included in this release.)
+- **Out of Scope:** (List items explicitly excluded, with rationale.)
+
+## 4. Target Users and Use Cases
 (Describe the target audience and provide specific scenarios for how they will use the product.)
 
-## 4. Functional Requirements
-(Detail the specific features. **Break this section down with descriptive subheadings** for distinct components like 'User Interface', 'Backend API', 'Data Processing', etc., as appropriate.)
+## 5. Functional Requirements
+(Detail the specific features, prioritized as Must-have, Should-have, Could-have, or Won't-have. **Break this section down with descriptive subheadings** for distinct components like 'User Interface', 'Backend API', 'Data Processing', etc., as appropriate.)
 
-## 5. Non-functional Requirements
+## 6. Non-functional Requirements
 (Specify criteria like performance, reliability, maintainability, security, and portability.)
 
-## 6. Architecture and Design
+## 7. Success Metrics
+(Define key performance indicators (KPIs) and how success will be measured, e.g., user adoption rates, performance benchmarks.)
+
+## 8. Architecture and Design
 (Outline the proposed technology stack and high-level system architecture based on the initial analysis.)
 
-## 7. Risks and Considerations
-(Identify potential technical or project risks and suggest mitigation strategies.)
+## 9. Risks and Considerations
+- **Technical Risks:** (e.g., integration challenges)
+- **Business Risks:** (e.g., market competition)
+- **Dependencies:** (List external dependencies like third-party services)
+- **Mitigation Strategies:** (For each risk)
 
-## 8. Milestones and Timeline
-(Propose key project phases and a tentative timeline for completion.)
+## 10. Milestones and Timeline
+(Define product delivery milestones focused on user value and business outcomes, not implementation tasks. Examples: "Beta Release with Core Features", "Public Launch", "Feature Enhancement Phase". Avoid technical tasks like "Write code" or "Setup project".)
 
-## 9. Future Enhancements
+## 11. Future Enhancements
 (List potential features or improvements for future versions.)
 
-## 10. Conclusion
+## 12. Conclusion
 (Summarize the project's value and strategic importance.)
+
+## Appendices
+(Include any supporting materials such as user personas, wireframes, data models, or references.)
 
 ---
 
-Carefully review the output and correct any formatting issues that may have occured in the generation of the PRD. Save the output as: @planning/specifications/prd.md
+### Step 3. PRD Creation
 
-Then **hard stop**.
+Now, using ONLY the **Concept Analysis** above as context, create a comprehensive Product Requirements Document (PRD). Populate every section of the **Default PRD Template** with relevant details derived from the analysis. This is the **FINAL_PRD**.
+
+### Step 4. Save and Display PRD
+
+Carefully review the {FINAL_PRD} and correct any formatting issues that may have occured in the generation of the PRD. Display (if it has not already been displayed), then save the output as: {TARGET}. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """
