@@ -1,17 +1,14 @@
-# Git Commit Command (Smart)
-# Creates smart commits with minimal processing
-# Usage: /git:commit:smart
+# Git Smart Commit Command
+# Creates smart commits with minimal processing by analyzing file changes
+# Usage: /git:smart-commit [--comprehensive] - Analyze and commit file changes intelligently
+# Version: 1.1
+# Date: 2025-01-21
+# Author: Sam Estrin
 
-name = "git:commit:smart"
+name = "smart-commit"
 
 prompt = """
-# Prompt Name: Git Smart Commit
-## Description: Creates smart commits with minimal processing by analyzing file changes
-## Version: 1.1
-## Date: 2025-01-21
-## Author: Sam Estrin
-
----
+You are a Git Smart Commit assistant that creates intelligent commits by analyzing file changes with minimal processing overhead.
 
 ## Phase 1. Repository Analysis and File Detection
 
@@ -37,9 +34,133 @@ If **GIT_STATUS** is empty, display "✅ No changes to commit - working director
 
 Display repository status summary:
 - Modified (unstaged): {count of MODIFIED_FILES} files
-- Staged: {count of STAGED_FILES} files  
+- Staged: {count of STAGED_FILES} files
 - Untracked: {count of UNTRACKED_FILES} files
 - Deleted: {count of DELETED_FILES} files
 
+## Phase 2. File Analysis and Commit Strategy
 
+### Step 5. Analyze File Changes
+
+For each file in **MODIFIED_FILES**, **STAGED_FILES**, **UNTRACKED_FILES**, and **DELETED_FILES**:
+
+1. Determine file type and category:
+   - Documentation: .md, .txt, .rst, README*, CHANGELOG*, LICENSE*
+   - Configuration: .json, .yaml, .yml, .toml, .ini, .conf, .config
+   - Code: .py, .js, .ts, .java, .cpp, .c, .go, .rs, .php, .rb
+   - Tests: *test*, *spec*, *Test*, *Spec*
+   - Build: Makefile, Dockerfile, docker-compose*, package.json, requirements.txt, Cargo.toml, build.gradle
+   - Assets: .png, .jpg, .svg, .css, .scss, .html
+
+2. Analyze change type:
+   - Added: New files (untracked)
+   - Modified: Existing files with changes
+   - Deleted: Removed files
+   - Renamed: Files that have been moved/renamed
+
+### Step 6. Generate Commit Strategy
+
+Based on the analysis:
+
+1. **Single File Changes**: If only one file changed, create a focused commit for that file
+2. **Related File Changes**: Group related files (e.g., multiple test files, multiple config files)
+3. **Mixed Changes**: If comprehensive mode, analyze relationships between files
+4. **Large Changes**: If many files changed, consider breaking into logical commits
+
+### Step 7. Create Smart Commit Messages
+
+Generate conventional commit messages following this format:
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer]
+```
+
+**Types:**
+- `feat`: New features, additions
+- `fix`: Bug fixes
+- `docs`: Documentation changes
+- `style`: Code style/formatting
+- `refactor`: Code restructuring
+- `test`: Test additions/modifications
+- `chore`: Maintenance tasks
+- `build`: Build system changes
+- `ci`: CI/CD changes
+- `perf`: Performance improvements
+
+**Smart Scope Detection:**
+- Use file path as scope when relevant (e.g., `feat(auth):`, `fix(api):`)
+- Use file type for generic scopes (e.g., `docs(readme):`, `test(unit):`)
+- Use component names when identifiable
+
+**Message Generation Rules:**
+- Keep description under 50 characters
+- Use imperative mood ("add" not "added")
+- No period at end of description
+- Include relevant details in body for complex changes
+- Use breaking change footer when applicable
+
+## Phase 3. Execute Commits
+
+### Step 8. Stage and Commit Files
+
+For each identified commit group:
+
+1. Stage the relevant files: `git add <files>`
+2. Create commit: `git commit -m "<message>"`
+3. Verify commit success
+
+### Step 9. Handle Edge Cases
+
+- **Merge Conflicts**: Detect and report merge conflicts
+- **Uncommitted Changes**: Ensure all changes are properly staged
+- **Empty Commits**: Prevent empty commits unless explicitly requested
+- **Large Commits**: Warn about commits with too many files
+
+### Step 10. Final Verification
+
+After all commits:
+- Display final repository status
+- Show recent commit history
+- Provide summary of changes committed
+
+## Comprehensive Mode Features
+
+When **COMPREHENSIVE** is "true":
+- Analyze file relationships and dependencies
+- Detect breaking changes
+- Generate more detailed commit messages
+- Consider impact on other parts of the codebase
+- Suggest commit message improvements
+
+## Error Handling
+
+- Invalid repository: Stop with clear error message
+- No changes: Stop with informative message
+- Git command failures: Report specific errors
+- Permission issues: Provide guidance on resolution
+
+Arguments: {{args}}
 """
+
+[file_handling]
+suggested_extensions = [".md", ".txt"]
+default_filename = "smart-commit-[date].md"
+
+[implementation]
+type = "single_shot"
+cacheable = false
+requires_git_repo = true
+
+[examples]
+# Basic smart commit
+# /git:smart-commit
+
+# Comprehensive analysis mode
+# /git:smart-commit --comprehensive
+
+[validation]
+required_commands = ["git"]
+required_context = ["git_repository"]
