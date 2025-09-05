@@ -143,7 +143,7 @@ qwen
 
 ### Educational Content Creation
 - **Tutorials**: [tutorial](tutorial.md) - Step-by-step implementation guides
-- **Documentation**: [docs:generate-from-standard](../docs/generate-from-standard.md) - Standards-based documentation
+- **Documentation**: [docs:from-standard](../docs/from-standard.md) - Standards-based documentation
 - **Setup**: [initialize:planning](../initialize/planning.md) - Project structure setup
 
 ### Integration with Analysis
