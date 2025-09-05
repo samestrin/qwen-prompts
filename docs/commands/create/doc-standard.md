@@ -43,16 +43,16 @@ The standard creation process includes:
 
 ## Related Resources
 
-- [/docs:generate-from-standard](generate-from-standard.md) - Generate documentation using standards
-- [/docs:update-standard](update-standard.md) - Update existing documentation standards
+- [/docs:from-standard](from-standard.md) - Generate documentation using standards
+- [/docs:standard](standard.md) - Update existing documentation standards
 - [/create:tutorial](../create/tutorial.md) - Tutorial generation from codebase
 
 ## See Also
 
 ### Documentation Standardization Workflow
 1. **Create Standard**: [/create:doc-standard](doc-standard.md) - Establish documentation standards
-2. **Generate Documentation**: [/docs:generate-from-standard](generate-from-standard.md) - Create docs following standards
-3. **Maintain Consistency**: [/docs:update-standard](update-standard.md) - Keep documentation aligned with standards
+2. **Generate Documentation**: [/docs:from-standard](from-standard.md) - Create docs following standards
+3. **Maintain Consistency**: [/docs:standard](standard.md) - Keep documentation aligned with standards
 4. **Save Standards**: [/file:save](../save/file.md) - Preserve documentation standards for reuse
 
 ### Integration with Project Initialization
