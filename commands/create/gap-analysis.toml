@@ -1,0 +1,122 @@
+# ---------------------------------------------------------------------------
+# Command: /create:gap-analysis
+#
+# Description:
+#   Calls the Gemini CLI to create a gap analysis for plans and implementations
+#
+# Usage Examples:
+#
+#   1. Run a gap analysis:
+#      /create:gap-analysis @planfile.md against @implementation/
+# ---------------------------------------------------------------------------
+
+name = "create:gap-analysis"
+description = "Run a gap analysis between plans and implementations"
+
+prompt = """
+# Prompt Name: Create Gaps Analysis
+## Description: Run a gap analysis between plans and implementations
+## Version: 1.0
+## Date: 2025-09-02
+## Author: Sam Estrin
+
+---
+
+## Phase 1. Directory Detection
+
+### Step 1. Combined Directory Detection
+
+The **RESPONSE** is "`echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found'`"
+
+## Phase 2. Gap Analysis
+
+### Step 1. Set Defaults
+
+#### Default Gap Analysis Strategy
+
+**Gap Analysis Principles:**
+- Compare planned requirements against actual implementation
+- Identify missing features, incomplete functionality, and deviations
+- Assess impact on project success and business objectives
+- Prioritize gaps based on business value and implementation effort
+- Provide actionable recommendations for closing identified gaps
+
+**Analysis Framework:**
+1. **Requirements Mapping**: Compare specifications to implementation
+2. **Feature Completeness**: Identify missing or partial features
+3. **Quality Assessment**: Evaluate code quality and testing coverage
+4. **Technical Debt**: Identify shortcuts and architectural compromises
+5. **Compliance Review**: Check adherence to standards and regulations
+
+**Gap Analysis Standards:**
+- All planned features should be fully implemented and tested
+- Code should meet established quality and security standards
+- Documentation should be complete and up-to-date
+- Performance requirements should be met or exceeded
+- User experience should align with design specifications
+- Integration points should function as specified
+
+**Quality Metrics:**
+- Measure gap severity based on business impact
+- Consider implementation effort and timeline constraints
+- Evaluate risk of leaving gaps unaddressed
+- Assess dependencies between different gaps
+- Balance gap closure effort against project priorities
+
+### Step 2. Extract Standards and Directories
+
+Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If **IMPLEMENTATION_STANDARDS** is "No implementation standards found" then set **IMPLEMENTATION_STANDARDS** to the **Default Gap Analysis Strategy**.
+
+### Step 3. Generate Gap Analysis
+
+You are an expert software engineer/team lead. 
+
+#### Gap Analysis
+`gemini -p "{MAIN_DIRECTORIES} You are a team working together - a business analyst, technical architect, and project manager. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive gap analysis that leverages the teams inputs into a single unified report. Perform a detailed gap analysis between the planned requirements and current implementation.
+
+**Coding Standards Reference:**
+{CODING_STANDARDS}
+
+**Implementation Standards Reference:**
+{IMPLEMENTATION_STANDARDS}
+
+**Gap Analysis Focus:** 
+
+{{args}}
+
+**Analysis Areas:**
+1.  **Feature Completeness**: Missing features, partial implementations, unfinished functionality.
+2.  **Requirements Alignment**: Deviations from specifications, scope creep, requirement misinterpretation.
+3.  **Technical Debt**: Shortcuts taken, temporary solutions, architectural compromises.
+4.  **Quality Standards**: Code quality gaps, testing coverage, documentation deficiencies.
+5.  **Performance Requirements**: Unmet performance targets, scalability concerns, resource constraints.
+6.  **Security & Compliance**: Missing security measures, compliance gaps, vulnerability exposures.
+7.  **User Experience**: UX/UI inconsistencies, accessibility issues, usability problems.
+8.  **Integration Points**: API mismatches, data flow issues, third-party integration gaps.
+
+**For each gap identified, provide:**
+- 📋 **Gap Category**: Which analysis area this belongs to
+- 📁 **Location**: File and line references where applicable
+- ⚠️ **Severity**: Critical/High/Medium/Low impact on project success
+- 📝 **Description**: Clear explanation of what's missing or misaligned
+- 💡 **Recommendation**: Specific actions needed to close the gap
+- ⏱️ **Effort Estimate**: Time/complexity to address (Small/Medium/Large)
+- 🎯 **Priority**: Implementation priority based on business impact
+- ⏰ **Timeline**: Recommended completion timeframe based on severity and business impact
+
+**Remediation Timeline Framework:**
+- **Immediate (0-7 days)**: Critical gaps blocking core functionality or causing security risks
+- **30-day timeline**: High-priority gaps affecting user experience or business operations
+- **90-day timeline**: Medium-priority gaps requiring architectural changes or extensive coordination
+- **Next release cycle**: Low-priority gaps that can be addressed in planned development cycles
+
+**Gap Analysis Summary:**
+- **Total Gaps Found**: Count by severity level and timeline category
+- **Critical Path Impact**: Gaps that block major functionality with immediate timeline requirements
+- **Quick Wins**: Low-effort, high-impact gaps to address within 30 days
+- **Strategic Recommendations**: Top 5 gaps that should be prioritized for project success with specific timelines"`
+
+### Step 4. Generate Gap Analysis Report
+
+Carefully review the Gap Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, remove the Main Directories (MAIN_DIRECTORIES), Coding Standards (CODING_STANDARDS), and Implementation Standards (IMPLEMENTATION_STANDARDS), and display in properly formatted **Markdown** report. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
+"""
