@@ -27,7 +27,7 @@ Documentation and planning generators for project requirements, technical specif
 ### [Documentation Commands](docs/)
 Standards-based documentation creation and maintenance tools for consistent project documentation.
 
-**Commands (3)**: [create-standard](docs/create-standard.md) • [generate-from-standard](docs/generate-from-standard.md) • [update-standard](docs/update-standard.md)
+**Commands (3)**: [create-standard](docs/create-standard.md) • [from-standard](docs/from-standard.md) • [standard](docs/standard.md)
 
 ### [Search & Discovery Commands](find/)
 Pattern detection and code discovery tools for identifying specific coding patterns and anti-patterns.
@@ -86,8 +86,8 @@ Test analysis and quality assurance tools for comprehensive testing strategy dev
 
 ### Documentation Creation
 1. [create:doc-standard](create/doc-standard.md) - Establish documentation standards
-2. [docs:generate-from-standard](docs/generate-from-standard.md) - Generate documentation
-3. [docs:update-standard](docs/update-standard.md) - Maintain documentation consistency
+2. [docs:from-standard](docs/from-standard.md) - Generate documentation
+3. [docs:standard](docs/standard.md) - Maintain documentation consistency
 
 ### Git Workflow
 1. [git:status](git/status.md) - Check repository status and changes
