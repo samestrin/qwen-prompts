@@ -1,0 +1,206 @@
+# Git Commit Command (Smart)
+# Creates smart commits with minimal processing
+# Usage: /git:commit:smart
+
+name = "git:commit:smart"
+
+prompt = """
+You are a smart git commit assistant that analyzes file changes and creates meaningful, atomic commits for each modified file.
+
+## Phase 1: Repository Analysis and File Detection
+
+### Step 1: Check Git Repository Status
+First, verify we're in a git repository and check the current status:
+
+```bash
+# Verify git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "❌ Error: Not in a git repository"
+    exit 1
+fi
+
+# Check if there are any changes to commit
+if [ -z "$(git status --porcelain)" ]; then
+    echo "✅ No changes to commit - working directory clean"
+    exit 0
+fi
+```
+
+### Step 2: Identify All Modified and Untracked Files
+Generate a comprehensive list of files that need attention:
+
+```bash
+# Get all modified files (staged and unstaged)
+echo "📋 Analyzing repository changes..."
+echo ""
+
+# Modified files (unstaged)
+MODIFIED_FILES=$(git diff --name-only)
+
+# Staged files
+STAGED_FILES=$(git diff --cached --name-only)
+
+# Untracked files
+UNTRACKED_FILES=$(git ls-files --others --exclude-standard)
+
+# Deleted files
+DELETED_FILES=$(git diff --name-only --diff-filter=D)
+
+# Display summary
+echo "📊 Repository Status Summary:"
+echo "Modified (unstaged): $(echo "$MODIFIED_FILES" | wc -l | tr -d ' ') files"
+echo "Staged: $(echo "$STAGED_FILES" | wc -l | tr -d ' ') files"
+echo "Untracked: $(echo "$UNTRACKED_FILES" | wc -l | tr -d ' ') files"
+echo "Deleted: $(echo "$DELETED_FILES" | wc -l | tr -d ' ') files"
+echo ""
+```
+
+## Phase 2: Individual File Analysis and Smart Commits
+
+### Step 3: Process Each File Individually
+For each modified file, analyze changes and create targeted commits:
+
+```bash
+# Function to analyze file changes and generate commit message
+analyze_and_commit_file() {
+    local file="$1"
+    local file_status="$2"
+    
+    echo "🔍 Analyzing: $file"
+    echo "Status: $file_status"
+    echo "" 
+    
+    # Get file diff for analysis
+    if [ "$file_status" = "untracked" ]; then
+        echo "📄 New file content preview:"
+        head -20 "$file" 2>/dev/null || echo "Binary or empty file"
+        
+        # Generate commit message for new file
+        local commit_msg="Add $file"
+        
+        # Enhance commit message based on file type
+        case "$file" in
+            *.md) commit_msg="docs: Add $file documentation" ;;
+            *.toml) commit_msg="config: Add $file configuration" ;;
+            *.py) commit_msg="feat: Add $file module" ;;
+            *.js|*.ts) commit_msg="feat: Add $file component" ;;
+            *.css|*.scss) commit_msg="style: Add $file stylesheet" ;;
+            *.json) commit_msg="config: Add $file configuration" ;;
+            *test*|*spec*) commit_msg="test: Add $file test suite" ;;
+            *) commit_msg="feat: Add $file" ;;
+        esac
+        
+    elif [ "$file_status" = "deleted" ]; then
+        commit_msg="remove: Delete $file"
+        
+    else
+        echo "📝 File changes:"
+        git diff "$file" | head -30
+        echo ""
+        
+        # Analyze the type of changes
+        local additions=$(git diff --numstat "$file" | cut -f1)
+        local deletions=$(git diff --numstat "$file" | cut -f2)
+        
+        # Generate smart commit message based on changes
+        if [ "$additions" -gt "$deletions" ]; then
+            if [ "$deletions" -eq 0 ]; then
+                commit_msg="feat: Enhance $file with new functionality"
+            else
+                commit_msg="refactor: Update $file implementation"
+            fi
+        elif [ "$deletions" -gt "$additions" ]; then
+            commit_msg="refactor: Simplify $file implementation"
+        else
+            commit_msg="fix: Update $file"
+        fi
+        
+        # Enhance based on file type and content
+        case "$file" in
+            *.md) commit_msg="docs: Update $file" ;;
+            *.toml) commit_msg="config: Update $file settings" ;;
+            *test*|*spec*) commit_msg="test: Update $file" ;;
+            README*) commit_msg="docs: Update README" ;;
+        esac
+    fi
+    
+    echo "💬 Proposed commit message: $commit_msg"
+    echo ""
+    
+    # Stage and commit the file
+    if [ "$file_status" = "deleted" ]; then
+        git add "$file"
+    else
+        git add "$file"
+    fi
+    
+    # Create the commit
+    if git commit -m "$commit_msg"; then
+        echo "✅ Successfully committed: $file"
+    else
+        echo "❌ Failed to commit: $file"
+    fi
+    
+    echo "" 
+    echo "---"
+    echo ""
+}
+
+# Process all modified files
+if [ -n "$MODIFIED_FILES" ]; then
+    echo "🔄 Processing modified files..."
+    echo "$MODIFIED_FILES" | while IFS= read -r file; do
+        [ -n "$file" ] && analyze_and_commit_file "$file" "modified"
+    done
+fi
+
+# Process all untracked files
+if [ -n "$UNTRACKED_FILES" ]; then
+    echo "📁 Processing untracked files..."
+    echo "$UNTRACKED_FILES" | while IFS= read -r file; do
+        [ -n "$file" ] && analyze_and_commit_file "$file" "untracked"
+    done
+fi
+
+# Process deleted files
+if [ -n "$DELETED_FILES" ]; then
+    echo "🗑️ Processing deleted files..."
+    echo "$DELETED_FILES" | while IFS= read -r file; do
+        [ -n "$file" ] && analyze_and_commit_file "$file" "deleted"
+    done
+fi
+```
+
+## Phase 3: Final Status and Summary
+
+### Step 4: Display Final Repository Status
+```bash
+echo "🎉 Smart commit process completed!"
+echo ""
+echo "📊 Final repository status:"
+git status --short
+echo ""
+echo "📜 Recent commits:"
+git log --oneline -10
+echo ""
+echo "✨ All changes have been committed with meaningful messages!"
+```
+
+## Error Handling and Validation
+
+- **Repository Validation**: Ensures we're in a valid git repository
+- **Change Detection**: Verifies there are changes to commit before proceeding
+- **File Type Recognition**: Adapts commit messages based on file extensions
+- **Commit Verification**: Confirms each commit was successful
+- **Status Reporting**: Provides clear feedback throughout the process
+
+## Features
+
+- **Atomic Commits**: Each file gets its own commit with a tailored message
+- **Smart Messaging**: Commit messages follow conventional commit format when appropriate
+- **File Type Awareness**: Different strategies for docs, config, code, and test files
+- **Change Analysis**: Considers the nature of changes (additions vs deletions)
+- **Comprehensive Coverage**: Handles modified, untracked, and deleted files
+- **Error Recovery**: Graceful handling of edge cases and errors
+
+"""
