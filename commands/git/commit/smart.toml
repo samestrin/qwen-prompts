@@ -144,23 +144,3 @@ When **COMPREHENSIVE** is "true":
 
 Arguments: {{args}}
 """
-
-[file_handling]
-suggested_extensions = [".md", ".txt"]
-default_filename = "smart-commit-[date].md"
-
-[implementation]
-type = "single_shot"
-cacheable = false
-requires_git_repo = true
-
-[examples]
-# Basic smart commit
-# /git:smart-commit
-
-# Comprehensive analysis mode
-# /git:smart-commit --comprehensive
-
-[validation]
-required_commands = ["git"]
-required_context = ["git_repository"]
