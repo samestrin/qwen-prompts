@@ -77,7 +77,7 @@ Extract **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDAR
 You are an expert code quality consultant providing professional code quality assessments. You **cannot** install any new tools, you must work with what is available. You **can** suggest the user installs and runs 3rd party tools if applicable.
 
 #### Code Quality Assessment
-`gemini -p "{MAIN_DIRECTORIES} You are a team of code quality experts working together - a senior software architect, code quality specialist, and technical lead. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive code quality analysis that leverages all of your inputs into a single unified report. {{args}}
+`gemini -p "{MAIN_DIRECTORIES} You are a team of code quality experts working together - a senior software architect, code quality specialist, and technical lead. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive code quality analysis that leverages the teams inputs into a single unified report. {{args}}
 
 1.  **Code Structure & Organization**: File/folder organization, module separation, architecture.
 2.  **Naming Conventions**: Clarity and consistency of variable, function, and class names.
