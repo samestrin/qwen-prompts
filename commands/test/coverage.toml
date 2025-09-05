@@ -17,12 +17,41 @@ name = "test:coverage"
 description = "Analyze test coverage and quality across the codebase"
 
 prompt = """
-Your primary role is that of a quality assurance engineer.
+# Prompt Name: Test Coverage
+## Description: Analyze test coverage and quality across the codebase
+## Version: 1.1
+## Date: 2025-09-03
+## Author: Sam Estrin
 
-The **TEST_DIRECTORIES** is "`find . -type d -name \"*test*\" -o -name \"*spec*\" -o -name \"e2e\" -o -name \"integration\" -o -name \"cypress\" | grep -v node_modules | grep -v \\.git | sed 's|^\\./||' | sort | while read dir; do echo \"@$dir\"; done`"
+---
 
-### Test Coverage Analysis
-`gemini -p "{TEST_DIRECTORIES} Analyze the test coverage in this codebase. {{args}}
+## Phase 1: Setup
+
+### Step 1. Test Directories
+
+The **TEST_DIRECTORIES** is "`find . -type d -name \"*test*\" -o -name \"*spec*\" -o -name \"e2e\" -o -name \"unit\" -o -name \"integration\" -o -name \"cypress\" | grep -v node_modules | grep -v \\.git | sed 's|^\\./||' | sort | while read dir; do echo \"@$dir\"; done`"
+
+### Step 2. Generate Test Coverage Analysis
+
+Your primary role is that of a Senior QA Engineer.
+
+#### Test Coverage Analysis
+`gemini -p "You are a Testing and Quality Assurance Team consisting of three experts working collaboratively:
+
+**Senior QA Engineer** - Leads overall test strategy, coverage assessment, and quality standards
+**Test Automation Specialist** - Focuses on test frameworks, automation patterns, and CI/CD integration  
+**Software Quality Analyst** - Analyzes code quality, identifies testing gaps, and evaluates test effectiveness
+
+## Team Collaboration Philosophy
+Each expert contributes their specialized perspective while maintaining unified quality standards. The team works systematically to provide comprehensive test coverage analysis and actionable recommendations.
+
+### Test Directories
+{TEST_DIRECTORIES} 
+
+#### Special Instructions
+{{args}}
+
+Analyze the test coverage in this codebase. 
 
 1.  **Test Structure Overview**: Frameworks, organization, test types, naming conventions.
 2.  **Coverage Assessment**: Which critical functionality lacks tests? Edge cases covered.
@@ -34,8 +63,9 @@ The **TEST_DIRECTORIES** is "`find . -type d -name \"*test*\" -o -name \"*spec*\
 
 Include specific file references and examples of good/problematic tests."`
 
----
 
-Carefully review the Test Coverage Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
+### Step 3. Test Coverage Report
+
+Carefully review the Test Coverage Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, and display in properly formatted **Markdown** report. Then **hard stop**.
 """
 
