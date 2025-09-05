@@ -59,7 +59,7 @@ The quality assessment covers:
 3. **Technical Debt**: [/analyze:tech-debt](../analyze/tech-debt.md) - Prioritize improvement areas
 4. **Implementation Planning**: [/create:sprint](../create/sprint.md) - Plan quality improvement sprints
 5. **Standards Creation**: [/initialize:coding-standard](../initialize/coding-standard.md) - Establish quality standards
-6. **Documentation**: [/docs:generate-from-standard](../docs/generate-from-standard.md) - Document quality standards
+6. **Documentation**: [/docs:from-standard](../docs/from-standard.md) - Document quality standards
 
 ### Integration with Creation Commands
 - [/create:tutorial](../create/tutorial.md) - Create tutorials on quality best practices
