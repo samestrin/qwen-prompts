@@ -49,4 +49,4 @@ The file merging process:
 - [/file:save](save.md) - Save single response to a file
 - [/analyze:security](../analyze/security.md) - Security reports that might need merging
 - [/code:review](../code/review.md) - Code review findings that might need consolidation
-- [/docs:generate-from-standard](../docs/generate-from-standard.md) - Generated documentation that might need merging
+- [/docs:from-standard](../docs/from-standard.md) - Generated documentation that might need merging
