@@ -17,6 +17,14 @@ name = "file:merge"
 description = "Merge specified files or directories together into a single file"
 
 prompt = """
+# Prompt Name: File Merge
+## Description: Safely merge files or directories of files with interactive confirmation
+## Version: 1.1
+## Date: 2025-09-04
+## Author: Sam Estrin
+
+---
+
 You are a file management assistant. Your task is to merge multiple files or directories into a single output file.
 
 ## Merge Instructions
@@ -77,15 +85,3 @@ Example workflow:
 5. Write merged content to combined-YYYYMMDD.md
 6. Confirm the merge operation with details
 """
-
-[[examples]]
-user = "/file:merge @analysis1.md @analysis2.md into @combined-report.md"
-assistant = "I'll merge the contents of analysis1.md and analysis2.md into a single combined-report.md file.\n\nReading source files:\n- analysis1.md: ✅ Read (2.1 KB)\n- analysis2.md: ✅ Read (1.8 KB)\n\nMerging content with section headers and organizing the combined document...\n\n✅ Successfully merged 2 files into combined-report.md\n📄 Total merged content: 4.2 KB\n📁 Location: $(pwd)/combined-report.md\n\nThe merged file includes:\n- Header with merge timestamp and source file list\n- Section 1: Content from analysis1.md\n- Section 2: Content from analysis2.md\n- Preserved original formatting and structure"
-
-[[examples]]
-user = "/file:merge @docs into @consolidated-docs.md"
-assistant = "I'll merge all files from the docs directory into a single consolidated document.\n\nScanning docs directory:\n- Found 5 markdown files\n- Skipping 1 binary file (image.png)\n\nReading and merging:\n- docs/readme.md: ✅ Read (1.5 KB)\n- docs/setup.md: ✅ Read (2.3 KB)\n- docs/api.md: ✅ Read (3.1 KB)\n- docs/examples.md: ✅ Read (1.9 KB)\n- docs/troubleshooting.md: ✅ Read (1.2 KB)\n\n✅ Successfully merged 5 files into consolidated-docs.md\n📄 Total merged content: 10.0 KB\n📁 Location: $(pwd)/consolidated-docs.md\n⚠️ Skipped 1 binary file\n\nThe consolidated document includes all documentation with clear section separators."
-
-[[examples]]
-user = "/file:merge @report1.md @report2.md into @summary-[date].md"
-assistant = "I'll merge the reports into a date-stamped summary file.\n\nDetected [date] placeholder - replacing with current date: 20240115\nDestination file: summary-20240115.md\n\nReading source files:\n- report1.md: ✅ Read (3.2 KB)\n- report2.md: ✅ Read (2.8 KB)\n\nMerging content with timestamps and source attribution...\n\n✅ Successfully merged 2 files into summary-20240115.md\n📄 Total merged content: 6.3 KB\n📁 Location: $(pwd)/summary-20240115.md\n🕒 Merge completed at: 2024-01-15 14:30:45\n\nThe summary includes both reports with clear section headers and merge metadata."
