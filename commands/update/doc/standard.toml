@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# Command: /update:doc:standard
+#
+# Description:
+#   Updates an existing documentation file to make it conform to a
+#   specified documentation standard. It supports different update types,
+#   from simple reformatting to a complete content rewrite.
+#
+# Usage Examples:
+#
+#   1. Reformat a document without changing content:
+#      /update:doc:standard Perform a 'format-only' update on @docs/old_api.md using the standard @docs/api_standard.md
+#
+#   2. Refresh content and update code examples:
+#      /update:doc:standard Do a 'content-refresh' on the user guide @docs/guide.md with the standard @docs/style_guide.md
+#
+#   3. Completely rewrite a document based on the current code:
+#      /update:doc:standard Execute a 'full-rewrite' of @README.md using the template @docs/readme_standard.md
+# ---------------------------------------------------------------------------
+
+name = "update:doc:standard"
+description = "Update existing documentation to match a documentation standard"
+
+prompt = """
+# Prompt Name: Update Doc From Standard 
+## Description: Update a documentation standard/template based on best practices and existing docs
+## Version: 2.0
+## Date: 2025-09-03
+## Author: Sam Estrin
+
+---
+
+## Phase 1: Setup
+
+### Step 1. Get Date/Time
+
+The **TODAYS_DATE** is "`date '+%B %d, %Y %I:%M:%S%p'`"
+
+## Phase 2: Update Documentation 
+
+### Step 1. Update Documentation from Standard 
+
+Update the existing **DOCUMENTATION** to match the documentation standard provided.
+
+**Update Details:**
+{{args}}
+
+**General Requirements:**
+
+1.  **Preserve Good Content**: Keep valuable existing content that is still accurate.
+2.  **Follow Standard**: Match the structure, format, and style of the standard.
+3.  **Current Information**: Ensure all code examples and references are current.
+4.  **Complete Coverage**: Include all sections required by the standard.
+5.  **Consistency**: Maintain consistent formatting throughout.
+
+Depending on the **Update Type** specified, follow these rules:
+
+* **format-only**: Keep all existing content but update formatting, structure, and style to match the standard. Reorganize sections and fix markdown inconsistencies.
+* **content-refresh**: Keep existing content but refresh it with current codebase information. Update code examples, add missing sections from the standard, and update outdated information.
+* **full-rewrite**: Use the existing doc only as a reference for what to cover. Completely rewrite the documentation following the standard's structure and style, extracting fresh information from the current codebase.
+
+### Step 2. Update Date
+
+Below the documentation title, we expect a date: 
+- if no date exists **add** below the title "Updated: {THIS_DATE}"
+- if a "Created:" date exists **update** the date to "Updated: {THIS_DATE}"
+
+### Step 3. Render Documentation Standard
+
+Carefully review the {DOCUMENTATION}, correct any formatting issues, and display in properly formatted **Markdown**. Output as a complete markdown file that can easily saved. Then **hard stop**.
+
+"""
