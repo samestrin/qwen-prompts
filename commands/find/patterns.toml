@@ -17,18 +17,45 @@ name = "find:patterns"
 description = "Find specific coding patterns, anti-patterns, or code smells in the codebase"
 
 prompt = """
-# Directory Detection
+# Prompt Name: Find Patterns
+## Description: Find specific coding patterns, anti-patterns, or code smells in the codebase
+## Version: 1.1
+## Date: 2025-09-03
+## Author: Sam Estrin
 
-The **MAIN_DIRECTORIES** is "`gemini -p "Analyze @package.json, @composer.json, @pyproject.toml to identify the primary source code directory by examining:
-1. **package.json**: main, module, exports fields, or scripts pointing to source dirs
-2. **composer.json**: autoload.psr-4 namespace mappings  
-3. **pyproject.toml**: [tool.setuptools.packages.find] include patterns, [project.scripts] entry points
-Return the actual package/module directory names containing application logic, prefixed with @. Don't assume generic names like 'src'.`"
+---
 
-You are an expert software architect/engineer.
+## Phase 1. Directory Detection
 
-### Pattern Analysis
-`gemini -p "{MAIN_DIRECTORIES} Find all instances of the coding pattern described. {{args}}
+### Step 1. Validate {{args}} is not NULL
+
+If "{{args}}" is NULL or empty then say "/find:patterns <description of feature or pattern>", and **hard stop**.
+
+### Step 2. Process Arguments
+
+**Set mode based on "{{args}}":**
+1. CLEAN_ARGS (string) is "{{args}}"
+2. If "{CLEAN_ARGS}" contains `@`, **TARGETS** is the path/to/filename(s) including `@`, otherwise **TARGETS** is "false". Remove {TARGETS} from {CLEAN_ARGS}.
+3. If "{CLEAN_ARGS}" contains "--comprehensive", **EXCLUDE_TESTS** is "" and **REPORT_TITLE** is "Comprehensive Find Pattern", otherwise **EXCLUDE_TESTS** is "- excluding tests -" and **REPORT_TITLE** is "Find Pattern". Remove "--comprehensive" from {CLEAN_ARGS}.
+
+Say "Generating {REPORT_TITLE} report ... [Mode: Comprehensive:{COMPREHENSIVE}, Target(s):{TARGETS}]"
+
+### Step 3. Main Directory Detection
+
+The **MAIN_DIRECTORIES** is "`gemini -p \"Find directories containing runtime code {EXCLUDE_TESTS} return only the directory basenames preceded by @ in a single line, separated by spaces\"`"
+
+## Phase 2. Find Patterns
+
+### Step 1. Search for Patterns
+
+You are a data analyst. Your job is to find patterns based on the user description "{CLEAN_ARGS}"
+
+#### Pattern Analysis
+`gemini -p "{MAIN_DIRECTORIES} 
+Find all instances of the coding pattern described. 
+
+#### Pattern
+{CLEAN_ARGS}
 
 1.  **Pattern Occurrences**: List all files containing this pattern with specific line references.
 2.  **Implementation Variations**: Show the different ways this pattern is implemented (good and bad).
@@ -39,9 +66,9 @@ You are an expert software architect/engineer.
 
 Provide specific file paths and line numbers for all examples."`
 
----
+### Step 2. Generate Find Patterns Report
 
-Carefully review the Pattern Analysis, correct any formatting issues, and display in properly formatted **Markdown**. 
+Carefully review the Pattern Analysis, if you encounter multiple perspectives - synthesize together into a unified report, correct any formatting issues, and display in properly formatted **Markdown** report. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 
 Then **hard stop**.
 """
