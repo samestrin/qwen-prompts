@@ -14,16 +14,158 @@
 #
 #   3. Analyze a TDD with a different rate:
 #      /create:cost-analysis Assume a developer rate of $95/hour.
+#
+#   4. Perform comprehensive analysis with real-time pricing research:
+#      /create:cost-analysis --comprehensive
+#
+#   5. Comprehensive analysis with custom developer rate:
+#      /create:cost-analysis --comprehensive Assume a developer rate of $150/hour.
 # ---------------------------------------------------------------------------
 
 name = "create:cost-analysis"
 description = "Generates a high-level operational cost estimate for a project"
 
 prompt = """
-The **TODAYS_DATE** is "`date`". The {TODAYS_DATE} value should include the date and the timestamp, do not reformat.
+# Prompt Name: Create PRD
+## Description: Generates a Product Requirements Document (PRD) from a feature description
+## Version: 1.1
+## Date: 2025-09-05
+## Author: Sam Estrin
 
-### Contextual Analysis
-`gemini -p "@planning/specifications/tdd.md Analyze the attached TDD to create a comprehensive cost projection. Your analysis must cover these areas:
+---
+
+## Phase 1. Setup
+
+### Step 1. Quick Setup
+
+**Set mode based on "{{args}}":**
+1. CLEAN_ARGS (string) is "{{args}}"
+2. If "{CLEAN_ARGS}" contains "--comprehensive", **COMPREHENSIVE** is "true" and **ANALYSIS_TYPE** is "Comprehensive Cost Analysis", otherwise "false" and **ANALYSIS_TYPE** is "Cost Analysis". Remove "--comprehensive" from {CLEAN_ARGS}.
+3. If "{CLEAN_ARGS}" contains `@`, **TARGET** is the path/to/filename(s) without `@`, otherwise **TARGET** is "tdd.md". 
+    1. Remove {TARGET} from {CLEAN_ARGS}.
+    2. If {TARGET} is just a filename pre-pend "planning/product/"
+4. Read the file {TARGET} and set the **FEATURE_TITLE** based on its contents.
+
+Say "Generating {ANALYSIS_TYPE} for {FEATURE_TITLE} ... [Mode: Comprehensive:{COMPREHENSIVE}, Target:{TARGET}]"
+
+### Step 2. Combined Directory Detection and Standards Scan
+
+The **CONTEXT_RESPONSE** is "`echo '# TODAYS_DATE'; date '+Generated: %B %d, %Y at %I:%M:%S%p'; echo; echo '# MAIN_DIRECTORIES'; gemini -p \"Find directories containing runtime code, excluding test directories, return only the directory basenames preceded by @ in a single line, separated by spaces\"; echo; echo '# CODING_STANDARDS'; cat ./planning/specifications/sprint-coding-standards.md 2>/dev/null || echo 'No coding standards found'; echo; echo '# IMPLEMENTATION_STANDARDS'; cat ./planning/specifications/implementation-standards.md 2>/dev/null || echo 'No implementation standards found'`"
+
+### Step 3. Set Defaults
+
+#### Default Implementation Strategy (Eskil Steenberg's Black Box Architecture)
+
+**Black Box Design Principles:**
+- Design modules that never need editing once written
+- Create primitive-based interfaces that hide complexity
+- Implement wrapper patterns for all external dependencies
+- Build replaceable components with standardized interfaces
+- Optimize for human cognitive load and maintainability
+
+**Architecture Framework:**
+1. **Primitive Identification**: Define core data types and operations
+2. **Black Box Boundaries**: Create modules with single responsibility
+3. **Dependency Wrapping**: Isolate external services behind interfaces
+4. **Interface Design**: Hide implementation details, expose only essentials
+5. **Replaceability Testing**: Verify components can be substituted
+
+**Implementation Strategy:**
+- Write code that works correctly from first deployment
+- Build modular boundaries testable in isolation
+- Create mock interfaces for external dependencies
+- Implement comprehensive logging and state inspection
+- Design validation modes for development and testing
+
+**Quality Standards:**
+- Test black box interfaces, not internal implementation
+- Assess risk through dependency analysis and failure modes
+- Maintain clear separation between platform and application logic
+- Optimize for team scalability and developer velocity
+- Ensure modules can be debugged and replaced independently
+
+### Step 4. Extract from Response
+
+Extract **TODAYS_DATE**, **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLEMENTATION_STANDARDS** from {CONTEXT_RESPONSE}. If the **MAIN_DIRECTORIES** cannot be extracted, then set **MAIN_DIRECTORIES** to ".". If **CODING_STANDARDS** is "No coding standards found" then set **CODING_STANDARDS** to "Use general best practices". If {IMPLEMENTATION_STANDARDS} is "No implementation standards found - using default analysis approach" then set **IMPLEMENTATION_STANDARDS** to the **Default Implementation Strategy**.
+
+## Phase 2. Cost Analysis Generation
+
+### Step 1. Initial Cost Analysis
+
+You are a Expert Financial Analyst (FA) tasked with performing a detailed cost analysis and synthesis of your teams findings.
+
+#### Cost Analysis
+`gemini "You are acting as a cross-functional cost analysis team with the following expert roles:
+
+**Financial Analyst (FA)**: Lead cost analysis, synthesize findings, ensure budget alignment
+- Consolidate team insights into structured cost estimates
+- Make budget allocation decisions and cost optimization recommendations
+- Validate alignment with financial objectives and constraints
+
+**Resource Planning Specialist (RPS)**: Personnel and resource cost estimation
+- Calculate labor costs based on roles, rates, and time estimates
+- Analyze resource utilization and capacity planning
+- Define staffing requirements and skill mix optimization
+
+**Technical Cost Estimator (TCE)**: Technology and infrastructure cost analysis
+- Evaluate technology stack costs and licensing requirements
+- Identify infrastructure, hosting, and operational expenses
+- Assess technical risk factors that impact cost projections
+
+**Project Cost Manager (PCM)**: Timeline and delivery cost modeling
+- Create detailed project phase cost breakdowns
+- Analyze cost implications of different delivery approaches
+- Establish cost tracking and budget control mechanisms
+
+**Risk Assessment Analyst (RAA)**: Cost risk identification and mitigation
+- Identify cost risk factors and contingency requirements
+- Analyze cost variance scenarios and impact assessments
+- Establish cost monitoring and early warning indicators
+
+Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive cost analysis that leverages the teams inputs into a single unified report.
+
+## Context Information
+
+### PRD: {TARGET}
+
+### Coding Standards
+{CODING_STANDARDS}
+
+### Implementation Standards
+{IMPLEMENTATION_STANDARDS}
+
+## Cost Analysis Requirements
+
+**If {COMPREHENSIVE} is "true":**
+
+Perform comprehensive cost analysis with real-time pricing research:
+
+1.  **One-Time Development Cost:** Based on the TDD's 'Resource Planning' and 'Timeline' sections, calculate an estimated one-time development cost. **{{args|Assume a standard developer rate of $75/hour.}}**
+
+2.  **Monthly Operational Costs with Context-Aware Research:**
+    a. **Project Type Analysis:** First determine the project characteristics:
+       - CLI Tool: Skip hosting research, focus on distribution costs
+       - Personal/Portfolio Site: Small-scale hosting (shared/basic VPS)
+       - Business Application: Medium-scale hosting with reliability needs
+       - Enterprise/Global Platform: High-scale hosting with redundancy
+    
+    b. **Smart Hosting Research:** Based on project type and scale:
+       - **CLI Tools:** `echo "No hosting required - focus on distribution (npm, GitHub releases, package managers)"`
+       - **Personal Sites:** Research static hosting: `echo "Vercel Free, Netlify Free, GitHub Pages Free, or DigitalOcean $4-12/month"`
+       - **Small Business Apps:** Research managed platforms: `echo "Vercel Pro $20/month, Railway $5-20/month, DigitalOcean App Platform $12-25/month"`
+       - **Enterprise Apps:** Research scalable infrastructure: `echo "AWS/GCP/Azure with load balancing, auto-scaling, multi-region deployment"`
+    
+    c. **Context-Aware Service Research:** Only research services that make sense for the project:
+       - **Database needs:** Analyze TDD for data persistence requirements
+       - **Traffic expectations:** Scale recommendations based on user base mentions
+       - **Geographic scope:** CDN needs based on global vs local audience
+       - **Compliance requirements:** Additional security/monitoring based on industry
+
+3.  **User-Borne Costs Research:** Research current API pricing for identified third-party services
+
+**If {COMPREHENSIVE} is "false":**
+
+Perform standard cost analysis with general estimates:
 
 1.  **One-Time Development Cost:** Based on the TDD's 'Resource Planning' and 'Timeline' sections, calculate an estimated one-time development cost. **{{args|Assume a standard developer rate of $75/hour.}}**
 
@@ -33,13 +175,49 @@ The **TODAYS_DATE** is "`date`". The {TODAYS_DATE} value should include the date
 
 3.  **User-Borne Costs:** Detail any ongoing costs the end-user will be responsible for (e.g., third-party API usage fees)."`
 
+### Step 2. Cost Analysis Template
+
+**If {COMPREHENSIVE} is "true", use Comprehensive Cost Analysis Template:**
+
 ---
 
-**Final Task:**
-Using ONLY the contextual analysis provided above, format the information into a clear cost-analysis document using the following structure.
+# Comprehensive Cost Analysis Report: {FEATURE_TITLE}
+Created: {TODAYS_DATE}
+Analysis Type: Comprehensive with Real-Time Pricing Research
 
-```markdown
-# Cost Analysis Report
+## 1. One-Time Development Cost Estimate
+(Summarize the estimated hours and total cost for the initial build of the project based on the provided developer rate.)
+
+## 2. Detailed Monthly Operational Costs
+
+### Primary Hosting Analysis
+(Present detailed comparison of hosting providers with current pricing research, including pros/cons for each option.)
+
+### Complementary Services Breakdown
+(Provide detailed breakdown with current pricing for each identified service, including alternative options and cost optimization recommendations.)
+
+### Infrastructure Scaling Considerations
+(Analyze how costs will scale with user growth, traffic increases, and data storage needs.)
+
+## 3. User-Borne Costs Analysis
+(Detail ongoing costs with current API pricing research and usage projections.)
+
+## 4. Cost Optimization Recommendations
+(Provide specific recommendations for reducing costs while maintaining functionality.)
+
+## 5. Pricing Research Methodology
+(Document the sources and methods used for pricing research, including confidence levels and last updated information.)
+
+## 6. Risk Assessment
+(Identify potential cost risks and mitigation strategies.)
+
+---
+
+**If {COMPREHENSIVE} is "false", use Standard Cost Analysis Template:**
+
+---
+
+# Cost Analysis Report: {FEATURE_TITLE}
 Created: {TODAYS_DATE}
 
 ## 1. One-Time Development Cost Estimate
@@ -58,7 +236,7 @@ Created: {TODAYS_DATE}
 
 ---
 
-Carefully review the output and correct any formatting issues that may have occured in the generation of the cost analysis. Save the output as: @planning/specifications/cost-analysis.md.
+### Step 3. Cost Analysis Creation
 
-Then **hard stop**.
+Now, using ONLY the **Cost Analysis** above as context and populate every section of the **Default Cost Analysis Template** with relevant details derived from the analysis. Carefully review and correct any formatting issues that may have occured in the generation of the Cost Analysis. Do not show any Todos/Task Lists, end with the report. Then **hard stop**.
 """

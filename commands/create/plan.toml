@@ -80,7 +80,7 @@ Extract **TODAYS_DATE**, **MAIN_DIRECTORIES**, **CODING_STANDARDS**, and **IMPLE
 ## Phase 2. Analysis
 
 ### Step 1. Strategic Analysis
-The **STRATEGIC_ANALYSIS** is `gemini -p "You are a team working together - a Strategic Business Analyst, Product Manager, and Technical Lead. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive strategic plan that leverages all of your inputs into a single unified plan.
+The **STRATEGIC_ANALYSIS** is `echo '# STRATEGIC_ANALYSIS'; gemini -p "You are a team working together - a Strategic Business Analyst, Product Manager, and Technical Lead. Each team member must provide their individual analysis from their expertise perspective, then work together to create a comprehensive strategic plan that leverages all of your inputs into a single unified plan.
 
 ## Planning Objective
 {CLEAN_ARGS}
@@ -114,7 +114,7 @@ Each team member should use available tools to research and analyze the codebase
 5. **Success Metrics**: Measurable outcomes from business, product, and technical viewpoints
 6. **Risk Assessment**: Comprehensive risk analysis with mitigation strategies from all perspectives
 
-Provide a clear, actionable strategic plan as your final unified output."`
+Provide a clear, actionable strategic plan as your final unified output.";`
 
 ### Step 2: Plan Synthesis
 

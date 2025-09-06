@@ -33,10 +33,10 @@ If **GIT_STATUS** is empty, display "✅ No changes to commit - working director
 ### Step 4. Display Repository Summary
 
 Display repository status summary:
-- Modified (unstaged): {count of MODIFIED_FILES} files
-- Staged: {count of STAGED_FILES} files
-- Untracked: {count of UNTRACKED_FILES} files
-- Deleted: {count of DELETED_FILES} files
+- Modified (unstaged): {count of MODIFIED_FILES} file(s)
+- Staged: {count of STAGED_FILES} file(s)
+- Untracked: {count of UNTRACKED_FILES} file(s)
+- Deleted: {count of DELETED_FILES} file(s)
 
 ## Phase 2. File Analysis and Commit Strategy
 
